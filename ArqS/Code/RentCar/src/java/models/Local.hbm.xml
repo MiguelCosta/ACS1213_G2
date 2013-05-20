@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 20/Mai/2013 14:00:52 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="models.Local" table="local" catalog="arqs">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cidade" class="models.Cidade" fetch="select">
+            <column name="Cidadeid" not-null="true" />
+        </many-to-one>
+        <property name="nome" type="string">
+            <column name="nome" not-null="true" />
+        </property>
+        <property name="latitude" type="big_decimal">
+            <column name="latitude" scale="9" />
+        </property>
+        <property name="longitude" type="big_decimal">
+            <column name="longitude" scale="9" />
+        </property>
+        <set name="servicosForLocalPartidaid" inverse="true">
+            <key>
+                <column name="LocalPartidaid" not-null="true" />
+            </key>
+            <one-to-many class="models.Servico" />
+        </set>
+        <set name="servicosForLocalChegadaid" inverse="true">
+            <key>
+                <column name="LocalChegadaid" not-null="true" />
+            </key>
+            <one-to-many class="models.Servico" />
+        </set>
+    </class>
+</hibernate-mapping>

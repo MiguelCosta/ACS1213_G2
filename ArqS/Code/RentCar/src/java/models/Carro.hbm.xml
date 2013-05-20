@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 20/Mai/2013 14:00:52 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="models.Carro" table="carro" catalog="arqs">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="categoria" class="models.Categoria" fetch="select">
+            <column name="Categoriaid" not-null="true" />
+        </many-to-one>
+        <property name="matricula" type="string">
+            <column name="matricula" not-null="true" unique="true" />
+        </property>
+        <property name="descricao" type="string">
+            <column name="descricao" length="1023" not-null="true" />
+        </property>
+        <property name="imagem" type="string">
+            <column name="imagem" length="1023" not-null="true" />
+        </property>
+        <set name="servicos" inverse="true">
+            <key>
+                <column name="Carroid" not-null="true" />
+            </key>
+            <one-to-many class="models.Servico" />
+        </set>
+    </class>
+</hibernate-mapping>
