@@ -12,7 +12,7 @@ import org.hibernate.mapping.List;
  *
  * @author Miguel
  */
-public class PaisesDB {
+public class PaisesDAO {
     
     public static Pais getByID(int id){
         

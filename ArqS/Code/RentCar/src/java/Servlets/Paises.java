@@ -40,7 +40,7 @@ public class Paises extends HttpServlet {
         
         try {
             
-            Pais p = DAO.PaisesDB.getByID(1);
+            Pais p = DAO.PaisesDAO.getByID(1);
             out.print(p.getNome());
             
         } finally {
