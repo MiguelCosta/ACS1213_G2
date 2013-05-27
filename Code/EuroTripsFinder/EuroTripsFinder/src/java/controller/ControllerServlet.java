@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Miguel
  */
-@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/"})
+@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/ControllerServlet"})
 public class ControllerServlet extends HttpServlet {
 
     /**
@@ -64,7 +64,31 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+
+        String userPath = request.getServletPath();
+
+        if (userPath.equals("/login")) {
+            userPath = "/login";
+        } else {
+            userPath = "";
+        }
+
+        String url;
+        if (userPath.equals("")) {
+            url = "/index.jsp";
+        } else {
+            url = "/WEB-INF/view" + userPath + ".jsp";
+
+        }
+        
+        try {
+            request.getRequestDispatcher(url).forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
     }
 
     /**
@@ -87,10 +111,10 @@ public class ControllerServlet extends HttpServlet {
 
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-            
+
             session.UtilizadorFacade user;
-            
-            
+
+
             userPath = "/index";
         }
 
