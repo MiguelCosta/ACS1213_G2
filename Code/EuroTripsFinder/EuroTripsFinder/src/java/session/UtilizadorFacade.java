@@ -30,7 +30,7 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
     }
 
     public Utilizador UtilizadorLogin(String username, String password) {
-        Query q = em.createNamedQuery("findByUsernameAndPassword");
+        Query q = em.createNamedQuery("Utilizador.findByUsernameAndPassword");
         q.setParameter("username", username);
         q.setParameter("password", password);
 
