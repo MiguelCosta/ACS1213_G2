@@ -32,7 +32,7 @@ public class ControllerServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
@@ -63,31 +63,8 @@ public class ControllerServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-//        processRequest(request, response);
-
-        String userPath = request.getServletPath();
-
-        if (userPath.equals("/login")) {
-            userPath = "/login";
-        } else {
-            userPath = "";
-        }
-
-        String url;
-        if (userPath.equals("")) {
-            url = "/index.jsp";
-        } else {
-            url = "/WEB-INF/view" + userPath + ".jsp";
-
-        }
-        
-        try {
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
+      throws ServletException, IOException {
+        processRequest(request, response);
 
     }
 
@@ -102,32 +79,8 @@ public class ControllerServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String userPath = request.getServletPath();
-        HttpSession session = request.getSession();
-
-        if (userPath.equals("/login")) {
-
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-
-            session.UtilizadorFacade user;
-
-
-            userPath = "/index";
-        }
-
-        // use RequestDispatcher to forward request internally
-        String url = "" + userPath + ".jsp";
-
-        try {
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-//        processRequest(request, response);
+      throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

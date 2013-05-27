@@ -14,13 +14,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import session.UtilizadorFacade;
 
 /**
  *
  * @author Miguel
  */
-@WebServlet(name = "UtilizadorServlet", urlPatterns = {"/Utilizador"})
+@WebServlet(name = "UtilizadorServlet", urlPatterns = {
+    "/Utilizador", 
+    "/Utilizador/login", 
+    "/Utilizador/logout"})
 public class UtilizadorServlet extends HttpServlet {
 
     @EJB
@@ -37,41 +41,36 @@ public class UtilizadorServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControllerUtilizador</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControllerUtilizador at " + request.getContextPath() + "</h1>");
-            out.println("Parametros: ");
+      throws ServletException, IOException {
+        String userPath = request.getServletPath();
+
+        if (userPath.equals("/Utilizador")) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-            out.println("Parametros: ");
-            out.println(username);
-            out.println(password);
 
-            Utilizador eu = utilizadorFacade.UtilizadorLogin(username, password);
+            Utilizador user = utilizadorFacade.UtilizadorLogin(username, password);
+            HttpSession session = request.getSession();
 
-            if (eu != null) {
-                out.println("Login:");
-                out.println(eu.getUsername());
+            if (user != null) {
+                session.setAttribute("user", user);
             } else {
-                out.println("Nao da para fazer login.");
-
+                session.setAttribute("user", null);
             }
-
-            out.println("</body>");
-            out.println("</html>");
-
-        } finally {
-            out.close();
+        } else if (userPath.equals("/Utilizador/logout")) {
+            HttpSession session = request.getSession();
+            session.invalidate();
+            response.sendRedirect("/EuroTripsFinder");
+            return;
         }
+
+
+
+
+        try {
+            request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -86,7 +85,7 @@ public class UtilizadorServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -101,7 +100,7 @@ public class UtilizadorServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         processRequest(request, response);
     }
 
