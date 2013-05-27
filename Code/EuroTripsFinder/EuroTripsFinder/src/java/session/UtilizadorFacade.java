@@ -8,6 +8,7 @@ import entity.Utilizador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -15,6 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class UtilizadorFacade extends AbstractFacade<Utilizador> {
+
     @PersistenceContext(unitName = "EuroTripsFinderPU")
     private EntityManager em;
 
@@ -26,5 +28,13 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
     public UtilizadorFacade() {
         super(Utilizador.class);
     }
-    
+
+    public Utilizador UtilizadorLogin(String username, String password) {
+        Query q = em.createNamedQuery("findByUsernameAndPassword");
+        q.setParameter("username", username);
+        q.setParameter("password", password);
+
+        Utilizador u = (Utilizador) q.getSingleResult();
+        return u;
+    }
 }

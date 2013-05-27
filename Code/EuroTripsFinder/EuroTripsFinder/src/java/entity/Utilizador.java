@@ -40,8 +40,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Utilizador.findByDataregisto", query = "SELECT u FROM Utilizador u WHERE u.dataregisto = :dataregisto"),
     @NamedQuery(name = "Utilizador.findByEmail", query = "SELECT u FROM Utilizador u WHERE u.email = :email"),
     @NamedQuery(name = "Utilizador.findByUsername", query = "SELECT u FROM Utilizador u WHERE u.username = :username"),
-    @NamedQuery(name = "Utilizador.findByPassword", query = "SELECT u FROM Utilizador u WHERE u.password = :password")})
+    @NamedQuery(name = "Utilizador.findByPassword", query = "SELECT u FROM Utilizador u WHERE u.password = :password"),
+    @NamedQuery(name = "Utilizador.findByUsernameAndPassword", query = "Select u FROM Utilizador u WHERE u.username = :username AND u.password = :password")})
 public class Utilizador implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -223,5 +225,4 @@ public class Utilizador implements Serializable {
     public String toString() {
         return "entity.Utilizador[ id=" + id + " ]";
     }
-    
 }

@@ -4,6 +4,7 @@
  */
 package controller;
 
+import entity.Utilizador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,12 +12,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Miguel
  */
-@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/ControllerServlet"})
+@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/"})
 public class ControllerServlet extends HttpServlet {
 
     /**
@@ -38,13 +40,13 @@ public class ControllerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControllerServlet</title>");            
+            out.println("<title>Servlet ControllerServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ControllerServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        } finally {            
+        } finally {
             out.close();
         }
     }
@@ -77,7 +79,31 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String userPath = request.getServletPath();
+        HttpSession session = request.getSession();
+
+        if (userPath.equals("/login")) {
+
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            
+            session.UtilizadorFacade user;
+            
+            
+            userPath = "/index";
+        }
+
+        // use RequestDispatcher to forward request internally
+        String url = "" + userPath + ".jsp";
+
+        try {
+            request.getRequestDispatcher(url).forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+//        processRequest(request, response);
     }
 
     /**
