@@ -22,7 +22,7 @@ import session.UtilizadorFacade;
  */
 @WebServlet(name = "UtilizadorServlet", urlPatterns = {"/Utilizador"})
 public class UtilizadorServlet extends HttpServlet {
-    
+
     @EJB
     private UtilizadorFacade utilizadorFacade;
 
@@ -45,7 +45,7 @@ public class UtilizadorServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControllerUtilizador</title>");            
+            out.println("<title>Servlet ControllerUtilizador</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ControllerUtilizador at " + request.getContextPath() + "</h1>");
@@ -55,21 +55,21 @@ public class UtilizadorServlet extends HttpServlet {
             out.println("Parametros: ");
             out.println(username);
             out.println(password);
-            
-            List<Utilizador> users = utilizadorFacade.findAll();
+
             Utilizador eu = utilizadorFacade.UtilizadorLogin(username, password);
 
-            out.println(users.size());
-            
-            for(Utilizador u : users){
-                out.println(u.getNome());
-                out.println(u.getEmail());
+            if (eu != null) {
+                out.println("Login:");
+                out.println(eu.getUsername());
+            } else {
+                out.println("Nao da para fazer login.");
+
             }
-            
+
             out.println("</body>");
             out.println("</html>");
-            
-        } finally {            
+
+        } finally {
             out.close();
         }
     }
@@ -101,7 +101,7 @@ public class UtilizadorServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

@@ -5,6 +5,7 @@
 package session;
 
 import entity.Utilizador;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,7 +35,12 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
         q.setParameter("username", username);
         q.setParameter("password", password);
 
-        Utilizador u = (Utilizador) q.getSingleResult();
-        return u;
+        List<Utilizador> users = q.getResultList();
+        if(users.size() > 0){
+            return users.get(0);
+        }
+        else{
+            return null;
+        }
     }
 }
