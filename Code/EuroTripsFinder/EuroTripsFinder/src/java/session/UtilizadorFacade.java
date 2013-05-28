@@ -4,7 +4,11 @@
  */
 package session;
 
+import entity.Percurso;
 import entity.Utilizador;
+import entity.Viagem;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -49,10 +53,16 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
     public boolean UtilizadorInsert(Utilizador user) {
 
         try {
-            em.getTransaction().begin();
+            Date d = new Date();
+            d.setYear(2013);
+            d.setMonth(1);
+            d.setDate(1);
+            user.setDatanascimento(d);
+            user.setDataregisto(d);
+            user.setFuncao("user");
+            user.setPercursoCollection(new ArrayList<Percurso>());
+            user.setViagemCollection(new ArrayList<Viagem>());
             em.persist(user);
-            em.getTransaction().commit();
-            em.close();
 
         } catch (Exception ex) {
             return false;
