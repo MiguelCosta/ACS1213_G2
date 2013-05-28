@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -41,13 +43,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Utilizador.findByEmail", query = "SELECT u FROM Utilizador u WHERE u.email = :email"),
     @NamedQuery(name = "Utilizador.findByUsername", query = "SELECT u FROM Utilizador u WHERE u.username = :username"),
     @NamedQuery(name = "Utilizador.findByPassword", query = "SELECT u FROM Utilizador u WHERE u.password = :password"),
+    @NamedQuery(name = "Utilizador.findByDatanascimento", query = "SELECT u FROM Utilizador u WHERE u.datanascimento = :datanascimento"),
     @NamedQuery(name = "Utilizador.findByUsernameAndPassword", query = "Select u FROM Utilizador u WHERE u.username = :username AND u.password = :password")})
 public class Utilizador implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -86,6 +89,11 @@ public class Utilizador implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "datanascimento")
+    @Temporal(TemporalType.DATE)
+    private Date datanascimento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilizadorid")
     private Collection<Viagem> viagemCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "utilizador")
@@ -100,7 +108,30 @@ public class Utilizador implements Serializable {
         this.id = id;
     }
 
-    public Utilizador(Integer id, String nome, String morada, String funcao, Date dataregisto, String email, String username, String password) {
+    /**
+     * Cria um novo utilizador com a data de registo do momento e a função do
+     * utilizador user
+     *
+     * @param nome
+     * @param morada
+     * @param email
+     * @param username
+     * @param password
+     * @param datanascimento
+     */
+    public Utilizador(String nome, String morada, String email, String username, String password, Date datanascimento) {
+        this.nome = nome;
+        this.morada = morada;
+        this.funcao = "user";
+        this.dataregisto = new Date();;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.datanascimento = datanascimento;
+
+    }
+
+    public Utilizador(Integer id, String nome, String morada, String funcao, Date dataregisto, String email, String username, String password, Date datanascimento) {
         this.id = id;
         this.nome = nome;
         this.morada = morada;
@@ -109,6 +140,7 @@ public class Utilizador implements Serializable {
         this.email = email;
         this.username = username;
         this.password = password;
+        this.datanascimento = datanascimento;
     }
 
     public Integer getId() {
@@ -173,6 +205,14 @@ public class Utilizador implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getDatanascimento() {
+        return datanascimento;
+    }
+
+    public void setDatanascimento(Date datanascimento) {
+        this.datanascimento = datanascimento;
     }
 
     @XmlTransient

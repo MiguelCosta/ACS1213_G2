@@ -7,6 +7,8 @@ package session;
 import entity.Utilizador;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -36,11 +38,26 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
         q.setParameter("password", password);
 
         List<Utilizador> users = q.getResultList();
-        if(users.size() > 0){
+        if (users.size() > 0) {
             return users.get(0);
-        }
-        else{
+        } else {
             return null;
         }
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public boolean UtilizadorInsert(Utilizador user) {
+
+        try {
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
+            em.close();
+
+        } catch (Exception ex) {
+            return false;
+        }
+
+        return true;
     }
 }
