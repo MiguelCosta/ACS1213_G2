@@ -58,6 +58,7 @@ CREATE TABLE Utilizador (
   email       varchar(255) NOT NULL comment 'email do utilizador', 
   username    varchar(255) NOT NULL UNIQUE, 
   password    varchar(255) NOT NULL, 
+  datanascimento date NOT NULL comment 'data nascimento', 
   PRIMARY KEY (id));
 CREATE TABLE ArtigoPublicitario (
   id         int(10) NOT NULL, 
