@@ -4,7 +4,9 @@
  */
 package controller;
 
+import entity.Percurso;
 import entity.Utilizador;
+import entity.Viagem;
 import java.io.IOException;
 import java.text.DateFormat;
 import javax.ejb.EJB;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import session.UtilizadorFacade;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -28,7 +31,8 @@ import java.util.Date;
     "/Utilizador/login",
     "/Utilizador/logout",
     "/Utilizador/register",
-    "/Utilizador/addUser"})
+    "/Utilizador/addUser",
+    "/Utilizador/perfil"})
 public class UtilizadorServlet extends HttpServlet {
 
     @EJB
@@ -61,10 +65,13 @@ public class UtilizadorServlet extends HttpServlet {
 
             if (user != null) {
                 session.setAttribute("user", user);
+                response.sendRedirect("/EuroTripsFinder");
+                return;
             } else {
                 session.setAttribute("user", null);
+                url = "login";
             }
-            url = "login";
+            
 
         } else if (userPath.equals("/Utilizador/logout")) {
             session.invalidate();
@@ -72,6 +79,8 @@ public class UtilizadorServlet extends HttpServlet {
             return;
         } else if (userPath.equals("/Utilizador/register")) {
             url = "register";
+        } else if (userPath.equals("/Utilizador/perfil")) {
+            url = "perfil";
         } else if (userPath.equals("/Utilizador/addUser")) {
 
             String email = request.getParameter("email");
@@ -83,7 +92,7 @@ public class UtilizadorServlet extends HttpServlet {
             Date dataNasc = new Date(0, 0, 0);
 
             erro = "";
-            // verifica valdiade dos campos
+            // verifica validade dos campos
             if (email == null || email.isEmpty()) {
                 erro = "O email é obrigatório!";
             } else if (username == null || username.isEmpty()) {
@@ -114,8 +123,15 @@ public class UtilizadorServlet extends HttpServlet {
                 user.setNome(nome);
                 user.setMorada(morada);
                 user.setDatanascimento(dataNasc);
+                
+                Date d = new Date();
+                user.setDatanascimento(d);
+                user.setDataregisto(d);
+                user.setFuncao("user");
+                user.setPercursoCollection(new ArrayList<Percurso>());
+                user.setViagemCollection(new ArrayList<Viagem>());
+                           
                 boolean sucesso = utilizadorFacade.UtilizadorInsert(user);
-//                utilizadorFacade.create(user);
 
                 if (!sucesso) {
                     erro = "erro ao inserrir utilizador ";

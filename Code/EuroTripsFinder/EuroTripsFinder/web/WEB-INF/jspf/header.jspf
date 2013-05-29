@@ -15,17 +15,28 @@
             <div class="navbar-inner">
                 <a class="brand" href="#">EuroTripsFinder</a>
                 <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    <li class="active"><a href="/EuroTripsFinder">Home</a></li>
                     <li><a href="#">Viagens</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
                 <ul class="nav pull-right">
                     <li class="">
                         <% if (session.getAttribute("user") == null) {%>
-                        <a href="/EuroTripsFinder/Utilizador">Login</a>
+                        <a href="/EuroTripsFinder/Utilizador/register">Registar</a>
+                        <%}%>
+                    </li>
+                    <li class="">
+                        <% if (session.getAttribute("user") != null) {%>
+                        <li><a href="/EuroTripsFinder/Utilizador/perfil">
+                        <%= ((Utilizador) session.getAttribute("user")).getUsername()%>
+                        </a></li>
+                        <%}%>
+                    </li>
+                    <li class="">
+                        <% if (session.getAttribute("user") == null) {%>
+                            <a href="/EuroTripsFinder/Utilizador">Login</a>
                         <%} else {%>
-                        <%= ((Utilizador) session.getAttribute("user")).getNome()%>
-                        <a href="/EuroTripsFinder/Utilizador/logout">Logout</a>
+                            <a href="/EuroTripsFinder/Utilizador/logout">Logout</a>
                         <% }%>
                     </li>
                 </ul>

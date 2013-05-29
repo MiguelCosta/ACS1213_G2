@@ -4,6 +4,6 @@
     Author     : Miguel
 --%>
 
-
-<h1>Hello World! 2</h1>
+<image src="/EuroTripsFinder/img/eurotripsmall.png">
+<h1>Bem-Vindo!</h1>
 
