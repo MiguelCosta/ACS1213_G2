@@ -11,11 +11,11 @@
         <title>EuroTripsFinder</title>
     </head>
     <body>
-        <div class="navbar">
+        <div class="navbar navbar-inverse">
             <div class="navbar-inner">
                 <a class="brand" href="#">EuroTripsFinder</a>
                 <ul class="nav">
-                    <li class="active"><a href="/EuroTripsFinder">Home</a></li>
+                    <li><a href="/EuroTripsFinder">Home</a></li>
                     <li><a href="#">Viagens</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
@@ -27,21 +27,39 @@
                     </li>
                     <li class="">
                         <% if (session.getAttribute("user") != null) {%>
-                        <li><a href="/EuroTripsFinder/Utilizador/perfil">
-                        <%= ((Utilizador) session.getAttribute("user")).getUsername()%>
+                    <li><a href="/EuroTripsFinder/Utilizador/perfil">
+                            <%= ((Utilizador) session.getAttribute("user")).getUsername()%>
                         </a></li>
                         <%}%>
                     </li>
                     <li class="">
                         <% if (session.getAttribute("user") == null) {%>
-                            <a href="/EuroTripsFinder/Utilizador">Login</a>
+                        <a href="/EuroTripsFinder/Utilizador">Login</a>
                         <%} else {%>
-                            <a href="/EuroTripsFinder/Utilizador/logout">Logout</a>
+                        <a href="/EuroTripsFinder/Utilizador/logout">Logout</a>
                         <% }%>
                     </li>
                 </ul>
             </div>
         </div>
+
+        <!-- Mensagem de erro -->
+        <% if (session.getAttribute("MessageError") != null) {%>
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= session.getAttribute("MessageError")%>
+        </div>
+        <% session.setAttribute("MessageError", null);
+            }%>
+
+        <!-- Mensagem de sucesso -->
+        <% if (session.getAttribute("MessageSuccess") != null) {%>
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= session.getAttribute("MessageSuccess")%>
+        </div>
+        <% session.setAttribute("MessageSuccess", null);
+            }%>
 
 
 

@@ -5,14 +5,62 @@
 --%>
 
 
+<h1>Perfil de ${user.getNome()}</h1>
 
-<h1></h1>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1><%=((Utilizador) session.getAttribute("user")).getNome() %></h1>
-    </body>
-</html>
+<form action="<%= request.getContextPath()%>/Utilizador/update" method=post class="form-horizontal">
+
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Email</label>
+        <div class="controls">
+            <input type="email" id="inputEmail" name="email" placeholder="email" required="required" value="${user.getEmail()}">
+        </div>   
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputUsername">Username</label>
+        <div class="controls">
+            <input type="text" id="inputUsername" name="username" placeholder="Username" required="required" readonly="readonly" value="${user.getUsername()}">
+        </div>   
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputPassword">Password</label>
+        <div class="controls">
+            <input type="password" id="inputPassword" name="password" placeholder="Password" required="required" value="${user.getPassword()}">
+        </div>   
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputNome">Nome</label>
+        <div class="controls">
+            <input type="text" id="inputNome" name="nome" placeholder="Nome" required="required" value="${user.getNome()}">
+        </div>   
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputMorada">Morada</label>
+        <div class="controls">
+            <input type="text" id="inputMorada" name="morada" placeholder="Morada" value="${user.getMorada()}">
+        </div>   
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputDatanascimento">Data Nascimento</label>
+        <div class="controls">
+            <input type="date" id="inputMorada" name="datanascimento" placeholder="yyyy-MM-dd" min="1900-01-01" max="2020-01-01" value="${user.getDatanascimentoString()}">
+        </div>   
+    </div>
+
+    <% if (session.getAttribute("erro") != null) {%>
+    <div class="alert alert-error">
+        <%= session.getAttribute("erro")%>
+    </div>
+    <% session.setAttribute("erro", null);
+        }%>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn">Limpar</button>
+    </div>
+
+</form>

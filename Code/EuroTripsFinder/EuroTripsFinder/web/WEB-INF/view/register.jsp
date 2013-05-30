@@ -47,16 +47,16 @@
     <div class="control-group">
         <label class="control-label" for="inputDatanascimento">Data Nascimento</label>
         <div class="controls">
-            <input type="date" id="inputMorada" name="Datanascimento" min="1900-01-01" max="2020-01-01">
+            <input type="date" 
+                   id="inputMorada" 
+                   name="datanascimento" 
+                   placeholder="yyyy-MM-dd" 
+                   min="1900-01-01" 
+                   max="2020-01-01" 
+                   pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" 
+                   title="yyyy-MM-dd">
         </div>   
     </div>
-
-    <% if (session.getAttribute("erro") != null) {%>
-    <div class="alert alert-error">
-        <%= session.getAttribute("erro")%>
-    </div>
-    <% session.setAttribute("erro", null);
-        }%>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Registar</button>

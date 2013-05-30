@@ -5,6 +5,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -239,6 +241,11 @@ public class Utilizador implements Serializable {
 
     public void setPercursoCollection(Collection<Percurso> percursoCollection) {
         this.percursoCollection = percursoCollection;
+    }
+
+    public String getDatanascimentoString() {
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(this.datanascimento);
     }
 
     @Override

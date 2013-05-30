@@ -48,16 +48,4 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
             return null;
         }
     }
-
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public boolean UtilizadorInsert(Utilizador user) {
-
-        try {
-            em.persist(user);
-        } catch (Exception ex) {
-            return false;
-        }
-
-        return true;
-    }
 }

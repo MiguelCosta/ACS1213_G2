@@ -32,7 +32,8 @@ import java.util.Date;
     "/Utilizador/logout",
     "/Utilizador/register",
     "/Utilizador/addUser",
-    "/Utilizador/perfil"})
+    "/Utilizador/perfil",
+    "/Utilizador/update"})
 public class UtilizadorServlet extends HttpServlet {
 
     @EJB
@@ -51,15 +52,26 @@ public class UtilizadorServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String erro = "";
+        boolean ok = true; // variavel para indicar se a acao foi executada correta ou nao
+
         HttpSession session = request.getSession();
         String userPath = request.getServletPath();
         String url = "";
-        String erro;
+
+
         Utilizador user;
+        Date dataNasc = new Date(0, 0, 0);
+        String email;
+        String username;
+        String password;
+        String nome;
+        String morada;
+        String datanascimnto;
 
         if (userPath.equals("/Utilizador")) {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
+            username = request.getParameter("username");
+            password = request.getParameter("password");
 
             user = utilizadorFacade.UtilizadorLogin(username, password);
 
@@ -71,7 +83,6 @@ public class UtilizadorServlet extends HttpServlet {
                 session.setAttribute("user", null);
                 url = "login";
             }
-            
 
         } else if (userPath.equals("/Utilizador/logout")) {
             session.invalidate();
@@ -81,27 +92,67 @@ public class UtilizadorServlet extends HttpServlet {
             url = "register";
         } else if (userPath.equals("/Utilizador/perfil")) {
             url = "perfil";
+
+        } else if (userPath.equals("/Utilizador/update")) {
+
+            email = request.getParameter("email");
+            password = request.getParameter("password");
+            nome = request.getParameter("nome");
+            morada = request.getParameter("morada");
+            datanascimnto = request.getParameter("datanascimento");
+
+            // Valida de informação do form
+            ok = validate.UtilizadorValidator.validateFormRegister(email,
+                    ((Utilizador) session.getAttribute("user")).getUsername(),
+                    password,
+                    nome,
+                    morada,
+                    datanascimnto,
+                    request);
+
+            try {
+                dataNasc = formataData(datanascimnto);
+            } catch (Exception e) {
+                erro = "Formato da Data inválido";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Utilizador/register");
+                return;
+            }
+
+            user = (Utilizador) session.getAttribute("user");
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setNome(nome);
+            user.setMorada(morada);
+            user.setDatanascimento(dataNasc);
+
+            try {
+                utilizadorFacade.edit(user);
+            } catch (Exception e) {
+                session.setAttribute("MessageError", "Erro ao atualizar a informação.");
+                response.sendRedirect("/EuroTripsFinder/Utilizador/register");
+                return;
+            }
+
+            url = "perfil";
+
         } else if (userPath.equals("/Utilizador/addUser")) {
 
-            String email = request.getParameter("email");
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String nome = request.getParameter("nome");
-            String morada = request.getParameter("morada");
-            String datanascimnto = request.getParameter("datanascimento");
-            Date dataNasc = new Date(0, 0, 0);
+            email = request.getParameter("email");
+            username = request.getParameter("username");
+            password = request.getParameter("password");
+            nome = request.getParameter("nome");
+            morada = request.getParameter("morada");
+            datanascimnto = request.getParameter("datanascimento");
 
-            erro = "";
-            // verifica validade dos campos
-            if (email == null || email.isEmpty()) {
-                erro = "O email é obrigatório!";
-            } else if (username == null || username.isEmpty()) {
-                erro = "O username é obrigatório!";
-            } else if (password == null || password.isEmpty()) {
-                erro = "A password é obrigatória!";
-            } else if (nome == null || nome.isEmpty()) {
-                erro = "O nome é obrigatório!";
-            }
+            // Valida de informação do form
+            ok = validate.UtilizadorValidator.validateFormRegister(email,
+                    username,
+                    password,
+                    nome,
+                    morada,
+                    datanascimnto,
+                    request);
 
             try {
                 dataNasc = formataData(datanascimnto);
@@ -109,47 +160,40 @@ public class UtilizadorServlet extends HttpServlet {
                 erro = "Formato da Data inválido";
             }
 
-            if (erro != null && !erro.isEmpty()) {
-                session.setAttribute("erro", erro);
+            if (!ok || !erro.isEmpty()) {
+                session.setAttribute("MessageError", erro);
                 response.sendRedirect("/EuroTripsFinder/Utilizador/register");
                 return;
             }
+
+            user = new Utilizador();
+            user.setEmail(email);
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setNome(nome);
+            user.setMorada(morada);
+            user.setDatanascimento(dataNasc);
+
+            user.setDataregisto(new Date());
+            user.setFuncao("user");
+            user.setPercursoCollection(new ArrayList<Percurso>());
+            user.setViagemCollection(new ArrayList<Viagem>());
 
             try {
-                user = new Utilizador();
-                user.setEmail(email);
-                user.setUsername(username);
-                user.setPassword(password);
-                user.setNome(nome);
-                user.setMorada(morada);
-                user.setDatanascimento(dataNasc);
-                
-                Date d = new Date();
-                user.setDatanascimento(d);
-                user.setDataregisto(d);
-                user.setFuncao("user");
-                user.setPercursoCollection(new ArrayList<Percurso>());
-                user.setViagemCollection(new ArrayList<Viagem>());
-                           
-                boolean sucesso = utilizadorFacade.UtilizadorInsert(user);
-
-                if (!sucesso) {
-                    erro = "erro ao inserrir utilizador ";
-                    session.setAttribute("erro", erro);
-                    response.sendRedirect("/EuroTripsFinder/Utilizador/register");
-                    return;
-                }
-
-            } catch (Exception e) {
-                erro = "erro: " + e.getLocalizedMessage();
-                session.setAttribute("erro", erro);
+                utilizadorFacade.create(user);
+            } catch (Exception ex) {
+                erro = "Erro ao inserrir utilizador ";
+                session.setAttribute("MessageError", erro);
                 response.sendRedirect("/EuroTripsFinder/Utilizador/register");
                 return;
             }
+
+            session.setAttribute("MessageSuccess", "Utilizador registado.");
 
             response.sendRedirect("/EuroTripsFinder");
             return;
         }
+
 
         try {
             request.getRequestDispatcher("/WEB-INF/view/" + url + ".jsp").forward(request, response);
