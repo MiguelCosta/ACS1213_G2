@@ -26,35 +26,35 @@ public class UtilizadorValidator {
             String datanascimento,
             HttpServletRequest request) {
 
-        boolean errorFlag = false;
+        boolean errorFlag = true;
         Date dataNasc = new Date(0, 0, 0);
 
         if (email == null
                 || email.equals("")
                 || !email.contains("@")) {
-            errorFlag = true;
+            errorFlag = false;
             request.setAttribute("MessageError", "Email inválido.");
         } else if (username == null
                 || username.equals("")
                 || username.length() < 5) {
-            errorFlag = true;
+            errorFlag = false;
             request.setAttribute("MessageError", "Username inválido");
         } else if (password == null
                 || password.equals("")
                 || password.length() < 4) {
-            errorFlag = true;
+            errorFlag = false;
             request.setAttribute("MessageError", "Password inválida");
         } else if (nome == null
                 || nome.equals("")
                 || nome.length() < 4) {
-            errorFlag = true;
+            errorFlag = false;
             request.setAttribute("MessageError", "Nome inválido");
         }
 
         try {
             dataNasc = formataData(datanascimento);
         } catch (Exception e) {
-            errorFlag = true;
+            errorFlag = false;
             request.setAttribute("MessageError", "Data de nascimento inválida");
         }
 

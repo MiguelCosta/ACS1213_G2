@@ -58,6 +58,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
         String nome;
         
         if(userPath.equals("/TipoMeioTransporte")){
+            //session.setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
             getServletContext().setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
             url = "tiposmeiotransporte";
         } else if(userPath.equals("/TipoMeioTransporte/register")){
@@ -76,8 +77,8 @@ public class TipoMeioTransporteServlet extends HttpServlet {
             tipomeiotransporte = new Tipomeiotransporte();
             tipomeiotransporte.setNome(nome);
             
-            //temporario IMportante
-            session.setAttribute("tipo", tipomeiotransporte);
+            //session.setAttribute("tipo", tipomeiotransporte);
+            getServletContext().setAttribute("tipo", tipomeiotransporte);
             
             try {
                 tipomeiotransporteFacade.create(tipomeiotransporte);
@@ -106,7 +107,8 @@ public class TipoMeioTransporteServlet extends HttpServlet {
                 return;
             }
             
-            tipomeiotransporte = (Tipomeiotransporte) session.getAttribute("tipo");
+            //tipomeiotransporte = (Tipomeiotransporte) session.getAttribute("tipo");
+            tipomeiotransporte = (Tipomeiotransporte) getServletContext().getAttribute("tipo");
             tipomeiotransporte.setNome(nome);
             
             try {
