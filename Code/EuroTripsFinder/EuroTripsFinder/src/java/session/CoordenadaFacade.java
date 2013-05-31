@@ -5,6 +5,7 @@
 package session;
 
 import entity.Coordenada;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,7 +31,7 @@ public class CoordenadaFacade extends AbstractFacade<Coordenada> {
         super(Coordenada.class);
     }
     
-       public boolean checkIfExists(Double lat, Double lon, String name) {
+       public boolean checkIfExists(BigDecimal lat, BigDecimal lon, String name) {
         Query q = em.createNamedQuery("Coordenada.findByLongAndLat");
         q.setParameter("longitude", lon);
         q.setParameter("latitude", lat);
