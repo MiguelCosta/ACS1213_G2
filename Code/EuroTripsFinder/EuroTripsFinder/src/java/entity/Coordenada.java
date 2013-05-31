@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Coordenada.findById", query = "SELECT c FROM Coordenada c WHERE c.id = :id"),
     @NamedQuery(name = "Coordenada.findByNome", query = "SELECT c FROM Coordenada c WHERE c.nome = :nome"),
     @NamedQuery(name = "Coordenada.findByLatitude", query = "SELECT c FROM Coordenada c WHERE c.latitude = :latitude"),
-    @NamedQuery(name = "Coordenada.findByLongitude", query = "SELECT c FROM Coordenada c WHERE c.longitude = :longitude")})
+    @NamedQuery(name = "Coordenada.findByLongitude", query = "SELECT c FROM Coordenada c WHERE c.longitude = :longitude"),
+    @NamedQuery(name = "Coordenada.findByLongAndLat", query = "SELECT c FROM Coordenada c WHERE c.longitude = :longitude AND c.latitude = :latitude")})
 public class Coordenada implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
