@@ -58,9 +58,8 @@ public class TipoMeioTransporteServlet extends HttpServlet {
         String nome;
         
         if(userPath.equals("/TipoMeioTransporte")){
-            //session.setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
             getServletContext().setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
-            url = "tiposmeiotransporte";
+            url = "index";
         } else if(userPath.equals("/TipoMeioTransporte/register")){
             url= "register";
         } else if(userPath.equals("/TipoMeioTransporte/add")){
@@ -77,7 +76,6 @@ public class TipoMeioTransporteServlet extends HttpServlet {
             tipomeiotransporte = new Tipomeiotransporte();
             tipomeiotransporte.setNome(nome);
             
-            //session.setAttribute("tipo", tipomeiotransporte);
             getServletContext().setAttribute("tipo", tipomeiotransporte);
             
             try {
@@ -96,18 +94,18 @@ public class TipoMeioTransporteServlet extends HttpServlet {
         } else if(userPath.equals("/TipoMeioTransporte/view")){
             
             url= "view";
-            //deve faltar aqui meter qual o tipo que vai ser mostrado
+            int id = new Integer(request.getParameter("id"));
+            getServletContext().setAttribute("tipo", tipomeiotransporteFacade.find(id));
         } else if(userPath.equals("/TipoMeioTransporte/update")){
             nome = request.getParameter("nome");
             ok = validate.TipoMeioTransporteValidator.validateFormRegister(nome, request);
             
             if (!ok || !erro.isEmpty()) {
                 session.setAttribute("MessageError", erro);
-                response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/register");
+                request.getRequestDispatcher("/WEB-INF/view/TipoMeioTransporte/view.jsp").forward(request, response);
                 return;
             }
             
-            //tipomeiotransporte = (Tipomeiotransporte) session.getAttribute("tipo");
             tipomeiotransporte = (Tipomeiotransporte) getServletContext().getAttribute("tipo");
             tipomeiotransporte.setNome(nome);
             
@@ -116,7 +114,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
             } catch (Exception ex) {
                 erro = "Erro ao actualizar tipo de meio de transporte ";
                 session.setAttribute("MessageError", erro);
-                response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/register");
+                response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/view");
                 return;
             }
 

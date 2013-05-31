@@ -17,12 +17,7 @@
         </div>   
     </div>
 
-    <% if (session.getAttribute("erro") != null) {%>
-    <div class="alert alert-error">
-        <%= session.getAttribute("erro")%>
-    </div>
-    <% session.setAttribute("erro", null);
-        }%>
+    
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Update</button>
