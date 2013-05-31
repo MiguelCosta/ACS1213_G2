@@ -182,7 +182,7 @@ public class UtilizadorServlet extends HttpServlet {
             try {
                 utilizadorFacade.create(user);
             } catch (Exception ex) {
-                erro = "Erro ao inserrir utilizador ";
+                erro = "Erro ao inserir utilizador ";
                 session.setAttribute("MessageError", erro);
                 response.sendRedirect("/EuroTripsFinder/Utilizador/register");
                 return;
