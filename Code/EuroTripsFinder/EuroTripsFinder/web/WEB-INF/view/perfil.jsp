@@ -47,7 +47,7 @@
     <div class="control-group">
         <label class="control-label" for="inputDatanascimento">Data Nascimento</label>
         <div class="controls">
-            <input type="date" id="inputMorada" name="datanascimento" placeholder="yyyy-MM-dd" min="1900-01-01" max="2020-01-01" value="${user.getDatanascimentoString()}">
+            <input type="date" id="inputDataNascimento" name="datanascimento" placeholder="yyyy-MM-dd" min="1900-01-01" max="2020-01-01" value="${user.getDatanascimentoString()}">
         </div>   
     </div>
 
