@@ -15,8 +15,8 @@
                 </tr> 
             <c:forEach var="row" items="${listmeiostransporte}"> 
                 <tr>
-                    <td><a href="<%= request.getContextPath()%>/TipoMeioTransporte/view?id=<c:out value="${row.id}"/>"><c:out value="${row.id}"/></a></td>
-                    <td><c:out value="${row.nome}"/></td>                  
+                    <td><a href="<%= request.getContextPath()%>/TipoMeioTransporte/view?id=${row.id}">${row.id}</a></td>
+                    <td>${row.nome}</td>                  
                 </tr>
             </c:forEach> 
 </table>

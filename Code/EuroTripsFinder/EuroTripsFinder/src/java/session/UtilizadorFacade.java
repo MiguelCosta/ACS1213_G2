@@ -48,4 +48,21 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
             return null;
         }
     }
+    
+    public Utilizador UtilizadorByUsername(String username){
+        Query q = em.createNamedQuery("Utilizador.findByUsername");
+        q.setParameter("username", username);
+        
+        Utilizador user = (Utilizador) q.getSingleResult();
+        return user;
+
+    }
+    
+    public Utilizador UtilizadorUltimo() {
+        Query q = em.createNamedQuery("Utilizador.findAll");
+
+        List<Utilizador> users = q.getResultList();
+            return users.get(users.size()-1);
+        
+    }
 }

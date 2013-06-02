@@ -6,6 +6,8 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -104,6 +106,16 @@ public class Contrato implements Serializable {
 
     public void setDatainicio(Date datainicio) {
         this.datainicio = datainicio;
+    }
+    
+    public String getDatainicioString() {
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(this.datainicio);
+    }
+    
+    public String getDatafimString() {
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(this.datafim);
     }
 
     public Date getDatafim() {

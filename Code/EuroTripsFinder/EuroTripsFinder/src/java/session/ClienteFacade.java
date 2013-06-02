@@ -8,6 +8,7 @@ import entity.Cliente;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +26,15 @@ public class ClienteFacade extends AbstractFacade<Cliente> {
 
     public ClienteFacade() {
         super(Cliente.class);
+    }
+    
+    public Cliente ClienteByNif(String nif){
+        Query q = em.createNamedQuery("Cliente.findByNif");
+        q.setParameter("nif", nif);
+        
+        Cliente cliente = (Cliente) q.getSingleResult();
+        return cliente;
+
     }
     
 }
