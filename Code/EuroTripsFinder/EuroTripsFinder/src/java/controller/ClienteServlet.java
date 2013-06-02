@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.ClienteFacade;
+import session.ContratoFacade;
 import session.UtilizadorFacade;
 
 /**
@@ -161,10 +163,11 @@ public class ClienteServlet extends HttpServlet {
         } else if(userPath.equals("/Cliente/view")){
             url= "view";
             
-            //não faço ideia se isto é assim
             int id = new Integer(request.getParameter("id"));
             cliente = clienteFacade.find(id);
             getServletContext().setAttribute("cliente", cliente);
+            
+            getServletContext().setAttribute("contratos", cliente.getContratoCollection());
 
         }else if(userPath.equals("/Cliente/update")){
             email = request.getParameter("email");

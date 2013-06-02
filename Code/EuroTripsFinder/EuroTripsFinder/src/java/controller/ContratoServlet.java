@@ -116,10 +116,8 @@ public class ContratoServlet extends HttpServlet {
             contrato.setDatafim(dataFim);
             Cliente client = (Cliente) clienteFacade.find(new Integer(clienteid));
             contrato.setClienteid(client);
-            //falta ligar contrato a cliente
             
             try {
-                //nao sei se é preciso adicionar mais qualquer coisa
                 contratoFacade.create(contrato);
             } catch (Exception ex) {
                 erro = "Erro ao inserir contrato";
@@ -136,7 +134,11 @@ public class ContratoServlet extends HttpServlet {
         }else if(userPath.equals("/Contrato/view")){
             url= "view";
             int id = new Integer(request.getParameter("id"));
-            getServletContext().setAttribute("contrato", contratoFacade.find(id));
+            contrato = contratoFacade.find(id); 
+            getServletContext().setAttribute("contrato", contrato);
+            
+            getServletContext().setAttribute("artigos", contrato.getArtigopublicitarioCollection());
+
         }else if(userPath.equals("/Contrato/update")){
             valor = request.getParameter("valor");
             datainicio = request.getParameter("datainicio");

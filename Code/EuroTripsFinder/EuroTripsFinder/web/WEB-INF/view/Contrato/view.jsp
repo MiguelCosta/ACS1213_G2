@@ -4,6 +4,8 @@
     Author     : miltonnunes52
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+
 <h1>Contrato ${contrato.getId()}</h1>
 
 <form action="<%= request.getContextPath()%>/Contrato/update" method=post class="form-horizontal">
@@ -35,3 +37,18 @@
     </div>
 
 </form>
+<c:choose>
+    <c:when test="${artigos.size() > 0}">
+         <h1>Artigos Publicitários</h1>
+        <table class="table table-hover"> 
+                <tr> 
+                    <td>Nome:</td>
+                </tr>
+                <c:forEach var="row" items="${artigos}"> 
+                <tr>
+                    <td><a href="<%= request.getContextPath()%>/Artigo/view?id=${row.id}">${row.nome}</a></td>
+                </tr>
+                </c:forEach> 
+        </table>
+    </c:when>
+</c:choose>
