@@ -60,12 +60,7 @@ public class CoordenadaFacade extends AbstractFacade<Coordenada> {
             return null;
         }
           
-       }
-
-  
-
-   
-      
+       }   
        
        
     
