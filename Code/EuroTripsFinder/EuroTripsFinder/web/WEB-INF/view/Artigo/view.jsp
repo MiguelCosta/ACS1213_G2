@@ -8,7 +8,8 @@
 
 <form action="<%= request.getContextPath()%>/Artigo/update" method=post class="form-horizontal">
 
-   
+    <input type="hidden" name ="id" value="${artigo.getId()}">
+
     <div class="control-group">
         <label class="control-label" for="inputNome">Nome</label>
         <div class="controls">

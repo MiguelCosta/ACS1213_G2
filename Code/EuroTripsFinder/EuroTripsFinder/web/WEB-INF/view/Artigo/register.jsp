@@ -29,7 +29,7 @@
             <div class="controls">
                 <select id="inputContratoid" name="contratoid">
                         <c:forEach var="row" items="${listcontratos}">
-                            <option>${row.id}</option>
+                            <option value="${row.id}">${row.getClienteid().getUtilizador().getNome()}</option>
                         </c:forEach>
                     </select>
              </div>   

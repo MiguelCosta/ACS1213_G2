@@ -58,7 +58,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
         String nome;
         
         if(userPath.equals("/TipoMeioTransporte")){
-            getServletContext().setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
+            request.setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
             url = "index";
         } else if(userPath.equals("/TipoMeioTransporte/register")){
             url= "register";
@@ -76,7 +76,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
             tipomeiotransporte = new Tipomeiotransporte();
             tipomeiotransporte.setNome(nome);
             
-            getServletContext().setAttribute("tipo", tipomeiotransporte);
+            request.setAttribute("tipo", tipomeiotransporte);
             
             try {
                 tipomeiotransporteFacade.create(tipomeiotransporte);
@@ -94,8 +94,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
         } else if(userPath.equals("/TipoMeioTransporte/view")){
             
             url= "view";
-            int id = new Integer(request.getParameter("id"));
-            getServletContext().setAttribute("tipo", tipomeiotransporteFacade.find(id));
+            request.setAttribute("tipo", tipomeiotransporteFacade.find(Integer.parseInt(request.getParameter("id"))));
         } else if(userPath.equals("/TipoMeioTransporte/update")){
             nome = request.getParameter("nome");
             ok = validate.TipoMeioTransporteValidator.validateFormRegister(nome, request);
@@ -106,7 +105,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
                 return;
             }
             
-            tipomeiotransporte = (Tipomeiotransporte) getServletContext().getAttribute("tipo");
+            tipomeiotransporte = tipomeiotransporteFacade.find(Integer.parseInt(request.getParameter("id")));
             tipomeiotransporte.setNome(nome);
             
             try {
