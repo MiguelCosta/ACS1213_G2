@@ -10,7 +10,10 @@
 <h1>Perfil de ${cliente.getUtilizador().getNome()}</h1>
 
 <form action="<%= request.getContextPath()%>/Cliente/update" method=post class="form-horizontal">
-    
+
+    <input type="hidden" name ="id" value="${cliente.getId()}">
+
+
     <div class="control-group">
         <label class="control-label" for="inputEmail">Email</label>
         <div class="controls">
@@ -45,14 +48,14 @@
             <input type="text" id="inputMorada" name="morada" placeholder="Morada" value="${cliente.getUtilizador().getMorada()}">
         </div>   
     </div>
-        
+
     <div class="control-group">
         <label class="control-label" for="inputMorada">NIF</label>
         <div class="controls">
             <input type="text" id="inputNif" name="nif" placeholder="Nif" value="${cliente.getNif()}">
         </div>   
     </div>
-    
+
     <div class="control-group">
         <label class="control-label" for="inputMorada">Contacto</label>
         <div class="controls">
@@ -71,21 +74,21 @@
         <button type="submit" class="btn btn-primary">Update</button>
         <button type="button" class="btn">Limpar</button>
     </div>
-                    
+
 </form>    
-        
+
 <c:choose>
     <c:when test="${contratos.size() > 0}">
         <h1>Contratos</h1>
         <table class="table table-hover"> 
-                <tr> 
-                    <td>ID:</td>
-                </tr>
-                <c:forEach var="row" items="${contratos}"> 
+            <tr> 
+                <td>ID:</td>
+            </tr>
+            <c:forEach var="row" items="${contratos}"> 
                 <tr>
                     <td><a href="<%= request.getContextPath()%>/Contrato/view?id=${row.id}">${row.id}</a></td>
                 </tr>
-                </c:forEach> 
+            </c:forEach> 
         </table>
     </c:when>
 </c:choose>

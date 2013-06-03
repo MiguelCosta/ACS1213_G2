@@ -80,7 +80,7 @@ public class ClienteServlet extends HttpServlet {
         String contacto;
         
         if(userPath.equals("/Cliente")){
-            getServletContext().setAttribute("listclientes", clienteFacade.findAll());
+            request.setAttribute("listclientes", clienteFacade.findAll());
             url = "index";
         }else if(userPath.equals("/Cliente/register")){ 
             url = "register";
@@ -146,9 +146,13 @@ public class ClienteServlet extends HttpServlet {
                 cliente.setId(i);
                 user.setCliente(cliente);
                 utilizadorFacade.create(user);
+                //isto é para actualizar o index logo direito
+                Utilizador usertemp = utilizadorFacade.find(i);
+                cliente.setUtilizador(usertemp);
+                clienteFacade.edit(cliente);
+                  
                 
 
-                
             } catch (Exception ex) {
                 erro = "Erro ao inserir cliente";
                 session.setAttribute("MessageError", erro);
@@ -158,16 +162,15 @@ public class ClienteServlet extends HttpServlet {
 
             session.setAttribute("MessageSuccess", "Cliente registado.");
 
-            response.sendRedirect("/EuroTripsFinder");
+            response.sendRedirect("/EuroTripsFinder/Cliente");
             return;
         } else if(userPath.equals("/Cliente/view")){
             url= "view";
             
-            int id = new Integer(request.getParameter("id"));
-            cliente = clienteFacade.find(id);
-            getServletContext().setAttribute("cliente", cliente);
+            cliente = clienteFacade.find(Integer.parseInt(request.getParameter("id")));
+            request.setAttribute("cliente", cliente);
             
-            getServletContext().setAttribute("contratos", cliente.getContratoCollection());
+            request.setAttribute("contratos", cliente.getContratoCollection());
 
         }else if(userPath.equals("/Cliente/update")){
             email = request.getParameter("email");
@@ -202,8 +205,8 @@ public class ClienteServlet extends HttpServlet {
                 return;
             }
             
-            //mais uma vez nao sei se é assim
-            cliente = (Cliente) getServletContext().getAttribute("cliente");
+            
+            cliente = clienteFacade.find(Integer.parseInt(request.getParameter("id")));
             cliente.setContacto(contacto);
             cliente.setNif(nif);
             

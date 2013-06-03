@@ -9,6 +9,7 @@
 
 <form action="<%= request.getContextPath()%>/TipoMeioTransporte/update" method=post class="form-horizontal">
 
+    <input type="hidden" name ="id" value="${tipo.getId()}">
    
     <div class="control-group">
         <label class="control-label" for="inputNome">Nome</label>

@@ -10,6 +10,7 @@
 
 <form action="<%= request.getContextPath()%>/Contrato/update" method=post class="form-horizontal">
 
+    <input type="hidden" name ="id" value="${contrato.getId()}">
    
     <div class="control-group">
         <label class="control-label" for="inputValor">Valor</label>

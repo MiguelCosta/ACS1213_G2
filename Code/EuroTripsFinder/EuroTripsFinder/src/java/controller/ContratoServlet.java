@@ -70,12 +70,13 @@ public class ContratoServlet extends HttpServlet {
         String datainicio;
         String datafim;
         String clienteid;
+        int contratoid;
         
         if(userPath.equals("/Contrato")){
-            getServletContext().setAttribute("listcontratos", contratoFacade.findAll());
+            request.setAttribute("listcontratos", contratoFacade.findAll());
             url = "index";
         }else if(userPath.equals("/Contrato/register")){ 
-            getServletContext().setAttribute("listclientes", clienteFacade.findAll());
+            request.setAttribute("listclientes", clienteFacade.findAll());
             url = "register";
         }else if (userPath.equals("/Contrato/add")) {
             valor = request.getParameter("valor");
@@ -89,6 +90,12 @@ public class ContratoServlet extends HttpServlet {
                     datainicio,
                     datafim,
                     request);
+            
+            if (!ok || !erro.isEmpty()) {
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Contrato/register");
+                return;
+            }
             
              try {
                 dataInic = formataData(datainicio);
@@ -114,7 +121,7 @@ public class ContratoServlet extends HttpServlet {
             contrato.setValor(val);
             contrato.setDatainicio(dataInic);
             contrato.setDatafim(dataFim);
-            Cliente client = (Cliente) clienteFacade.find(new Integer(clienteid));
+            Cliente client = (Cliente) clienteFacade.find(Integer.parseInt(clienteid));
             contrato.setClienteid(client);
             
             try {
@@ -133,11 +140,11 @@ public class ContratoServlet extends HttpServlet {
             
         }else if(userPath.equals("/Contrato/view")){
             url= "view";
-            int id = new Integer(request.getParameter("id"));
-            contrato = contratoFacade.find(id); 
-            getServletContext().setAttribute("contrato", contrato);
+            contratoid = Integer.parseInt(request.getParameter("id"));
+            contrato = contratoFacade.find(contratoid); 
+            request.setAttribute("contrato", contrato);
             
-            getServletContext().setAttribute("artigos", contrato.getArtigopublicitarioCollection());
+            request.setAttribute("artigos", contrato.getArtigopublicitarioCollection());
 
         }else if(userPath.equals("/Contrato/update")){
             valor = request.getParameter("valor");
@@ -151,6 +158,11 @@ public class ContratoServlet extends HttpServlet {
             
             if (!ok || !erro.isEmpty()) {
                 session.setAttribute("MessageError", erro);
+                
+                //ver isto que tá mal
+                contratoid = Integer.parseInt(request.getParameter("id"));
+                
+                request.setAttribute("contrato", contratoFacade.find(contratoid));
                 response.sendRedirect("/EuroTripsFinder/Contrato/view");
                 return;
             }
@@ -173,7 +185,9 @@ public class ContratoServlet extends HttpServlet {
                 return;
             }
             
-            contrato = (Contrato) getServletContext().getAttribute("contrato");
+            
+            contrato = contratoFacade.find(Integer.parseInt(request.getParameter("id")));
+            
             contrato.setValor(new BigDecimal(valor));
             contrato.setDatainicio(dataInic);
             contrato.setDatafim(dataFim);

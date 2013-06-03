@@ -62,10 +62,10 @@ public class ArtigoServlet extends HttpServlet {
         String contratoid;
         
         if(userPath.equals("/Artigo")){
-            getServletContext().setAttribute("listartigos", artigoFacade.findAll());
+            request.setAttribute("listartigos", artigoFacade.findAll());
             url = "index";
         }else if(userPath.equals("/Artigo/register")){ 
-            getServletContext().setAttribute("listcontratos", contratoFacade.findAll());
+            request.setAttribute("listcontratos", contratoFacade.findAll());
             url = "register";
         }else if (userPath.equals("/Artigo/update")) {
             nome = request.getParameter("nome");
@@ -82,7 +82,9 @@ public class ArtigoServlet extends HttpServlet {
                 return;
             }
             
-            artigo = (Artigopublicitario) getServletContext().getAttribute("artigo");
+            
+            artigo = artigoFacade.find(Integer.parseInt(request.getParameter("id")));
+
             artigo.setConteudo(conteudo);
             artigo.setNome(nome);
             
@@ -101,8 +103,7 @@ public class ArtigoServlet extends HttpServlet {
             
         }else if(userPath.equals("/Artigo/view")){
             url= "view";
-            int id = new Integer(request.getParameter("id"));
-            getServletContext().setAttribute("artigo", artigoFacade.find(id));
+            request.setAttribute("artigo", artigoFacade.find(Integer.parseInt(request.getParameter("id"))));
         }else if(userPath.equals("/Artigo/add")){
             
             nome = request.getParameter("nome");
@@ -122,7 +123,7 @@ public class ArtigoServlet extends HttpServlet {
             artigo = new Artigopublicitario();
             artigo.setConteudo(conteudo);
             artigo.setNome(nome);
-            Contrato contrato = (Contrato) contratoFacade.find(new Integer(contratoid));
+            Contrato contrato = (Contrato) contratoFacade.find(Integer.parseInt(contratoid));
             artigo.setContratoid(contrato);
             //falta meter aqui o contrato id
             
