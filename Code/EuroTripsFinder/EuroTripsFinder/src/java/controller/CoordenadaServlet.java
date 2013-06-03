@@ -28,11 +28,7 @@ public class CoordenadaServlet extends HttpServlet {
     private CoordenadaFacade coordenadaFacade;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-<<<<<<< HEAD
             throws ServletException, IOException {
-=======
-      throws ServletException, IOException {
->>>>>>> 8e493b609d025e755cf70a4dd5777af788f14a86
 
         String erro = "";
         boolean ok = true; // variavel para indicar se a acao foi executada correta ou nao
@@ -53,24 +49,16 @@ public class CoordenadaServlet extends HttpServlet {
             latitude = request.getParameter("latitude");
             longitude = request.getParameter("longitude");
 
-<<<<<<< HEAD
             BigDecimal lati;
             BigDecimal longi;
-=======
-            BigDecimal lati = null;
-            BigDecimal longi = null;
->>>>>>> 8e493b609d025e755cf70a4dd5777af788f14a86
 
 
             if (!validate.CoordenadaValidator.validateFormRegister(latitude, longitude, nome, request)) {
                 lati = new BigDecimal(latitude);
                 longi = new BigDecimal(longitude);
             } else {
-<<<<<<< HEAD
                 session.setAttribute("MessageError", request.getAttribute("MessageError"));
-=======
-                session.setAttribute("MessageError", "Campos inválidos.");
->>>>>>> 8e493b609d025e755cf70a4dd5777af788f14a86
+
                 response.sendRedirect("/EuroTripsFinder/Coordenada/register");
                 return;
             }
