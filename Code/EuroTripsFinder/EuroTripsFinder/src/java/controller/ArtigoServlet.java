@@ -59,6 +59,7 @@ public class ArtigoServlet extends HttpServlet {
         
         String nome;
         String conteudo;
+        String artigoid;
         String contratoid;
         
         if(userPath.equals("/Artigo")){
@@ -70,15 +71,15 @@ public class ArtigoServlet extends HttpServlet {
         }else if (userPath.equals("/Artigo/update")) {
             nome = request.getParameter("nome");
             conteudo = request.getParameter("conteudo");
-           
+            artigoid = request.getParameter("id");
             
             ok = validate.ArtigoValidator.validateFormRegister(nome,
                     conteudo,                  
                     request);
             
             if (!ok || !erro.isEmpty()) {
-                session.setAttribute("MessageError", erro);
-                response.sendRedirect("/EuroTripsFinder/Artigo/view");
+                session.setAttribute("MessageError", request.getAttribute("MessageError"));
+                response.sendRedirect("/EuroTripsFinder/Artigo/view?id="+artigoid);
                 return;
             }
             
@@ -93,10 +94,11 @@ public class ArtigoServlet extends HttpServlet {
                 artigoFacade.edit(artigo);
             } catch (Exception ex) {             
                 session.setAttribute("MessageError", "Erro ao atualizar a informação.");
-                response.sendRedirect("/EuroTripsFinder/Artigo/view");
+                response.sendRedirect("/EuroTripsFinder/Artigo/view?id="+artigoid);
                 return;
             }
              
+            session.setAttribute("MessageSuccess", "Artigo Publicitário actualizado.");
             
             response.sendRedirect("/EuroTripsFinder/Artigo");
             return;
@@ -115,7 +117,7 @@ public class ArtigoServlet extends HttpServlet {
                     request);
             
             if (!ok || !erro.isEmpty()) {
-                session.setAttribute("MessageError", erro);
+                session.setAttribute("MessageError", request.getAttribute("MessageError"));
                 response.sendRedirect("/EuroTripsFinder/Artigo/register");
                 return;
             }

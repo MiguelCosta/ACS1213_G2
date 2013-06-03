@@ -78,6 +78,7 @@ public class ClienteServlet extends HttpServlet {
         String datanascimnto;
         String nif;
         String contacto;
+        String clienteid;
         
         if(userPath.equals("/Cliente")){
             request.setAttribute("listclientes", clienteFacade.findAll());
@@ -113,7 +114,7 @@ public class ClienteServlet extends HttpServlet {
             }
 
             if (!ok || !erro.isEmpty()) {
-                session.setAttribute("MessageError", erro);
+                session.setAttribute("MessageError", request.getAttribute("MessageError"));
                 response.sendRedirect("/EuroTripsFinder/Cliente/register");
                 return;
             }
@@ -181,6 +182,7 @@ public class ClienteServlet extends HttpServlet {
             nif = request.getParameter("nif");
             contacto = request.getParameter("contacto");
             datanascimnto = request.getParameter("datanascimento");
+            clienteid = request.getParameter("id");
 
             // Valida de informação do form
             ok = validate.ClienteValidator.validateFormRegister(email,
@@ -200,8 +202,8 @@ public class ClienteServlet extends HttpServlet {
             }
 
             if (!ok || !erro.isEmpty()) {
-                session.setAttribute("MessageError", erro);
-                response.sendRedirect("/EuroTripsFinder/Cliente/view");
+                session.setAttribute("MessageError", request.getAttribute("MessageError"));
+                response.sendRedirect("/EuroTripsFinder/Cliente/view?id="+clienteid);
                 return;
             }
             
@@ -225,10 +227,12 @@ public class ClienteServlet extends HttpServlet {
                 utilizadorFacade.edit(user);
             } catch (Exception e) {
                 session.setAttribute("MessageError", "Erro ao atualizar a informação.");
-                response.sendRedirect("/EuroTripsFinder/Cliente/view");
+                response.sendRedirect("/EuroTripsFinder/Cliente/view?id="+clienteid);
                 return;
             }
 
+            session.setAttribute("MessageSuccess", "Cliente actualizado.");
+            
             response.sendRedirect("/EuroTripsFinder/Cliente");
             return;        
         }

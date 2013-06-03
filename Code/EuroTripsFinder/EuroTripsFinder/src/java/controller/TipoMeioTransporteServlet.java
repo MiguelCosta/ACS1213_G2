@@ -56,6 +56,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
         Tipomeiotransporte tipomeiotransporte;
         
         String nome;
+        String tipoid;
         
         if(userPath.equals("/TipoMeioTransporte")){
             request.setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
@@ -67,7 +68,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
             ok = validate.TipoMeioTransporteValidator.validateFormRegister(nome, request);
             
             if (!ok || !erro.isEmpty()) {
-                session.setAttribute("MessageError", erro);
+                session.setAttribute("MessageError", request.getAttribute("MessageError"));
                 response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/register");
                 return;
             }
@@ -97,11 +98,12 @@ public class TipoMeioTransporteServlet extends HttpServlet {
             request.setAttribute("tipo", tipomeiotransporteFacade.find(Integer.parseInt(request.getParameter("id"))));
         } else if(userPath.equals("/TipoMeioTransporte/update")){
             nome = request.getParameter("nome");
+            tipoid = request.getParameter("id");
+
             ok = validate.TipoMeioTransporteValidator.validateFormRegister(nome, request);
-            
             if (!ok || !erro.isEmpty()) {
-                session.setAttribute("MessageError", erro);
-                request.getRequestDispatcher("/WEB-INF/view/TipoMeioTransporte/view.jsp").forward(request, response);
+                session.setAttribute("MessageError", request.getAttribute("MessageError"));
+                response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/view?id="+tipoid);
                 return;
             }
             
@@ -113,7 +115,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
             } catch (Exception ex) {
                 erro = "Erro ao actualizar tipo de meio de transporte ";
                 session.setAttribute("MessageError", erro);
-                response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/view");
+                response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/view?id="+tipoid);
                 return;
             }
 

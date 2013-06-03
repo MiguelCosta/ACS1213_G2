@@ -28,6 +28,18 @@ public class ContratoValidator {
             errorFlag = false;
             request.setAttribute("MessageError", "valor inválido.");
         }
+        
+        if(datainicio.equals("")){
+            errorFlag = false;
+            request.setAttribute("MessageError", "Data inicio inválida.");
+        }
+        
+        if(datafim.equals("")){
+            errorFlag = false;
+            request.setAttribute("MessageError", "Data fim inválida.");
+        }
+        
+        
 
         try {
             dataInic = formataData(datainicio);

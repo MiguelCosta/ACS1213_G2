@@ -92,7 +92,7 @@ public class ContratoServlet extends HttpServlet {
                     request);
             
             if (!ok || !erro.isEmpty()) {
-                session.setAttribute("MessageError", erro);
+                session.setAttribute("MessageError", request.getAttribute("MessageError"));
                 response.sendRedirect("/EuroTripsFinder/Contrato/register");
                 return;
             }
@@ -150,6 +150,7 @@ public class ContratoServlet extends HttpServlet {
             valor = request.getParameter("valor");
             datainicio = request.getParameter("datainicio");
             datafim = request.getParameter("datafim");
+            contratoid = Integer.parseInt(request.getParameter("id"));
             
             ok = validate.ContratoValidator.validateFormRegister(valor,
                     datainicio,
@@ -157,13 +158,10 @@ public class ContratoServlet extends HttpServlet {
                     request);
             
             if (!ok || !erro.isEmpty()) {
-                session.setAttribute("MessageError", erro);
-                
-                //ver isto que tá mal
-                contratoid = Integer.parseInt(request.getParameter("id"));
+                session.setAttribute("MessageError", request.getAttribute("MessageError"));
                 
                 request.setAttribute("contrato", contratoFacade.find(contratoid));
-                response.sendRedirect("/EuroTripsFinder/Contrato/view");
+                response.sendRedirect("/EuroTripsFinder/Contrato/view?id="+contratoid);
                 return;
             }
             
@@ -172,7 +170,7 @@ public class ContratoServlet extends HttpServlet {
             } catch (Exception e) {
                 erro = "Formato da Data Inicio inválido";
                 session.setAttribute("MessageError", erro);
-                response.sendRedirect("/EuroTripsFinder/Contrato/view");
+                response.sendRedirect("/EuroTripsFinder/Contrato/view?id="+contratoid);
                 return;
             }
             
@@ -181,7 +179,7 @@ public class ContratoServlet extends HttpServlet {
             } catch (Exception e) {
                 erro = "Formato da Data Fim inválido";
                 session.setAttribute("MessageError", erro);
-                response.sendRedirect("/EuroTripsFinder/Contrato/view");
+                response.sendRedirect("/EuroTripsFinder/Contrato/view?id="+contratoid);
                 return;
             }
             
@@ -197,10 +195,11 @@ public class ContratoServlet extends HttpServlet {
                 contratoFacade.edit(contrato);
             } catch (Exception ex) {             
                 session.setAttribute("MessageError", "Erro ao atualizar a informação.");
-                response.sendRedirect("/EuroTripsFinder/Contrato/view");
+                response.sendRedirect("/EuroTripsFinder/Contrato/view?id="+contratoid);
                 return;
             }
              
+            session.setAttribute("MessageSuccess", "Contrato actualizado.");
             
             response.sendRedirect("/EuroTripsFinder/Contrato");
             return;

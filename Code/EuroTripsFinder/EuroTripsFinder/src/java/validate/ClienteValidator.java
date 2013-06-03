@@ -60,6 +60,10 @@ public class ClienteValidator {
             errorFlag = false;
             request.setAttribute("MessageError", "Contacto inválido");
         }
+         if(datanascimento.equals("")){
+            errorFlag = false;
+            request.setAttribute("MessageError", "Data fim inválida.");
+        }
 
         try {
             dataNasc = formataData(datanascimento);
