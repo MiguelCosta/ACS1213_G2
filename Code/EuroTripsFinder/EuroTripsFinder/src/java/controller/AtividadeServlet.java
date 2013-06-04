@@ -23,7 +23,7 @@ import session.CidadeFacade;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "AtividadeServlet", urlPatterns = {"/Atividade", "/Atividade/register", "/Atividade/add", "/Atividade/view"})
+@WebServlet(name = "AtividadeServlet", urlPatterns = {"/Atividade", "/Atividade/register", "/Atividade/add", "/Atividade/view", "/Cidade/Atividade/view"})
 public class AtividadeServlet extends HttpServlet {
  @EJB
   private CidadeFacade cidadeFacade;
@@ -44,9 +44,9 @@ public class AtividadeServlet extends HttpServlet {
         {                      
             url = "/view";
         }
-        else if(userPath.equals("/Atividade/view"))
+        else if(userPath.equals("/Cidade/Atividade/view") || userPath.equals("/Atividade/view") )
         {
-            nomeCidade = (String)request.getParameter("nomeCidade");            
+            nomeCidade = (String)request.getParameter("id");            
             cidade = cidadeFacade.checkIfExistcidade(nomeCidade);
             if(cidadeFacade.checkIfExistcidade(nomeCidade) == null)
             {

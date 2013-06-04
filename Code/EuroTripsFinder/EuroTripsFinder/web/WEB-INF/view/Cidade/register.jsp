@@ -1,3 +1,8 @@
+<%-- 
+    Document   : register
+    Created on : 4/Jun/2013, 11:50:25
+    Author     : JorgeMaia
+--%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -25,7 +30,22 @@
             var initialized = false;
             var hashFragment = "";
 
+            var GeocoderStatusDescription = {
+                "OK": "The request did not encounter any errors",
+                "UNKNOWN_ERROR": "A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is not known",
+                "OVER_QUERY_LIMIT": "The webpage has gone over the requests limit in too short a period of time",
+                "REQUEST_DENIED": "The webpage is not allowed to use the geocoder for some reason",
+                "INVALID_REQUEST": "This request was invalid",
+                "ZERO_RESULTS": "The request did not encounter any errors but returns zero results",
+                "ERROR": "There was a problem contacting the Google servers"
+            };
 
+            var GeocoderLocationTypeDescription = {
+                "ROOFTOP": "The returned result reflects a precise geocode.",
+                "RANGE_INTERPOLATED": "The returned result reflects an approximation (usually on a road) interpolated between two precise points (such as intersections). Interpolated results are generally returned when rooftop geocodes are unavilable for a street address.",
+                "GEOMETRIC_CENTER": "The returned result is the geometric center of a result such a line (e.g. street) or polygon (region).",
+                "APPROXIMATE": "The returned result is approximate."
+            }
 
             function init() {
                 var params = parseUrlParams();
@@ -60,6 +80,7 @@
                         new google.maps.Point(10, 34)
                         );
 
+                //google.maps.event.addListener(map, 'click', onClickCallback);
 
                 // Bounds changes are asynchronous in v3, so we have to wait for the idle
                 // event to ensure that viewport biasing picks up the correct viewport
@@ -146,11 +167,26 @@
 
             function clearOptions() {
                 document.getElementById("query").value = '';
+                //document.getElementById("biasViewport").checked = false;
+                //document.getElementById("country").value = '';
+                //document.getElementById("language").value = '';  
             }
 
             function setOptions(params) {
                 if (params.query) {
                     document.getElementById("query").value = params.query;
+                }
+
+                if (params.zoom && params.center) {
+                    //document.getElementById("biasViewport").checked = true;
+                }
+
+                if (params.country) {
+                    //document.getElementById("country").value = params.country;
+                }
+
+                if (params.language) {
+                    //document.getElementById("language").value = params.language;
                 }
             }
 
@@ -186,9 +222,9 @@
                     hash = 'q=' + request.address;
                 }
 
-                var vpbias = false;
-                var country = "";
-                var language = "";
+                var vpbias;// =  document.getElementById("biasViewport").checked;
+                var country;// = document.getElementById("country").value;
+                var language;// = document.getElementById("language").value;
 
                 if (vpbias) {
                     hash += '&vpcenter=' + map.getCenter().toUrlValue(6);
@@ -239,7 +275,7 @@
                 selected = null;
                 clearBoundsOverlays();
 
-
+                //document.getElementById("responseCount").style.display = "none";
                 document.getElementById("matches").style.display = "none";
             }
 
@@ -249,8 +285,15 @@
                 if (!results) {
                     alert("Geocoder did not return a valid response");
                 } else {
+                    //document.getElementById("statusValue").innerHTML = status;
+                    //document.getElementById("statusDescription").innerHTML = GeocoderStatusDescription[status];
+
+                    //document.getElementById("responseInfo").style.display = "block";    
+                    //document.getElementById("responseStatus").style.display = "block";
 
                     if (status == google.maps.GeocoderStatus.OK) {
+                        //document.getElementById("matchCount").innerHTML = results.length;       
+                        //document.getElementById("responseCount").style.display = "block";
                         plotMatchesOnMap(results, reverse);
                     } else {
                         if (!reverse) {
@@ -275,7 +318,7 @@
 
                         map.fitBounds(result.geometry.viewport);
                         infowindow.setContent(getAddressComponentsHtml(result.address_components));
-                        infowindow.open(map, marker);
+                        //infowindow.open(map, marker);
 
                         if (result.geometry.bounds) {
                             boundsOverlay = new google.maps.Rectangle({
@@ -287,7 +330,7 @@
                             });
                             boundsOverlay.setMap(map);
                             google.maps.event.addListener(boundsOverlay, 'click', onClickCallback);
-                            document.getElementById('boundsLegend').style.display = 'block';
+                            //document.getElementById('boundsLegend').style.display = 'block';
                         } else {
                             boundsOverlay = null;
                         }
@@ -300,13 +343,13 @@
                             'fillOpacity': 0.0
                         });
                         viewportOverlay.setMap(map);
-                        google.maps.event.addListener(viewportOverlay, 'click', onClickCallback);
-                        document.getElementById('viewportLegend').style.display = 'block';
+                        //google.maps.event.addListener(viewportOverlay, 'click', onClickCallback);
+                        //document.getElementById('viewportLegend').style.display = 'block';
 
-                        //document.getElementById('p' + resultNum).style.backgroundColor = "#eeeeff";
-                        //document.getElementById('matches').scrollTop =
-                        //document.getElementById('p' + resultNum).offsetTop -
-                        //      document.getElementById('matches').offsetTop;
+                        document.getElementById('p' + resultNum).style.backgroundColor = "#eeeeff";
+                        document.getElementById('matches').scrollTop =
+                                document.getElementById('p' + resultNum).offsetTop -
+                                document.getElementById('matches').offsetTop;
                         selected = resultNum;
                     }
                 }
@@ -326,23 +369,29 @@
                         'shadow': shadow
                     });
 
-
+                    //google.maps.event.addListener(markers[i], 'click', openInfoWindow(i, results[i], markers[i]));
 
                     resultsListHtml += getResultsListItem(i, getResultDescription(results[i]));
                 }
 
-                //document.getElementById("matches").innerHTML = resultsListHtml;
+                document.getElementById("matches").innerHTML = resultsListHtml;
                 document.getElementById("p0").style.border = "none";
-                //document.getElementById("matches").style.display = "block";
+                document.getElementById("matches").style.display = "block";
 
                 if (reverse) {
+                    // make a smooth movement to the clicked position
                     map.panTo(clickMarker.getPosition());
+                    google.maps.event.addListenerOnce(map, 'idle', function() {
+                        selectMarker(0);
+                    });
                 }
 
                 else {
                     zoomToViewports(results);
                     selectMarker(0);
                 }
+
+
             }
 
             function selectMarker(n) {
@@ -364,11 +413,12 @@
             }
 
             function getResultsListItem(resultNum, resultDescription) {
-                var html = '<div class="info" id="p' + resultNum + '">';
-                html += '<table><tr valign="top">';
-                html += '<td style="padding: 2px"></td>';
-                html += '<td style="padding: 2px">' + resultDescription + '</td>';
-                html += '</tr></table>';
+                var html = '<a onclick="selectMarker(' + resultNum + ')">';
+                html += '<div class="info" id="p' + resultNum + '">';
+                //html += '<table><tr valign="top">';
+                //html += '<td style="padding: 2px"><img src="' + getMarkerImageUrl(resultNum) + '"/></td>';
+                //html += '<td style="padding: 2px">' + resultDescription + '</td>';
+                //html += '</tr></table>';
                 html += '</div></a>';
                 return html;
             }
@@ -376,10 +426,11 @@
             function getResultDescription(result) {
                 var bounds = result.geometry.bounds;
                 var html = '<table class="tabContent">';
-                //html += tr('Latitude', '<input type="text" name="xxx" value="' + result.geometry.location.lat() + '"');
-                //html += tr('Longitude', '<input type="text" name="xxl" value="' + result.geometry.location.lng() + '"');
-                document.getElementById('myLatitude').innerHTML = '<input type="text" id="inputLatitude" name="latitude" value="' + result.geometry.location.lat() + '"/>';
-                document.getElementById('myLongitude').innerHTML = '<input type="text" id="inputLongitude" name="longitude" value="' + result.geometry.location.lng() + '"/>';
+
+
+                document.getElementById("myLatitude").innerHTML = '<input type="text" id="inputLatitude" name="latitude" value="' + result.geometry.location.lat() + '" required="required">';
+                document.getElementById("myLongitude").innerHTML = '<input type="text" id="inputLongitude" name="longitude" value="' + result.geometry.location.lng() + '" required="required">';
+
                 if (result.partial_match) {
                     html += tr('Partial match', 'Yes');
                 }
@@ -391,17 +442,7 @@
                 var html = '<div class="infoWindowContent">' +
                         '<table class="tabContent">';
 
-                for (var i = 0; i < components.length; i++) {
-                    html += tr("Long name", components[i].long_name);
-                    html += tr("Short name", components[i].short_name);
-                    html += tr("Types", components[i].types[0]);
-                    for (var j = 1; j < components[i].types.length; j++) {
-                        html += tr("", components[i].types[j]);
-                    }
-                    if (i < components.length - 1) {
-                        html += br();
-                    }
-                }
+
 
                 html += '</table></div>';
                 return html;
@@ -421,11 +462,11 @@
             function clearBoundsOverlays() {
                 if (boundsOverlay != null) {
                     boundsOverlay.setMap(null);
-                    document.getElementById('boundsLegend').style.display = 'none';
+                    //document.getElementById('boundsLegend').style.display = 'none';
                 }
                 if (viewportOverlay != null) {
                     viewportOverlay.setMap(null);
-                    document.getElementById('viewportLegend').style.display = 'none';
+                    //document.getElementById('viewportLegend').style.display = 'none';
                 }
             }
 
@@ -458,63 +499,70 @@
 
     <body onload="init()">
         <h1>Adicionar cidade do mapa:</h1>
-        
-        <div class="left">
-            
-            
-            
-        </div>
-        
-        <div class="right"></div>
-        
-        
-        <div  id="mapcontainer">
-            <div id="map"></div>
-        </div>
-        <div id="matches"></div>
-
-        
-            <div class="control-group">
-                <label class="control-label" for="inputLatitude">Nome da Cidade:</label>        
-                <div class="controls">
-                    <div>
-                        <input type="text" size="60" id="query"/>          
-                        <input type="button" value="Procurar" onclick="submitQuery()"/>
-                    </div>
-
-                </div>   
-            </div>    
 
 
-            <div class="control-group">
-                <label class="control-label" for="inputLatitude">Latitude:</label>        
-                <div class="controls">
-                    <div id="myLatitude">
+        <form action="<%= request.getContextPath()%>/Cidade/add" method=post class="form-horizontal">
+            <div style="float:left">
+                <div class="control-group">
+                    <label class="control-label" for="inputLatitude">Nome da Cidade:</label>        
+                    <div class="controls">
+                        <div>
+                            <input type="text" size="60" id="query" name="nomeCidade"/>          
+                            <input type="button" value="Procurar" onclick="submitQuery()"/>
+                        </div>
 
-                    </div>  
+                    </div>   
+                </div>    
 
-                </div>   
+                <div class="control-group">
+                    <label class="control-label" for="inputPais">País:</label>        
+                    <div class="controls" id="pais">                   
+                        <input type="text" id="inputPais" name="pais" required="required"/>       
+                    </div>   
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputDistrito">Distrito:</label>        
+                    <div class="controls" id="distrito">                   
+                        <input type="text" id="inputDistrito" name="distrito" required="required"/>       
+                    </div>   
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputRegiao">Região:</label>        
+                    <div class="controls" id="regiao">                   
+                        <input type="text" id="inputRegiao" name="regiao" required="required"/>       
+                    </div>   
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputLatitude">Latitude:</label>        
+                    <div class="controls" id="myLatitude">                   
+
+                    </div>   
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputLongitude">Longitude:</label>
+                    <div class="controls" id="myLongitude">
+
+                    </div>   
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Registar</button>
+                    <button type="button" class="btn">Limpar</button>
+                </div>
+
             </div>
-
-            <div class="control-group">
-                <label class="control-label" for="inputLongitude">Longitude:</label>
-                <div class="controls">
-                    <div id="myLongitude"></div>
-                </div>   
+            <div style="float:right;"> 
+            <div  id="mapcontainer">
+                <div id="map"></div>
             </div>
-
-
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Registar</button>
-                <button type="button" class="btn">Limpar</button>
+            <div id="matches"></div>
             </div>
-      
-
-
-
-
+        </form>
 
     </body>
 </html>
+
+
 
