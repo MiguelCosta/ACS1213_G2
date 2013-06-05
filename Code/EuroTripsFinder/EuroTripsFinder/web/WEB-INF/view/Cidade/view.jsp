@@ -5,7 +5,7 @@
 --%>
 
 <form action="<%= request.getContextPath()%>/Cidade/update" method=post class="form-horizontal">
-    <div style="float:left">
+    
         <div class="control-group">
             <label class="control-label" for="inputNome">Nome da Cidade:</label>        
             <div class="controls">
@@ -50,10 +50,17 @@
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Registar</button>
-            <button type="button" class="btn">Limpar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn">Cancelar</button>
         </div>
 
+    
+
+</form>
+            
+<form action="<%= request.getContextPath()%>/Atividade/register" method=post class="form-horizontal">
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Adicionar Atividades</button>
+
     </div>
-   
 </form>

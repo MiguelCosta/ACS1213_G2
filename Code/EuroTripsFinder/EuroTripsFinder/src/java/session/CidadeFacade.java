@@ -59,6 +59,14 @@ public class CidadeFacade extends AbstractFacade<Cidade> {
         return (Cidade)q.getSingleResult();
         
     }
+    
+    public Cidade cidade(String nome)
+    {
+        Query q = em.createNamedQuery("Cidade.findByNome");
+        q.setParameter("nome", nome);        
+        return (Cidade)q.getSingleResult();
+        
+    }
 
     public boolean register(Coordenada coordenada, Cidade cidade) {
 

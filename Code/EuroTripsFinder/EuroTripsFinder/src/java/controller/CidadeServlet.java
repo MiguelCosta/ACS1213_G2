@@ -23,7 +23,7 @@ import session.CoordenadaFacade;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "CidadeServlet", urlPatterns = {"/Cidade/register", "/Cidade/add", "/Cidade", "/Cidade/Atividade","/Cidade/view", "/Cidade/update"})
+@WebServlet(name = "CidadeServlet", urlPatterns = {"/Cidade/register", "/Cidade/add", "/Cidade", "/Cidade/Atividade", "/Cidade/view", "/Cidade/update"})
 public class CidadeServlet extends HttpServlet {
 
     @EJB
@@ -51,8 +51,6 @@ public class CidadeServlet extends HttpServlet {
         if (userPath.equals("/Cidade/register")) {
             url = "/register";
         } else if (userPath.equals("/Cidade/add")) {
-            String x = null;
-
 
             nome = (String) request.getParameter("nomeCidade");
             latitude = request.getParameter("latitude");
@@ -60,7 +58,6 @@ public class CidadeServlet extends HttpServlet {
             distrito = request.getParameter("distrito");
             pais = request.getParameter("pais");
             regiao = request.getParameter("regiao");
-
 
             BigDecimal lati;
             BigDecimal longi;
@@ -114,12 +111,57 @@ public class CidadeServlet extends HttpServlet {
             List<Cidade> myList = cidadeFacade.findAll();
             request.setAttribute("resultado", myList);
             url = "/index";
-        }else if(userPath.equals("/Cidade/view"))
-        {
-            int id = Integer.parseInt(request.getParameter("id"));            
+        } else if (userPath.equals("/Cidade/view")) {
+            int id = Integer.parseInt(request.getParameter("id"));
             cidade = cidadeFacade.cidade(id);
-            request.setAttribute("cidade", cidade);
+            session.setAttribute("cidade", cidade);
             url = "/view";
+        } else if (userPath.equals("/Cidade/update")) {
+
+            nome = (String) request.getParameter("nomeCidade");
+            latitude = request.getParameter("latitude");
+            longitude = request.getParameter("longitude");
+            distrito = request.getParameter("distrito");
+            pais = request.getParameter("pais");
+            regiao = request.getParameter("regiao");
+
+            BigDecimal lati;
+            BigDecimal longi;
+
+            if (!validate.CoordenadaValidator.validateFormRegister(latitude, longitude, nome, request)) {
+                lati = new BigDecimal(latitude);
+                longi = new BigDecimal(longitude);
+            } else {
+                session.setAttribute("MessageError", "Coordenadas Inválidas!");
+                response.sendRedirect("/EuroTripsFinder/Cidade/register");
+                return;
+            }
+
+            cidade = (Cidade) session.getAttribute("cidade");
+         
+            coordenada = cidade.getCoordenadaid();
+            try {
+                coordenada.setLatitude(lati);
+                coordenada.setLongitude(longi);
+                coordenada.setNome(nome);
+                cidade.setCoordenadaid(coordenada);
+                cidade.setDistrito(distrito);
+                cidade.setNome(nome);
+                cidade.setRegiao(regiao);
+                cidade.setPais(pais);
+                cidadeFacade.edit(cidade);
+                
+
+
+            } catch (Exception ex) {
+                erro = "Erro ao atualizar a Cidade!";
+                session.setAttribute("MessageError", erro);
+                
+                return;
+            }
+            session.setAttribute("MessageSuccess", "Atualizado com sucesso!");
+            response.sendRedirect("/EuroTripsFinder/Cidade");
+            return;
         }
         try {
             request.getRequestDispatcher("/WEB-INF/view/Cidade" + url + ".jsp").forward(request, response);

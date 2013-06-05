@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.AtividadeFacade;
 import session.CidadeFacade;
+import validate.AtividadeValidator;
 
 /**
  *
@@ -25,54 +27,74 @@ import session.CidadeFacade;
  */
 @WebServlet(name = "AtividadeServlet", urlPatterns = {"/Atividade", "/Atividade/register", "/Atividade/add", "/Atividade/view", "/Cidade/Atividade/view"})
 public class AtividadeServlet extends HttpServlet {
- @EJB
-  private CidadeFacade cidadeFacade;
-   
+
+    @EJB
+    private CidadeFacade cidadeFacade;
+    @EJB
+    private AtividadeFacade atividadeFacade;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String erro = "";
         boolean ok = true; // variavel para indicar se a acao foi executada correta ou nao
-        HttpSession session = request.getSession();        
+        HttpSession session = request.getSession();
         String userPath = request.getServletPath();
-        String url = "";        
-        String nomeCidade;       
+        String url = "";
+        String nomeCidade;
+        String nomeAtividade;
+        String descricao;
         Cidade cidade;
+        Atividade atividade;
         Collection<Atividade> atividades = null;
-        
-        if(userPath.equals("/Atividade"))
-        {                      
+
+        if (userPath.equals("/Atividade")) {
             url = "/view";
-        }
-        else if(userPath.equals("/Cidade/Atividade/view") || userPath.equals("/Atividade/view") )
-        {
-            nomeCidade = (String)request.getParameter("id");            
+        } else if (userPath.equals("/Cidade/Atividade/view") || userPath.equals("/Atividade/view")) {
+            nomeCidade = (String) request.getParameter("id");
             cidade = cidadeFacade.checkIfExistcidade(nomeCidade);
-            if(cidadeFacade.checkIfExistcidade(nomeCidade) == null)
-            {
-                 session.setAttribute("MessageError", "Não foi encontrada uma cidade com esse nome!");
-                 response.sendRedirect("/EuroTripsFinder/Atividade");   
-                 request.getServletContext().setAttribute("atividades", "");
+            if (cidadeFacade.checkIfExistcidade(nomeCidade) == null) {
+                session.setAttribute("MessageError", "Não foi encontrada uma cidade com esse nome!");
+                response.sendRedirect("/EuroTripsFinder/Atividade");
+                request.getServletContext().setAttribute("atividades", "");
+            } else {
+                atividades = cidadeFacade.atividades(cidade);
+                if (atividades.isEmpty()) {
+                    session.setAttribute("MessageError", "Não existe nenhuma actividade para essa cidade!");
+                    response.sendRedirect("/EuroTripsFinder/Atividade");
+                    request.getServletContext().setAttribute("atividades", "");
+                } else {
+                    request.getServletContext().setAttribute("atividades", atividades);
+                    url = "/view";
+                }
             }
-            else{                
-                    atividades = cidadeFacade.atividades(cidade);
-                    if(atividades.isEmpty())
-                    {
-                        session.setAttribute("MessageError", "Não existe nenhuma actividade para essa cidade!");
-                        response.sendRedirect("/EuroTripsFinder/Atividade");  
-                        request.getServletContext().setAttribute("atividades", "");                        
-                    }
-                    else
-                    {
-                        request.getServletContext().setAttribute("atividades", atividades);
-                        url = "/view";
-                    }
-                }   
-            } 
+        } else if (userPath.equals("/Atividade/add")) {
+            nomeAtividade = request.getParameter("nomeAtividade");
+            descricao = request.getParameter("descricao");
+
+            if (!AtividadeValidator.validateFormRegister(nomeAtividade, descricao, request)) {
+                atividade = new Atividade();
+                atividade.setDescricao(descricao);
+                atividade.setNome(nomeAtividade);
+                atividade.setCidadeid((Cidade) session.getAttribute("cidade"));
+                atividadeFacade.register(atividade);
+                session.setAttribute("MessageSuccess", "Nova Atividade inserida com sucesso!");
+
+
+            } else {
+                session.setAttribute("MessageError", "Ocorreu um erro.");
+
+            }
+            response.sendRedirect("/EuroTripsFinder/Cidade");
+        } else if (userPath.equals("/Atividade/register")) {
+            url = "/register";
+        }
+
+
         try {
             request.getRequestDispatcher("/WEB-INF/view/Atividade" + url + ".jsp").forward(request, response);
         } catch (Exception e) {
-        }  
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

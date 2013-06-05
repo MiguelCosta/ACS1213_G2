@@ -123,7 +123,7 @@ public class CoordenadaServlet extends HttpServlet {
                 lati = new BigDecimal(latitude);
                 longi = new BigDecimal(longitude);
             } else {
-                session.setAttribute("MessageError", request.getAttribute("MessageError"));
+                session.setAttribute("MessageError", "Não é válido");
                 response.sendRedirect("/EuroTripsFinder/Coordenada");
                 return;
             }
