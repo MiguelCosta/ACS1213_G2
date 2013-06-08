@@ -8,6 +8,7 @@ import entity.Cidade;
 import entity.Coordenada;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.ArtigopublicitarioFacade;
 import session.CidadeFacade;
 import session.CoordenadaFacade;
 
@@ -30,6 +32,9 @@ public class CidadeServlet extends HttpServlet {
     private CoordenadaFacade coordenadaFacade;
     @EJB
     private CidadeFacade cidadeFacade;
+    @EJB
+    private ArtigopublicitarioFacade artigoFacade;
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,7 +53,13 @@ public class CidadeServlet extends HttpServlet {
         Coordenada coordenada;
         Cidade cidade;
 
-        if (userPath.equals("/Cidade/register")) {
+         
+        // Publiciade
+        Date data = new Date();
+        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
+
+        
+       if (userPath.equals("/Cidade/register")) {
             url = "/register";
         } else if (userPath.equals("/Cidade/add")) {
 

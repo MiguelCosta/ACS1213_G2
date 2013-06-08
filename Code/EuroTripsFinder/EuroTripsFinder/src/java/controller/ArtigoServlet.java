@@ -8,6 +8,12 @@ import entity.Artigopublicitario;
 import entity.Contrato;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,6 +67,15 @@ public class ArtigoServlet extends HttpServlet {
         String conteudo;
         String artigoid;
         String contratoid;
+        
+        
+        
+        // Publiciade
+        Date data = new Date();
+        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
+
+        
+       
         
         if(userPath.equals("/Artigo")){
             request.setAttribute("listartigos", artigoFacade.findAll());
@@ -152,6 +167,21 @@ public class ArtigoServlet extends HttpServlet {
         } catch (Exception e) {
         }
         
+    }
+    
+    public static Date formataData(String data) throws Exception {
+        if (data == null || data.equals("")) {
+            return null;
+        }
+
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date = (java.util.Date) formatter.parse(data);
+        } catch (ParseException e) {
+            //throw e;
+        }
+        return date;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

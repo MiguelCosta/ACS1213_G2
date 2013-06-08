@@ -7,6 +7,7 @@ package controller;
 import entity.Coordenada;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.ArtigopublicitarioFacade;
 import session.CoordenadaFacade;
 
 /**
@@ -26,6 +28,8 @@ public class CoordenadaServlet extends HttpServlet {
 
     @EJB
     private CoordenadaFacade coordenadaFacade;
+    @EJB
+    private ArtigopublicitarioFacade artigoFacade;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,7 +47,13 @@ public class CoordenadaServlet extends HttpServlet {
         Coordenada coordenada;
 
 
+         
+        // Publiciade
+        Date data = new Date();
+        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
 
+        
+       
         if (userPath.equals("/Coordenada/add")) {
             nome = (String) request.getParameter("nomecoordenada");
             latitude = request.getParameter("latitude");

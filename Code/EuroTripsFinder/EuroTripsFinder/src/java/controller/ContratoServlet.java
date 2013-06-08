@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.ArtigopublicitarioFacade;
 import session.ClienteFacade;
 import session.ContratoFacade;
 
@@ -40,6 +41,9 @@ public class ContratoServlet extends HttpServlet {
     private ContratoFacade contratoFacade;
     @EJB
     private ClienteFacade clienteFacade;
+    @EJB
+    private ArtigopublicitarioFacade artigoFacade;
+
 
     /**
      * Processes requests for both HTTP
@@ -71,7 +75,13 @@ public class ContratoServlet extends HttpServlet {
         String datafim;
         String clienteid;
         int contratoid;
+         
+        // Publiciade
+        Date data = new Date();
+        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
+
         
+       
         if(userPath.equals("/Contrato")){
             request.setAttribute("listcontratos", contratoFacade.findAll());
             url = "index";
