@@ -34,13 +34,22 @@ public class ArtigopublicitarioFacade extends AbstractFacade<Artigopublicitario>
         super(Artigopublicitario.class);
     }
     
-    public Artigopublicitario ArtigoRandom(Date datafim) {
-        Query q = em.createQuery("SELECT a FROM Artigopublicitario a, Contrato c WHERE a.contratoid = c and c.datafim >= :datafim");
-        q.setParameter("datafim", datafim);
-        List<Artigopublicitario> artigos = q.getResultList();
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(artigos.size());
-        return artigos.get(randomInt);
+    public Artigopublicitario ArtigoRandom() {
+        try{
+            Date datafim = new Date();
+            Query q = em.createQuery("SELECT a FROM Artigopublicitario a, Contrato c WHERE a.contratoid = c and c.datafim >= :datafim");
+            q.setParameter("datafim", datafim);
+            List<Artigopublicitario> artigos = q.getResultList();
+            if(artigos.isEmpty()){
+                return null;
+            }
+            Random randomGenerator = new Random();
+            int randomInt = randomGenerator.nextInt(artigos.size());
+            return artigos.get(randomInt);
+        } catch (Exception ex){
+            return null;
+        }
+        
     }
     
 }

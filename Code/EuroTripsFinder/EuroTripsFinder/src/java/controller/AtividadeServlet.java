@@ -55,8 +55,7 @@ public class AtividadeServlet extends HttpServlet {
                 
         
         // Publiciade
-        Date data = new Date();
-        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
+        session.setAttribute("artigorandom", artigoFacade.ArtigoRandom());
 
         
        

@@ -48,15 +48,17 @@
             </div>
         </div>
 
-
+        
         <!-- Código da publicidade-->
+        <% if (session.getAttribute("artigorandom") != null) {%>
         <div class="alert-block" style="position: fixed; top: 50px; right: 0px; z-index: 999999999;">
             <div style="width: 315px; height: 220px; padding: 15px 0px 15px 15px; display: block;">
-                <a href="#" class="close"  data-dismiss="alert" style="position: absolute; background-image: url(http://localhost:8080/EuroTripsFinder/img/close.png); top: 20px; left: 30px; width: 19px; height: 18px; font-size: 0px; overflow: hidden; text-indent: -999px; z-index: 999999;">x</a>
+                <a href="#" class="close"  data-dismiss="alert" style="position: absolute; background-image: url(<%= request.getContextPath()%>/img/close.png); top: 20px; left: 30px; width: 19px; height: 18px; font-size: 0px; overflow: hidden; text-indent: -999px; z-index: 999999;">x</a>
                 <iframe src="${artigorandom.conteudo}" frameborder="0" width="420" height="315" scrolling="no" style="position: absolute; top: 16px; left: 16px; width:315px; height:220px; border: 0; margin: 0; padding: 0;">
                 </iframe>
             </div>
         </div>
+        <% }%>
 
 
         <!-- Mensagem de erro -->

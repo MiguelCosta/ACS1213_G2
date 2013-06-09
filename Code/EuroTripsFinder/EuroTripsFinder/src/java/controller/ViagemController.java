@@ -55,8 +55,7 @@ public class ViagemController extends HttpServlet {
         Utilizador user = (Utilizador) session.getAttribute("user");
          
         // Publiciade
-        Date data = new Date();
-        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
+        session.setAttribute("artigorandom", artigoFacade.ArtigoRandom());
 
         
        
