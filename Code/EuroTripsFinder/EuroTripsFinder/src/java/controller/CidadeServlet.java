@@ -114,7 +114,7 @@ public class CidadeServlet extends HttpServlet {
         } else if (userPath.equals("/Cidade/view")) {
             int id = Integer.parseInt(request.getParameter("id"));
             cidade = cidadeFacade.cidade(id);
-            session.setAttribute("cidade", cidade);
+            request.setAttribute("cidade", cidade);
             url = "/view";
         } else if (userPath.equals("/Cidade/update")) {
 
@@ -137,21 +137,20 @@ public class CidadeServlet extends HttpServlet {
                 return;
             }
 
-            cidade = (Cidade) session.getAttribute("cidade");
+            cidade = (Cidade) request.getAttribute("cidade");
          
             coordenada = cidade.getCoordenadaid();
             try {
                 coordenada.setLatitude(lati);
                 coordenada.setLongitude(longi);
                 coordenada.setNome(nome);
+                coordenadaFacade.edit(coordenada);
                 cidade.setCoordenadaid(coordenada);
                 cidade.setDistrito(distrito);
                 cidade.setNome(nome);
                 cidade.setRegiao(regiao);
                 cidade.setPais(pais);
                 cidadeFacade.edit(cidade);
-                
-
 
             } catch (Exception ex) {
                 erro = "Erro ao atualizar a Cidade!";
