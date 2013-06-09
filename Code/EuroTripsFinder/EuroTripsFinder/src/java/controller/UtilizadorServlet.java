@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import session.ArtigopublicitarioFacade;
 
 /**
  *
@@ -38,6 +39,8 @@ public class UtilizadorServlet extends HttpServlet {
 
     @EJB
     private UtilizadorFacade utilizadorFacade;
+    @EJB
+    private ArtigopublicitarioFacade artigoFacade;
 
     /**
      * Processes requests for both HTTP
@@ -68,7 +71,13 @@ public class UtilizadorServlet extends HttpServlet {
         String nome;
         String morada;
         String datanascimnto;
+         
+        // Publiciade
+        Date data = new Date();
+        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
 
+        
+       
         if (userPath.equals("/Utilizador")) {
             username = request.getParameter("username");
             password = request.getParameter("password");

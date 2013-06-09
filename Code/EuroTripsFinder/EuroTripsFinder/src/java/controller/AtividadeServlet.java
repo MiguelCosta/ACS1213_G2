@@ -9,6 +9,7 @@ import entity.Cidade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.ArtigopublicitarioFacade;
 import session.AtividadeFacade;
 import session.CidadeFacade;
 import validate.AtividadeValidator;
@@ -32,6 +34,9 @@ public class AtividadeServlet extends HttpServlet {
     private CidadeFacade cidadeFacade;
     @EJB
     private AtividadeFacade atividadeFacade;
+    @EJB
+    private ArtigopublicitarioFacade artigoFacade;
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -47,7 +52,15 @@ public class AtividadeServlet extends HttpServlet {
         Cidade cidade;
         Atividade atividade;
         Collection<Atividade> atividades = null;
+                
+        
+        // Publiciade
+        Date data = new Date();
+        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
 
+        
+       
+       
         if (userPath.equals("/Atividade")) {
             url = "/view";
         } else if (userPath.equals("/Cidade/Atividade/view") || userPath.equals("/Atividade/view")) {

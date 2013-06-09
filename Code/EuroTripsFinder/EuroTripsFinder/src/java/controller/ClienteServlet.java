@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.ArtigopublicitarioFacade;
 import session.ClienteFacade;
 import session.ContratoFacade;
 import session.UtilizadorFacade;
@@ -43,9 +44,11 @@ public class ClienteServlet extends HttpServlet {
 
     @EJB
     private  ClienteFacade clienteFacade;
-    
+    @EJB
+    private ArtigopublicitarioFacade artigoFacade;
     @EJB
     private  UtilizadorFacade utilizadorFacade;
+    
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -79,6 +82,12 @@ public class ClienteServlet extends HttpServlet {
         String nif;
         String contacto;
         String clienteid;
+        
+         
+        // Publiciade
+        Date data = new Date();
+        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
+
         
         if(userPath.equals("/Cliente")){
             request.setAttribute("listclientes", clienteFacade.findAll());

@@ -4,8 +4,13 @@
  */
 package session;
 
+import entity.Artigopublicitario;
 import entity.Contrato;
 import entity.Utilizador;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +33,5 @@ public class ContratoFacade extends AbstractFacade<Contrato> {
     public ContratoFacade() {
         super(Contrato.class);
     }
-    
+        
 }

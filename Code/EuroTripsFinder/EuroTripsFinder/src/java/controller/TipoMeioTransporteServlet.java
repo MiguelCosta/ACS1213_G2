@@ -7,6 +7,7 @@ package controller;
 import entity.Tipomeiotransporte;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.ArtigopublicitarioFacade;
 import session.TipomeiotransporteFacade;
 
 /**
@@ -31,6 +33,8 @@ public class TipoMeioTransporteServlet extends HttpServlet {
     
     @EJB
     private  TipomeiotransporteFacade tipomeiotransporteFacade;
+    @EJB
+    private ArtigopublicitarioFacade artigoFacade;
 
     /**
      * Processes requests for both HTTP
@@ -57,7 +61,13 @@ public class TipoMeioTransporteServlet extends HttpServlet {
         
         String nome;
         String tipoid;
+         
+        // Publiciade
+        Date data = new Date();
+        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
+
         
+       
         if(userPath.equals("/TipoMeioTransporte")){
             request.setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
             url = "index";

@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -29,7 +30,9 @@ public class ViagemController extends HttpServlet {
 
     @EJB
     private ViagemFacade viagemFacade;
-
+    @EJB
+    private ArtigopublicitarioFacade artigoFacade;
+    
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -50,7 +53,13 @@ public class ViagemController extends HttpServlet {
         String url = "";
 
         Utilizador user = (Utilizador) session.getAttribute("user");
+         
+        // Publiciade
+        Date data = new Date();
+        request.setAttribute("artigorandom", artigoFacade.ArtigoRandom(data));
 
+        
+       
         if (userPath.equals("/Viagem")) {
             Collection<Viagem> viagens = null;
 
