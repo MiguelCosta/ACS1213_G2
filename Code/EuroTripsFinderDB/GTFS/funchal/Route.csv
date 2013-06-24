@@ -1,0 +1,38 @@
+id;agency_id;short_name;long_name;description;route_type;route_url;route_color
+25;1;20;[20] Monte - Via Corujeira de Dentro{Urbano - Regular};Centro - Monte (via Corujeira de Dentro);3;http://www.horariosdofunchal.pt/carreiras2011/20.pdf#toolbar=0&navpanes=0;F37032
+26;1;20A;[20A] Monte - Lombos - Via Corujeira de Dentro{Urbano - Regular};Centro - Monte - Lombos (via Corujeira de Dentro);3;http://www.horariosdofunchal.pt/carreiras2011/20A.pdf#toolbar=0&navpanes=0;F37032
+27;1;21;[21] Monte - Via Largo da Fonte{Urbano - Regular};Centro - Monte (Largo da Fonte);3;http://www.horariosdofunchal.pt/carreiras2011/21.pdf#toolbar=0&navpanes=0;F37032
+45;1;36;[36] Palheiro Ferreiro (Via Lombo da Quinta){Urbano - Regular};Centro - Palheiro Ferreiro (via Ribeiro da Quinta);3;http://www.horariosdofunchal.pt/carreiras2011/36.pdf#toolbar=0&navpanes=0;EC008C
+48;1;38;[38] Cancela{Urbano - Regular};Centro - Cancela;3;http://www.horariosdofunchal.pt/carreiras2011/38.pdf#toolbar=0&navpanes=0;EC008C
+90;5;81;[81] Curral das Freiras{Interurbano - Linha Laranja};Funchal - Curral das Freiras;3;http://www.horariosdofunchal.pt/carreiras2011/81.pdf#toolbar=0&navpanes=0;F79239
+91;5;85;[85] Boqueirão / P. Ferr{Interurbano - Linha Vermelha};Funchal - Boqueirão (via Palheiro Ferreiro);3;http://www.horariosdofunchal.pt/carreiras2011/85.pdf#toolbar=0&navpanes=0;ED1C24
+9;1;8;[8] Santa Quitéria - Via Barreiros{Urbano - Regular};Centro - Stª Quitéria (via Barreiros);3;http://www.horariosdofunchal.pt/carreiras2011/08.pdf#toolbar=0&navpanes=0;663695
+13;1;10A;[10A] Chamorra(Barreira){Urbano - Regular};Centro - Chamorra (Barreira);3;http://www.horariosdofunchal.pt/carreiras2011/10A.pdf#toolbar=0&navpanes=0;663695
+20;1;15B;[15B] Santana (Escola do Galeão){Urbano - Regular};Centro - Galeão (Escola);3;http://www.horariosdofunchal.pt/carreiras2011/15B.pdf#toolbar=0&navpanes=0;F37032
+49;1;39;[39] Montanha{Urbano - Regular};Centro - Montanha;3;http://www.horariosdofunchal.pt/carreiras2011/39.pdf#toolbar=0&navpanes=0;EC008C
+51;1;42;[42] Alegria{Urbano - Regular};Centro - Alegria;3;http://www.horariosdofunchal.pt/carreiras2011/42.pdf#toolbar=0&navpanes=0;F37032
+17;1;14;[14] Álamos{Urbano - Regular};Centro - Álamos;3;http://www.horariosdofunchal.pt/carreiras2011/14.pdf#toolbar=0&navpanes=0;663695
+35;1;28;[28] D. João{Urbano - Regular};Centro - D. João;3;http://www.horariosdofunchal.pt/carreiras2011/28.pdf#toolbar=0&navpanes=0;F37032
+37;1;30;[30] Largo do Miranda{Urbano - Regular};Centro - Largo do Miranda;3;http://www.horariosdofunchal.pt/carreiras2011/30.pdf#toolbar=0&navpanes=0;EC008C
+46;1;36A;[36A] Palheiro Ferreiro{Urbano - Regular};Centro - Palheiro Ferreiro;3;http://www.horariosdofunchal.pt/carreiras2011/36A.pdf#toolbar=0&navpanes=0;EC008C
+47;1;37;[37] Pinheirinho (Via Palheiro Ferreiro){Urbano - Regular};Centro - Pinheirinho (via Palheiro Ferreiro);3;http://www.horariosdofunchal.pt/carreiras2011/37.pdf#toolbar=0&navpanes=0;EC008C
+71;1;01;[01] Ponta da Laranjeira (Linha Verde){Urbano - Regular - Linha Verde};Centro - Ponta da Laranjeira (Linha Verde);3;http://www.horariosdofunchal.pt/carreiras2011/01.pdf#toolbar=0&navpanes=0;8CC641
+72;1;02;[02] Ponta da Cruz (Linha Verde){Urbano - Regular - Linha Verde};Centro  Ponta da Cruz (Linha Verde);3;http://www.horariosdofunchal.pt/carreiras2011/02.pdf#toolbar=0&navpanes=0;8CC641
+82;5;113;[113] Camacha / Sta Cruz{Interurbano - Linha Vermelha};Camacha - Santa Cruz (via Gaula);3;http://www.horariosdofunchal.pt/carreiras2011/113.pdf#toolbar=0&navpanes=0;ED1C24
+89;5;77;[77] Santo da Serra{Interurbano - Linha Vermelha};Funchal - Santo da Serra (via Camacha);3;http://www.horariosdofunchal.pt/carreiras2011/77.pdf#toolbar=0&navpanes=0;ED1C24
+7;1;6;[6] Lido{Urbano - Regular};Centro - Lido (via Ilhéus);3;http://www.horariosdofunchal.pt/carreiras2011/06.pdf#toolbar=0&navpanes=0;D62138
+74;1;04;[04] Amparo (Linha Verde){Urbano - Regular - Linha Verde};Centro - Amparo (Linha Verde);3;http://www.horariosdofunchal.pt/carreiras2011/04.pdf#toolbar=0&navpanes=0;8CC641
+12;1;10;[10] Chamorra{Urbano - Regular};Centro - Chamorra;3;http://www.horariosdofunchal.pt/carreiras2011/10.pdf#toolbar=0&navpanes=0;663695
+14;1;11;[11] Trapiche{Urbano - Regular};Centro - Trapiche;3;http://www.horariosdofunchal.pt/carreiras2011/11.pdf#toolbar=0&navpanes=0;663695
+53;1;44;[44] Nazaré - Via Virtudes{Urbano - Regular};Centro - Nazaré (via Virtudes);3;http://www.horariosdofunchal.pt/carreiras2011/44.pdf#toolbar=0&navpanes=0;D62138
+56;1;47;[47] São João Latrão{Urbano - Regular};Centro - São João Latrão;3;http://www.horariosdofunchal.pt/carreiras2011/47.pdf#toolbar=0&navpanes=0;EC008C
+38;1;31;[31] Jardim Botânico{Urbano - Regular};Centro - Jardim Botânico;3;http://www.horariosdofunchal.pt/carreiras2011/31.pdf#toolbar=0&navpanes=0;EC008C
+39;1;31A;[31A] Teleférico Jardim Botânico{Urbano - Regular};Centro - Teleférico Jardim Botânico;3;http://www.horariosdofunchal.pt/carreiras2011/31A.pdf#toolbar=0&navpanes=0;EC008C
+28;1;21A;[21A] Monte - Lajinhas{Urbano - Regular};Centro - Monte - Lajinhas;3;http://www.horariosdofunchal.pt/carreiras2011/21A.pdf#toolbar=0&navpanes=0;F37032
+29;1;22;[22] Babosas{Urbano - Regular};Centro - Babosas;3;http://www.horariosdofunchal.pt/carreiras2011/22.pdf#toolbar=0&navpanes=0;F37032
+30;1;23;[23] Livramento - Via TIl{Urbano - Regular};Centro - Livramento (via Til);3;http://www.horariosdofunchal.pt/carreiras2011/23.pdf#toolbar=0&navpanes=0;F37032
+33;1;26;[26] Levada de Santa Luzia - Via Pena{Urbano - Regular};Centro - Levada de Stª Luzia (via Pena);3;http://www.horariosdofunchal.pt/carreiras2011/26.pdf#toolbar=0&navpanes=0;F37032
+34;1;27;[27] Caminho de Ferro{Urbano - Regular};Centro - Caminho de Ferro;3;http://www.horariosdofunchal.pt/carreiras2011/27.pdf#toolbar=0&navpanes=0;F37032
+36;1;29;[29] Curral dos Romeiros{Urbano - Regular};Centro - Curral dos Romeiros;3;http://www.horariosdofunchal.pt/carreiras2011/29.pdf#toolbar=0&navpanes=0;EC008C
+41;1;33;[33] Balancal - Via Bairro Stª Maria{Urbano - Regular};Centro - Balancal (via Bairro Stª Maria);3;http://www.horariosdofunchal.pt/carreiras2011/33.pdf#toolbar=0&navpanes=0;EC008C
+81;5;112;[112] Rochão de Cima{Interurbano - Linha Vermelha};Funchal - Rochão de Cima (via Carreiras);3;http://www.horariosdofunchal.pt/carreiras2011/112.pdf#toolbar=0&navpanes=0;ED1C24

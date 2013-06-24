@@ -1,0 +1,2 @@
+﻿agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone,agency_fare_url
+187,António da Silva Cruz & Filhos  Ldª.,http://www.maiatransportes.pt,Europe/Lisbon,PT,+351221465897,http://www.maiatranpostes.pt/tickect
