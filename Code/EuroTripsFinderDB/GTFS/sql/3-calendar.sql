@@ -1,0 +1,6 @@
+INSERT INTO `eurotripsfinder`.`calendario` (`servicoid`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `datainicio`, `datafim`) VALUES (235, '0', '0', '0', '0', '0', '1', '0', '2012-01-01','2012-12-31');
+INSERT INTO `eurotripsfinder`.`calendario` (`servicoid`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `datainicio`, `datafim`) VALUES (134, '1', '1', '1', '1', '1', '0', '0', '2012-01-01','2012-12-31');
+INSERT INTO `eurotripsfinder`.`calendario` (`servicoid`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `datainicio`, `datafim`) VALUES (336, '0', '0', '0', '0', '0', '0', '1', '2012-01-01','2012-12-31');
+INSERT INTO `eurotripsfinder`.`calendario` (`servicoid`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `datainicio`, `datafim`) VALUES (437, '1', '1', '1', '1', '1', '0', '0', '2012-01-08','2012-04-10');
+INSERT INTO `eurotripsfinder`.`calendario` (`servicoid`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `datainicio`, `datafim`) VALUES (537, '1', '1', '1', '1', '1', '0', '0', '2012-04-24','2012-07-31');
+INSERT INTO `eurotripsfinder`.`calendario` (`servicoid`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `datainicio`, `datafim`) VALUES (637, '1', '1', '1', '1', '1', '0', '0', '2012-09-10','2012-12-20');

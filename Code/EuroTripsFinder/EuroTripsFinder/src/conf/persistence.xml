@@ -5,6 +5,7 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
         <property name="eclipselink.logging.level" value="FINEST"/>
+        <property name="eclipselink.flush-clear.cache" value="Drop"/>
     </properties>
   </persistence-unit>
 </persistence>

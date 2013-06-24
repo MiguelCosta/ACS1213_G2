@@ -22,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -39,6 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Percurso.findByNumeroetapas", query = "SELECT p FROM Percurso p WHERE p.numeroetapas = :numeroetapas"),
     @NamedQuery(name = "Percurso.findByValortotal", query = "SELECT p FROM Percurso p WHERE p.valortotal = :valortotal")})
 public class Percurso implements Serializable {
+    @Size(max = 255)
+    @Column(name = "nome")
+    private String nome;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -161,6 +165,14 @@ public class Percurso implements Serializable {
     @Override
     public String toString() {
         return "entity.Percurso[ id=" + id + " ]";
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     
 }

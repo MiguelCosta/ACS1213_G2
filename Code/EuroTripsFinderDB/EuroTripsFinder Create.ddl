@@ -104,6 +104,7 @@ CREATE TABLE Percurso (
   numeroetapas int(10) NOT NULL comment 'indica o numero de etapas que existe no percurso', 
   valortotal   decimal(10, 2) DEFAULT 0 NOT NULL comment 'indica o valor total do percurso, este campo acaba sempre por ser a soma do valor de cada etapa', 
   Utilizadorid int(10) NOT NULL, 
+  nome         varchar(255), 
   PRIMARY KEY (id));
 CREATE TABLE Atividade (
   id        int(10) NOT NULL AUTO_INCREMENT, 
@@ -134,8 +135,8 @@ CREATE TABLE Coordenada (
 CREATE TABLE LocalParagem (
   id           int(10) NOT NULL AUTO_INCREMENT comment 'ID da estação', 
   nome         varchar(255) NOT NULL, 
-  coordenadaid int(10) NOT NULL comment 'ID da coordenada que indica a locailizacao da estacao', 
-  cidadeid     int(10) NOT NULL, 
+  coordenadaid int(10) comment 'ID da coordenada que indica a locailizacao da estacao', 
+  cidadeid     int(10), 
   codigo       varchar(255) NOT NULL comment 'GTFS: stops->stop_code', 
   descricao    varchar(2048) NOT NULL comment 'GTFS: stops->stop_desc', 
   PRIMARY KEY (id)) comment='GTFS: stops';

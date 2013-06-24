@@ -1,0 +1,1 @@
+﻿INSERT INTO `eurotripsfinder`.`companhia` (`id`, `nome`, `url`, `timezone`, `lingua`, `telefone`, `ticketurl`) VALUES (187, 'António da Silva Cruz & Filhos  Ldª.', 'http://www.maiatransportes.pt', 'Europe/Lisbon', 'PT', '+351221465897', 'http://www.maiatranpostes.pt/tickect');
