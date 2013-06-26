@@ -32,11 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "localparagem")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Localparagem.findAll", query = "SELECT l FROM Localparagem l"),
+    @NamedQuery(name = "Localparagem.findAll", query = "SELECT l FROM Localparagem l ORDER BY l.nome"),
     @NamedQuery(name = "Localparagem.findById", query = "SELECT l FROM Localparagem l WHERE l.id = :id"),
     @NamedQuery(name = "Localparagem.findByNome", query = "SELECT l FROM Localparagem l WHERE l.nome = :nome"),
     @NamedQuery(name = "Localparagem.findByCodigo", query = "SELECT l FROM Localparagem l WHERE l.codigo = :codigo"),
     @NamedQuery(name = "Localparagem.findByDescricao", query = "SELECT l FROM Localparagem l WHERE l.descricao = :descricao")})
+
 public class Localparagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
