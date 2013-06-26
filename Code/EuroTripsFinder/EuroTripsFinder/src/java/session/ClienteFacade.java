@@ -12,7 +12,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class ClienteFacade extends AbstractFacade<Cliente> {
@@ -35,6 +35,5 @@ public class ClienteFacade extends AbstractFacade<Cliente> {
         Cliente cliente = (Cliente) q.getSingleResult();
         return cliente;
 
-    }
-    
+}
 }

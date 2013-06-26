@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Entity
 @Table(name = "coordenada")
@@ -58,7 +58,7 @@ public class Coordenada implements Serializable {
     @NotNull
     @Column(name = "longitude")
     private BigDecimal longitude;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coordenadaid")
+    @OneToMany(mappedBy = "coordenadaid")
     private Collection<Localparagem> localparagemCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "coordenadaid")
     private Collection<Cidade> cidadeCollection;

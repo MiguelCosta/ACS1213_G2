@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Entity
 @Table(name = "cidade")
@@ -65,7 +65,7 @@ public class Cidade implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "regiao")
     private String regiao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cidadeid")
+    @OneToMany(mappedBy = "cidadeid")
     private Collection<Localparagem> localparagemCollection;
     @JoinColumn(name = "coordenadaid", referencedColumnName = "id")
     @ManyToOne(optional = false)

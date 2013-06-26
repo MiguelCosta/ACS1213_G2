@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Entity
 @Table(name = "contrato")
@@ -107,7 +107,7 @@ public class Contrato implements Serializable {
     public void setDatainicio(Date datainicio) {
         this.datainicio = datainicio;
     }
-    
+
     public String getDatainicioString() {
         Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(this.datainicio);

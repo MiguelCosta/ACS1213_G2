@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class UtilizadorFacade extends AbstractFacade<Utilizador> {
@@ -29,7 +29,7 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
     public UtilizadorFacade() {
         super(Utilizador.class);
     }
-
+    
     public Utilizador UtilizadorLogin(String username, String password) {
         Query q = em.createNamedQuery("Utilizador.findByUsernameAndPassword");
         q.setParameter("username", username);
@@ -40,7 +40,7 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
             return users.get(0);
         } else {
             return null;
-        }
+}
     }
     
     public Utilizador UtilizadorByUsername(String username){
