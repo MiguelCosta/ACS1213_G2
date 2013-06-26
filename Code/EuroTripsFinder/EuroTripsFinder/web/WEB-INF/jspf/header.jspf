@@ -18,7 +18,7 @@
     <body>
         <div class="navbar navbar-inverse">
             <div class="navbar-inner">
-                <a class="brand" href="#">EuroTripsFinder</a>
+                <li class="brand" style="color:white">EuroTripsFinder</li>
                 <ul class="nav">
                     <li><a href="/EuroTripsFinder">Home</a></li>
                     <li><a href="#">Viagens</a></li>
