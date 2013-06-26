@@ -82,7 +82,7 @@ public class UtilizadorServlet extends HttpServlet {
             password = request.getParameter("password");
 
             user = utilizadorFacade.UtilizadorLogin(username, password);
-
+            
             if (user != null) {
                 session.setAttribute("user", user);
                 response.sendRedirect("/EuroTripsFinder");

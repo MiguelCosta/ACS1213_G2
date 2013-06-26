@@ -21,8 +21,26 @@
                 <li class="brand" style="color:white">EuroTripsFinder</li>
                 <ul class="nav">
                     <li><a href="/EuroTripsFinder">Home</a></li>
-                    <li><a href="#">Viagens</a></li>
-                    <li><a href="#">About</a></li>
+                    <li><a href="#">Viagem</a></li>
+                    
+                    <!--Menus do Admin-->                
+                    <% if (session.getAttribute("user") != null){
+                        String funcao = ((Utilizador)session.getAttribute("user")).getFuncao();
+                        if(funcao.equals("Administrador")){%>
+                            <li><a href="/EuroTripsFinder/Cliente">Clientes</a></li>
+                            <li><a href="/EuroTripsFinder/Contrato">Contratos</a></li>
+                            <li><a href="/EuroTripsFinder/Artigo">Artigos Publicitário</a></li>
+                        <%}
+                    }%>
+                    <!--Menus do Admin-->
+                     <% if (session.getAttribute("user") != null){
+                        String funcao = ((Utilizador)session.getAttribute("user")).getFuncao();
+                        if(funcao.equals("user")){%>
+                            <li><a href="#">Minhas Viagens</a></li>
+                            <li><a href="#">Favoritos</a></li>
+                        <%}
+                    }%>
+                    
                 </ul>
                 <ul class="nav pull-right">
                     <li class="">
