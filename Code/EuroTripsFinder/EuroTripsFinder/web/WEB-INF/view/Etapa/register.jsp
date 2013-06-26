@@ -11,13 +11,13 @@
         var windowFeatures = "width=" + width + ",height=" + height +
                 ",status,resizable,left=" + left + ",top=" + top +
                 "screenX=" + left + ",screenY=" + top + ",scrollbars=yes";
-                window.open(url, "subWind", windowFeatures, "POS");
+        window.open(url, "subWind", windowFeatures, "POS");
     }
 </script>
 
 <h1>Adicionar Nova Etapa</h1>
 
-<form action="<%= request.getContextPath()%>/Etapa/register" method=post class="form-horizontal">
+<form action="<%= request.getContextPath()%>/Etapa/add" method=post class="form-horizontal">
 
     <div class="control-group">
         <label class="control-label" for="inputNomeEtapa">Nova Etapa</label>
@@ -102,5 +102,27 @@
         <button type="submit" class="btn btn-primary">Registar</button>
         <button type="button" class="btn">Limpar</button>
     </div>
+
+    <table class="table table-hover"> 
+        <tr>
+            <td>campo 1</td>
+            <td>2</td> 
+             <td>3</td>
+            <td>4</td> 
+             <td>5</td>
+
+        </tr> 
+        <c:forEach var="row" items="${caminhos}"> 
+            <tr>                  
+                <td> ${row.transporteviagemid}</td>
+                <td>${row.horachegada}</td> 
+                <td> ${row.horapartida}</td>
+                <td>${row.localparagemid}</td> 
+                <td> ${row.localparagemsequencia}</td>
+                <td> ${row.tempoparagemid}</a></td>
+
+            </tr>
+        </c:forEach> 
+    </table>
 
 </form>

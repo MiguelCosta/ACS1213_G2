@@ -18,7 +18,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class ContratoFacade extends AbstractFacade<Contrato> {
@@ -33,5 +33,5 @@ public class ContratoFacade extends AbstractFacade<Contrato> {
     public ContratoFacade() {
         super(Contrato.class);
     }
-        
+    
 }

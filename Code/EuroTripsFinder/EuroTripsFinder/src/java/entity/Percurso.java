@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Entity
 @Table(name = "percurso")
@@ -40,9 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Percurso.findByNumeroetapas", query = "SELECT p FROM Percurso p WHERE p.numeroetapas = :numeroetapas"),
     @NamedQuery(name = "Percurso.findByValortotal", query = "SELECT p FROM Percurso p WHERE p.valortotal = :valortotal")})
 public class Percurso implements Serializable {
-    @Size(max = 255)
-    @Column(name = "nome")
-    private String nome;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,6 +59,9 @@ public class Percurso implements Serializable {
     @NotNull
     @Column(name = "valortotal")
     private BigDecimal valortotal;
+    @Size(max = 255)
+    @Column(name = "nome")
+    private String nome;
     @ManyToMany(mappedBy = "percursoCollection")
     private Collection<Etapa> etapaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "percursoid")
@@ -116,6 +116,14 @@ public class Percurso implements Serializable {
         this.valortotal = valortotal;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     @XmlTransient
     public Collection<Etapa> getEtapaCollection() {
         return etapaCollection;
@@ -165,14 +173,6 @@ public class Percurso implements Serializable {
     @Override
     public String toString() {
         return "entity.Percurso[ id=" + id + " ]";
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
     
 }

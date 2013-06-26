@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Entity
 @Table(name = "utilizador")
@@ -48,7 +48,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Utilizador.findByDatanascimento", query = "SELECT u FROM Utilizador u WHERE u.datanascimento = :datanascimento"),
     @NamedQuery(name = "Utilizador.findByUsernameAndPassword", query = "Select u FROM Utilizador u WHERE u.username = :username AND u.password = :password")})
 public class Utilizador implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -272,4 +271,5 @@ public class Utilizador implements Serializable {
     public String toString() {
         return "entity.Utilizador[ id=" + id + " ]";
     }
+    
 }

@@ -14,7 +14,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class TipomeiotransporteFacade extends AbstractFacade<Tipomeiotransporte> {
@@ -39,7 +39,7 @@ public class TipomeiotransporteFacade extends AbstractFacade<Tipomeiotransporte>
             return transportes.get(0);
         } else {
             return null;
-        }
+}
 
     }
     

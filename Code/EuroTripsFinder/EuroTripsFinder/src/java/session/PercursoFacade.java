@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class PercursoFacade extends AbstractFacade<Percurso> {
@@ -29,5 +29,5 @@ public class PercursoFacade extends AbstractFacade<Percurso> {
     public PercursoFacade() {
         super(Percurso.class);
     }
-
+    
 }

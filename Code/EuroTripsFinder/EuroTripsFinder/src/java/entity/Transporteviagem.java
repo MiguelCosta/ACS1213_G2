@@ -5,7 +5,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,14 +15,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Entity
 @Table(name = "transporteviagem")
@@ -36,6 +40,8 @@ public class Transporteviagem implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "transporteviagemid")
     private String transporteviagemid;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "transporteviagemid")
+    private Collection<Tempoparagem> tempoparagemCollection;
     @JoinColumn(name = "servicoid", referencedColumnName = "servicoid")
     @ManyToOne(optional = false)
     private Calendario servicoid;
@@ -56,6 +62,15 @@ public class Transporteviagem implements Serializable {
 
     public void setTransporteviagemid(String transporteviagemid) {
         this.transporteviagemid = transporteviagemid;
+    }
+
+    @XmlTransient
+    public Collection<Tempoparagem> getTempoparagemCollection() {
+        return tempoparagemCollection;
+    }
+
+    public void setTempoparagemCollection(Collection<Tempoparagem> tempoparagemCollection) {
+        this.tempoparagemCollection = tempoparagemCollection;
     }
 
     public Calendario getServicoid() {

@@ -124,7 +124,7 @@ public class CidadeServlet extends HttpServlet {
         } else if (userPath.equals("/Cidade/view")) {
             int id = Integer.parseInt(request.getParameter("id"));
             cidade = cidadeFacade.cidade(id);
-            request.setAttribute("cidade", cidade);
+            session.setAttribute("cidade", cidade);
             url = "/view";
         } else if (userPath.equals("/Cidade/update")) {
 
