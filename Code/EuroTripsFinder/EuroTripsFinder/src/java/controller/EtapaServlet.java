@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import session.CidadeFacade;
 import session.TipomeiotransporteFacade;
 import session.LocalparagemFacade;
+import session.TempoparagemFacade;
 
 /**
  *
@@ -33,6 +34,8 @@ public class EtapaServlet extends HttpServlet {
     private TipomeiotransporteFacade tipomeiotransporteFacade;
     @EJB
     private LocalparagemFacade LocalparagemFacade;
+    @EJB
+    private TempoparagemFacade TempoparagemFacade;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,6 +45,9 @@ public class EtapaServlet extends HttpServlet {
         boolean ok = true; // variavel para indicar se a acao foi executada correta ou nao
         String userPath = request.getServletPath();
         String url = "";
+        int localOrigemId;
+        int localDestinoId;
+        
 
         HttpSession session = request.getSession();
 
@@ -51,10 +57,16 @@ public class EtapaServlet extends HttpServlet {
 //            request.setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
             //request.setAttribute("cidades", myList);
             request.setAttribute("locais", LocalparagemFacade.findAll());
+            
 
 
             url = "/register";
         } else if (userPath.equals("/Etapa/add")) {
+            localOrigemId = Integer.parseInt((String)request.getParameter("localInicial"));
+            localDestinoId = Integer.parseInt((String)request.getParameter("localFinal"));
+            request.setAttribute("caminhos", TempoparagemFacade.caminhos(localOrigemId,localDestinoId));
+           url = "/register";
+            
         } else if (userPath.equals("/Etapa")) {
 
             url = "/index";

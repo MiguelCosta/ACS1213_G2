@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class ViagemFacade extends AbstractFacade<Viagem> {
@@ -38,6 +38,6 @@ public class ViagemFacade extends AbstractFacade<Viagem> {
         viagens = q.getResultList();
         
         return viagens;
-    }
+}
     
 }

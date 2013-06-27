@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Entity
 @Table(name = "meiotransporte")
@@ -39,8 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Meiotransporte implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)

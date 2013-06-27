@@ -17,7 +17,7 @@ import session.AbstractFacade;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class CidadeFacade extends AbstractFacade<Cidade> {
@@ -33,7 +33,7 @@ public class CidadeFacade extends AbstractFacade<Cidade> {
     public CidadeFacade() {
         super(Cidade.class);
     }
-
+    
     public Cidade checkIfExistcidade(String nome) {
         Query q = em.createNamedQuery("Cidade.findByNome");
         q.setParameter("nome", nome);
@@ -43,7 +43,7 @@ public class CidadeFacade extends AbstractFacade<Cidade> {
             return cidade;
         } else {
             return null;
-        }
+}
     }
 
     public Collection<Atividade> atividades(Cidade cidade) {

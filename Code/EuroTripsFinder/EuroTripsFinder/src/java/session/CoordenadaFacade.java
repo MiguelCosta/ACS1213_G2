@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class CoordenadaFacade extends AbstractFacade<Coordenada> {
@@ -46,7 +46,7 @@ public class CoordenadaFacade extends AbstractFacade<Coordenada> {
             return true;
         } else {
             return false;
-        }
+}
     }
        
        public Coordenada verifica(int id)

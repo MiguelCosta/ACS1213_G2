@@ -18,7 +18,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class ArtigopublicitarioFacade extends AbstractFacade<Artigopublicitario> {
@@ -42,7 +42,7 @@ public class ArtigopublicitarioFacade extends AbstractFacade<Artigopublicitario>
             List<Artigopublicitario> artigos = q.getResultList();
             if(artigos.isEmpty()){
                 return null;
-            }
+}
             Random randomGenerator = new Random();
             int randomInt = randomGenerator.nextInt(artigos.size());
             return artigos.get(randomInt);

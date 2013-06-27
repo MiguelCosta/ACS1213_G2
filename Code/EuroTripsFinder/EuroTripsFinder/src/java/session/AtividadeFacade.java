@@ -15,7 +15,7 @@ import session.AbstractFacade;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Stateless
 public class AtividadeFacade extends AbstractFacade<Atividade> {
@@ -31,18 +31,20 @@ public class AtividadeFacade extends AbstractFacade<Atividade> {
     public AtividadeFacade() {
         super(Atividade.class);
     }
-
+    
     public boolean register(Atividade atividade) {
 
         boolean sucess = false;
         try {
             em.persist(atividade);
             em.flush();
+            
             sucess = true;
         } catch (Exception e) {
             sucess = false;
+            println(e.getMessage());
             return sucess;
-        }
+}
         return sucess;
 
     }
@@ -56,5 +58,9 @@ public class AtividadeFacade extends AbstractFacade<Atividade> {
         } else {
             return false;
         }
+    }
+
+    private void println(String message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

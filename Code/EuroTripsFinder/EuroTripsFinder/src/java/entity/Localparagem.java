@@ -26,18 +26,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Miguel
+ * @author JorgeMaia
  */
 @Entity
 @Table(name = "localparagem")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Localparagem.findAll", query = "SELECT l FROM Localparagem l ORDER BY l.nome"),
+    @NamedQuery(name = "Localparagem.findAll", query = "SELECT l FROM Localparagem l"),
     @NamedQuery(name = "Localparagem.findById", query = "SELECT l FROM Localparagem l WHERE l.id = :id"),
     @NamedQuery(name = "Localparagem.findByNome", query = "SELECT l FROM Localparagem l WHERE l.nome = :nome"),
     @NamedQuery(name = "Localparagem.findByCodigo", query = "SELECT l FROM Localparagem l WHERE l.codigo = :codigo"),
     @NamedQuery(name = "Localparagem.findByDescricao", query = "SELECT l FROM Localparagem l WHERE l.descricao = :descricao")})
-
 public class Localparagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,16 +54,16 @@ public class Localparagem implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "codigo")
     private String codigo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2048)
+    @Size(max = 2048)
     @Column(name = "descricao")
     private String descricao;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "localparagemid")
+    private Collection<Tempoparagem> tempoparagemCollection;
     @JoinColumn(name = "cidadeid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Cidade cidadeid;
     @JoinColumn(name = "coordenadaid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Coordenada coordenadaid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "localparagemdestinoid")
     private Collection<Etapa> etapaCollection;
@@ -115,6 +114,15 @@ public class Localparagem implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @XmlTransient
+    public Collection<Tempoparagem> getTempoparagemCollection() {
+        return tempoparagemCollection;
+    }
+
+    public void setTempoparagemCollection(Collection<Tempoparagem> tempoparagemCollection) {
+        this.tempoparagemCollection = tempoparagemCollection;
     }
 
     public Cidade getCidadeid() {
