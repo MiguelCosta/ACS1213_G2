@@ -41,7 +41,7 @@ public class ViagemFacade extends AbstractFacade<Viagem> {
     }
 
     public Viagem getViagemDados(int viagemId) {
-    
+        
         Query q  = em.createNamedQuery("Viagem.findById");
         q.setParameter("id", viagemId);
         Viagem x = (Viagem)q.getSingleResult();

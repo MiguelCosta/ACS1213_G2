@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -33,7 +34,8 @@ import session.ContratoFacade;
                 "/Artigo/register",
                 "/Artigo/add",
                 "/Artigo/view",
-                "/Artigo/update"})
+                "/Artigo/update",
+                "/Artigo/index"})
 public class ArtigoServlet extends HttpServlet {
     
     @EJB
@@ -73,12 +75,29 @@ public class ArtigoServlet extends HttpServlet {
         // Publiciade
         session.setAttribute("artigorandom", artigoFacade.ArtigoRandom());
 
-        
+     
        
         
         if(userPath.equals("/Artigo")){
-            request.setAttribute("listartigos", artigoFacade.findAll());
+            response.sendRedirect("/EuroTripsFinder/Artigo/index?page="+1);
+        }else if(userPath.equals("/Artigo/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            int page = 1;
+            if (request.getParameter("page") == null){
+                response.sendRedirect("/EuroTripsFinder/Artigo/index?page="+1);
+            }
+            else page = new Integer(request.getParameter("page"));  
+            int ct = artigoFacade.count();
+            int nrpages = ct/artigoFacade.limitepage;
+            if(nrpages == 0) nrpages = 1;
+            else if((ct)%artigoFacade.limitepage > 0) nrpages++;
+            request.setAttribute("nrpages", String.valueOf(nrpages));
+            int max = page*artigoFacade.limitepage;
+            if(max > ct) max = ct;
+            request.setAttribute("listartigos", artigoFacade.findAll().subList((page-1)*artigoFacade.limitepage, max));
             url = "index";
+            
         }else if(userPath.equals("/Artigo/register")){ 
             request.setAttribute("listcontratos", contratoFacade.findAll());
             url = "register";

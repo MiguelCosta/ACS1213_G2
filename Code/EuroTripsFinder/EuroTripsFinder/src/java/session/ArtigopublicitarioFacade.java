@@ -42,7 +42,7 @@ public class ArtigopublicitarioFacade extends AbstractFacade<Artigopublicitario>
             List<Artigopublicitario> artigos = q.getResultList();
             if(artigos.isEmpty()){
                 return null;
-}
+            }
             Random randomGenerator = new Random();
             int randomInt = randomGenerator.nextInt(artigos.size());
             return artigos.get(randomInt);
@@ -51,5 +51,15 @@ public class ArtigopublicitarioFacade extends AbstractFacade<Artigopublicitario>
         }
         
     }
+    
+   /* public List<Artigopublicitario> ArtigoPages(int page) {
+        
+        Query q = em.createNamedQuery("Artigopublicitario.findAll");
+        //Query q = em.createQuery("SELECT a FROM Artigopublicitario a");
+       // q.setFirstResult(page*limitepage);
+        //q.setMaxResults(limitepage);
+        List<Artigopublicitario> artigos = q.getResultList();
+        return artigos;
+    }*/
     
 }
