@@ -79,9 +79,28 @@ public class ViagemController extends HttpServlet {
             viag = viagemFacade.getViagemDados(Id);
             request.setAttribute("viagem", viag);
 
+            //separacao de pontos para mostrar no mapa
+            ArrayList<String> intermedios = new ArrayList<String>();
+            String origem = null;
+            String destino = null;
+            int index = 0;
+            for (Etapa x : viag.getPercursoid().getEtapaCollection()) {
+                if (index == 0) {
+                    origem = x.getLocalparageminicialid().getCoordenadaid().getLatitude().toString() + " , "
+                            + x.getLocalparageminicialid().getCoordenadaid().getLongitude().toString();
+                } else {
+                    intermedios.add(x.getLocalparagemdestinoid().getCoordenadaid().getLatitude().toString() + " , "
+                            + x.getLocalparagemdestinoid().getCoordenadaid().getLongitude().toString());
+                }
+                index++;
+            }
+            destino = intermedios.get(intermedios.size() - 1);
+            intermedios.remove(destino);
+            request.setAttribute("origem", origem);
+            request.setAttribute("destino", destino);
+            request.setAttribute("intermedios", intermedios.toArray());
             url = "view";
         }
-
         try {
             request.getRequestDispatcher("/WEB-INF/view/Viagem/" + url + ".jsp").forward(request, response);
         } catch (Exception e) {
