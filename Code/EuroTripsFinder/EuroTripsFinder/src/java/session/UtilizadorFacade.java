@@ -59,4 +59,12 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
             return users.get(users.size()-1);
         
     }
+    
+     public List<Utilizador> UtilizadorPages(int page) {
+        Query q = em.createNamedQuery("Utilizador.findAll");
+        q.setFirstResult(page*limitepage);
+        q.setMaxResults(limitepage);
+        List<Utilizador> users = q.getResultList();
+        return users;
+    }
 }
