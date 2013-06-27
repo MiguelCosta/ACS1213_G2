@@ -11,6 +11,7 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -25,14 +26,14 @@ import session.*;
  *
  * @author Miguel
  */
-@WebServlet(name = "ViagemController", urlPatterns = {"/Viagem"})
+@WebServlet(name = "ViagemController", urlPatterns = {"/Viagem", "/Viagem/view"})
 public class ViagemController extends HttpServlet {
 
     @EJB
     private ViagemFacade viagemFacade;
     @EJB
     private ArtigopublicitarioFacade artigoFacade;
-    
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -52,13 +53,15 @@ public class ViagemController extends HttpServlet {
         String userPath = request.getServletPath();
         String url = "";
 
+        Viagem viag;
+
         Utilizador user = (Utilizador) session.getAttribute("user");
-         
+
         // Publiciade
         session.setAttribute("artigorandom", artigoFacade.ArtigoRandom());
 
-        
-       
+
+
         if (userPath.equals("/Viagem")) {
             Collection<Viagem> viagens = null;
 
@@ -71,6 +74,12 @@ public class ViagemController extends HttpServlet {
             request.setAttribute("viagens", viagens);
 
             url = "index";
+        } else if (userPath.equals("/Viagem/view")) {
+            int Id = Integer.parseInt((String) request.getParameter("id"));
+            viag = viagemFacade.getViagemDados(Id);
+            request.setAttribute("viagem", viag);
+
+            url = "view";
         }
 
         try {

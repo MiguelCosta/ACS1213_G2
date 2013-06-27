@@ -17,6 +17,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ViagemFacade extends AbstractFacade<Viagem> {
+
     @PersistenceContext(unitName = "EuroTripsFinderPU")
     private EntityManager em;
 
@@ -28,16 +29,22 @@ public class ViagemFacade extends AbstractFacade<Viagem> {
     public ViagemFacade() {
         super(Viagem.class);
     }
-    
-    
-    public List<Viagem> getViagensByUtilizadorId(int userID){
+
+    public List<Viagem> getViagensByUtilizadorId(int userID) {
         List<Viagem> viagens;
         Query q = em.createNamedQuery("Viagem.findByUtilizadorId");
         q.setParameter("utilizadorid", userID);
-        
+
         viagens = q.getResultList();
-        
+
         return viagens;
-}
+    }
+
+    public Viagem getViagemDados(int viagemId) {
     
+        Query q  = em.createNamedQuery("Viagem.findById");
+        q.setParameter("id", viagemId);
+        Viagem x = (Viagem)q.getSingleResult();
+        return x;
+    }
 }

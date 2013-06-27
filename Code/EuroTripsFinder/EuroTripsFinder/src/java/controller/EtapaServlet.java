@@ -6,6 +6,7 @@ package controller;
 
 import entity.Cidade;
 import entity.Etapa;
+import entity.Utilizador;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -40,6 +41,7 @@ public class EtapaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
 
         String erro = "";
         boolean ok = true; // variavel para indicar se a acao foi executada correta ou nao
@@ -47,30 +49,30 @@ public class EtapaServlet extends HttpServlet {
         String url = "";
         int localOrigemId;
         int localDestinoId;
+        Utilizador utilizador = (Utilizador) session.getAttribute("user");
+        int utilizadorId = utilizador.getId();
         
-
-        HttpSession session = request.getSession();
-
 
         if (userPath.equals("/Etapa/register")) {
 //            List<Cidade> myList = cidadeFacade.findAll();
 //            request.setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
             //request.setAttribute("cidades", myList);
             request.setAttribute("locais", LocalparagemFacade.findAll());
-            
+
 
 
             url = "/register";
         } else if (userPath.equals("/Etapa/add")) {
-            localOrigemId = Integer.parseInt((String)request.getParameter("localInicial"));
-            localDestinoId = Integer.parseInt((String)request.getParameter("localFinal"));
-            request.setAttribute("caminhos", TempoparagemFacade.caminhos(localOrigemId,localDestinoId));
-           url = "/register";
-            
+            localOrigemId = Integer.parseInt((String) request.getParameter("localInicial"));
+            localDestinoId = Integer.parseInt((String) request.getParameter("localFinal"));
+            request.setAttribute("caminhos", TempoparagemFacade.caminhos(localOrigemId, localDestinoId));
+            url = "/register";
+
         } else if (userPath.equals("/Etapa")) {
 
             url = "/index";
-        } else if (userPath.equals("/Etapa/view")) {
+        } else if (userPath.equals("/Etapa/view")){
+
 
             url = "/view";
         } else if (userPath.equals("/Etapa/update")) {
