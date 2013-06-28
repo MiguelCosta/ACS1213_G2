@@ -1,17 +1,29 @@
     
 
-<div class="navbar navbar-fixed-bottom" style="background-color: #f5f5f5; height: 40px;">
-    <div class="container" style="margin: 10px 40px" >
-        <div class="muted credit">
+<div class="container" style="position: static; bottom: 0" >
+
+<div class="footer">
+            <hr>
             Created by... 
             <div class="muted credit" style="float: right">
                 <a href="#" style="color: graytext">About</a>
                 |
                 <a href="#" style="color: graytext">Contact us</a>
-            </div> 
-        </div>
+            </div>
+            
        
     </div>
-    
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
 </body>
 </html>
