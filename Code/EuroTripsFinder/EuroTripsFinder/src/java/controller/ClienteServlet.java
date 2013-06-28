@@ -160,7 +160,7 @@ public class ClienteServlet extends HttpServlet {
             user.setDatanascimento(dataNasc);
 
             user.setDataregisto(new Date());
-            user.setFuncao("client");
+            user.setFuncao("Cliente");
             user.setPercursoCollection(new ArrayList<Percurso>());
             user.setViagemCollection(new ArrayList<Viagem>());
             

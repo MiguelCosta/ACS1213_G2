@@ -262,7 +262,7 @@ public class UtilizadorServlet extends HttpServlet {
             user.setDatanascimento(dataNasc);
 
             user.setDataregisto(new Date());
-            user.setFuncao("user");
+            user.setFuncao("Utilizador");
             user.setPercursoCollection(new ArrayList<Percurso>());
             user.setViagemCollection(new ArrayList<Viagem>());
 
