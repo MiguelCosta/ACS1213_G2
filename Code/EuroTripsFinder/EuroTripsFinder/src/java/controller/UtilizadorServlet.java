@@ -94,9 +94,30 @@ public class UtilizadorServlet extends HttpServlet {
                 session.setAttribute("user", null);
                 url = "login";
             }
-        }else if (userPath.equals("/Utilizador/index")) {
-            request.setAttribute("listutilizadores", utilizadorFacade.findAll());
-            url = "index";
+         }else if(userPath.equals("/Utilizador/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            try{
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = utilizadorFacade.count();
+                int nrpages;
+                if(ct<=20) nrpages= 1;
+                else if((ct)%utilizadorFacade.limitepage == 0) nrpages = ct/utilizadorFacade.limitepage;
+                else nrpages = (ct/utilizadorFacade.limitepage)+1;
+                if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
+                    page = 1;
+                    response.sendRedirect("/EuroTripsFinder/Utilizador/index?page="+1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page*utilizadorFacade.limitepage;
+                if(max > ct) max = ct;
+                request.setAttribute("listutilizadores", utilizadorFacade.findAll().subList((page-1)*utilizadorFacade.limitepage, max));
+                url = "index";
+            }
+            catch(NumberFormatException e){
+                response.sendRedirect("/EuroTripsFinder/Utilizador/index?page="+1);
+            }  
         } else if (userPath.equals("/Utilizador/logout")) {
             session.invalidate();
             response.sendRedirect("/EuroTripsFinder");

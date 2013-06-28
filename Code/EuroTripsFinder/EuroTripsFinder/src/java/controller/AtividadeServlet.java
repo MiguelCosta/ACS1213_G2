@@ -27,7 +27,7 @@ import validate.AtividadeValidator;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "AtividadeServlet", urlPatterns = {"/Atividade", "/Atividade/register", "/Atividade/add", "/Atividade/view", "/Cidade/Atividade/view"})
+@WebServlet(name = "AtividadeServlet", urlPatterns = {"/Atividade", "/Atividade/register", "/Atividade/add", "/Atividade/view", "/Cidade/Atividade/view", "/Atividade/index"})
 public class AtividadeServlet extends HttpServlet {
 
     @EJB
@@ -61,7 +61,31 @@ public class AtividadeServlet extends HttpServlet {
        
        
         if (userPath.equals("/Atividade")) {
-            url = "/view";
+               response.sendRedirect("/EuroTripsFinder/Atividade/index?page="+1);
+        }else if(userPath.equals("/Atividade/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            try{
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = atividadeFacade.count();
+                int nrpages;
+                if(ct<=20) nrpages= 1;
+                else if((ct)%atividadeFacade.limitepage == 0) nrpages = ct/atividadeFacade.limitepage;
+                else nrpages = (ct/atividadeFacade.limitepage)+1;
+                if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
+                    page = 1;
+                    response.sendRedirect("/EuroTripsFinder/Atividade/index?page="+1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page*atividadeFacade.limitepage;
+                if(max > ct) max = ct;
+                request.setAttribute("atividades", atividadeFacade.findAll().subList((page-1)*atividadeFacade.limitepage, max));
+                url = "/view";
+            }
+            catch(NumberFormatException e){
+                response.sendRedirect("/EuroTripsFinder/Atividade/index?page="+1);
+            }  
         } else if (userPath.equals("/Cidade/Atividade/view") || userPath.equals("/Atividade/view")) {
             nomeCidade = (String) request.getParameter("id");
             cidade = cidadeFacade.checkIfExistcidade(nomeCidade);

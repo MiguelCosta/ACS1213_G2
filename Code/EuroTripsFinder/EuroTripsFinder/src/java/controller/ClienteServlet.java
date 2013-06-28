@@ -39,7 +39,8 @@ import session.UtilizadorFacade;
                 "/Cliente/register",
                 "/Cliente/add",
                 "/Cliente/view",
-                "/Cliente/update"})
+                "/Cliente/update",
+                "/Cliente/index"})
 public class ClienteServlet extends HttpServlet {
 
     @EJB
@@ -89,8 +90,31 @@ public class ClienteServlet extends HttpServlet {
 
         
         if(userPath.equals("/Cliente")){
-            request.setAttribute("listclientes", clienteFacade.findAll());
-            url = "index";
+            response.sendRedirect("/EuroTripsFinder/Cliente/index?page="+1);
+        }else if(userPath.equals("/Cliente/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            try{
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = clienteFacade.count();
+                int nrpages;
+                if(ct<=20) nrpages= 1;
+                else if((ct)%clienteFacade.limitepage == 0) nrpages = ct/clienteFacade.limitepage;
+                else nrpages = (ct/clienteFacade.limitepage)+1;
+                if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
+                    page = 1;
+                    response.sendRedirect("/EuroTripsFinder/Cliente/index?page="+1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page*clienteFacade.limitepage;
+                if(max > ct) max = ct;
+                request.setAttribute("listclientes", clienteFacade.findAll().subList((page-1)*clienteFacade.limitepage, max));
+                url = "index";
+            }
+            catch(NumberFormatException e){
+                response.sendRedirect("/EuroTripsFinder/Cliente/index?page="+1);
+            }
         }else if(userPath.equals("/Cliente/register")){ 
             url = "register";
         }else if (userPath.equals("/Cliente/add")) {

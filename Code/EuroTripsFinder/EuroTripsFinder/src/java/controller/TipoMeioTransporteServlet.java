@@ -28,7 +28,8 @@ import session.TipomeiotransporteFacade;
                 "/TipoMeioTransporte/register",
                 "/TipoMeioTransporte/add",
                 "/TipoMeioTransporte/view",
-                "/TipoMeioTransporte/update"})
+                "/TipoMeioTransporte/update",
+                "/TipoMeioTransporte/index"})
 public class TipoMeioTransporteServlet extends HttpServlet {
     
     @EJB
@@ -68,8 +69,31 @@ public class TipoMeioTransporteServlet extends HttpServlet {
         
        
         if(userPath.equals("/TipoMeioTransporte")){
-            request.setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll());
-            url = "index";
+            response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/index?page="+1);
+        }else if(userPath.equals("/TipoMeioTransporte/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            try{
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = tipomeiotransporteFacade.count();
+                int nrpages;
+                if(ct<=20) nrpages= 1;
+                else if((ct)%tipomeiotransporteFacade.limitepage == 0) nrpages = ct/tipomeiotransporteFacade.limitepage;
+                else nrpages = (ct/tipomeiotransporteFacade.limitepage)+1;
+                if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
+                    page = 1;
+                    response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/index?page="+1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page*tipomeiotransporteFacade.limitepage;
+                if(max > ct) max = ct;
+                request.setAttribute("listmeiostransporte", tipomeiotransporteFacade.findAll().subList((page-1)*tipomeiotransporteFacade.limitepage, max));
+                url = "index";
+            }
+            catch(NumberFormatException e){
+                response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/index?page="+1);
+            }   
         } else if(userPath.equals("/TipoMeioTransporte/register")){
             url= "register";
         } else if(userPath.equals("/TipoMeioTransporte/add")){

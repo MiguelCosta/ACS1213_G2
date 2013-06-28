@@ -23,7 +23,7 @@ import session.CoordenadaFacade;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "CoordenadaController", urlPatterns = {"/Coordenada", "/Coordenada/register", "/Coordenada/add", "/Coordenada/view", "/Coordenada/update"})
+@WebServlet(name = "CoordenadaController", urlPatterns = {"/Coordenada", "/Coordenada/register", "/Coordenada/add", "/Coordenada/view", "/Coordenada/update", "/Coordenada/index"})
 public class CoordenadaServlet extends HttpServlet {
 
     @EJB
@@ -94,10 +94,31 @@ public class CoordenadaServlet extends HttpServlet {
 
             response.sendRedirect(request.getServletContext().getContextPath() + "/Coordenada");
         } else if (userPath.equals("/Coordenada")) {
-            List<Coordenada> myList = coordenadaFacade.findAll();
-            request.setAttribute("resultado", myList);
-            url = "/view";
-            //listar coordenadas
+            response.sendRedirect("/EuroTripsFinder/Coordenada/index?page="+1);
+        }else if(userPath.equals("/Coordenada/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            try{
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = coordenadaFacade.count();
+                int nrpages;
+                if(ct<=20) nrpages= 1;
+                else if((ct)%coordenadaFacade.limitepage == 0) nrpages = ct/coordenadaFacade.limitepage;
+                else nrpages = (ct/coordenadaFacade.limitepage)+1;
+                if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
+                    page = 1;
+                    response.sendRedirect("/EuroTripsFinder/Coordenada/index?page="+1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page*coordenadaFacade.limitepage;
+                if(max > ct) max = ct;
+                request.setAttribute("resultado", coordenadaFacade.findAll().subList((page-1)*coordenadaFacade.limitepage, max));
+                url = "/view";
+            }
+            catch(NumberFormatException e){
+                response.sendRedirect("/EuroTripsFinder/Coordenada/index?page="+1);
+            }
         } else if (userPath.equals("/Coordenada/view")) {
             int id = 0;
             try {
