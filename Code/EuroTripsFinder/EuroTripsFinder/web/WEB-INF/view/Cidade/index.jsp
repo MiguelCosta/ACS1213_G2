@@ -4,7 +4,9 @@
     Author     : JorgeMaia
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<h1>Lista de Cidades</h1>
+<h1>Lista de Cidades
+    <a class="btn btn-success" href="<%= request.getContextPath()%>/Cidade/register" ><i class="icon-plus icon-white"></i></a>
+</h1>
 
 <div class="pagination pagination-centered">
     <ul>
@@ -47,15 +49,18 @@
         <td><b>Nome:</b></td>
         <td><b>País:</b></td> 
         <td><b>Região:</b></td>
-        <td></td>
+        <td>Opções:</td>
 
     </tr> 
     <c:forEach var="row" items="${resultado}"> 
         <tr>            
-            <td> <a href="<%= request.getContextPath()%>/Cidade/view?id=${row.id}">${row.nome}</a></td>
+            <td>${row.nome}</td>
             <td>${row.pais}</td> 
             <td>${row.regiao}</td>
-            <td><a href="<%= request.getContextPath()%>/Atividade/view?id=${row.nome}">Ver Atividades</a></td>  
+            <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Atividade/view?id=${row.nome}">Atividades</a>
+            <a class="btn btn-info" href="<%= request.getContextPath()%>/Cidade/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
+            <a class="btn btn-danger" href="<%= request.getContextPath()%>/Cidade/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
+
         </tr>
     </c:forEach> 
 </table>

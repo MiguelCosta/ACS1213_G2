@@ -7,7 +7,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 
 
-<h1>Artigos Publicitários</h1>
+<h1>Artigos Publicitários
+    <a class="btn btn-success" href="<%= request.getContextPath()%>/Artigo/register" ><i class="icon-plus icon-white"></i></a>
+</h1>
 
 <div class="pagination pagination-centered">
     <ul>
@@ -51,12 +53,15 @@
         <td>ID:</td>
         <td>Nome:</td>
         <td>Conteúdo:</td>
+        <td>Opções:</td>
     </tr> 
     <c:forEach var="row" items="${listartigos}"> 
         <tr>
-            <td><a href="<%= request.getContextPath()%>/Artigo/view?id=${row.id}">${row.id}</a></td>
+            <td>${row.id}</td>
             <td>${row.nome}</td>
             <td>${row.conteudo}</td>
+            <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Artigo/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
+            <a class="btn btn-danger" href="<%= request.getContextPath()%>/Artigo/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
         </tr>
     </c:forEach> 
 </table>

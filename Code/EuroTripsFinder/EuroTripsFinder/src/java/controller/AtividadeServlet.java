@@ -27,7 +27,7 @@ import validate.AtividadeValidator;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "AtividadeServlet", urlPatterns = {"/Atividade", "/Atividade/register", "/Atividade/add", "/Atividade/view", "/Cidade/Atividade/view", "/Atividade/index"})
+@WebServlet(name = "AtividadeServlet", urlPatterns = {"/Atividade", "/Atividade/register", "/Atividade/add", "/Atividade/view", "/Cidade/Atividade/view", "/Atividade/index", "/Atividade/delete"})
 public class AtividadeServlet extends HttpServlet {
 
     @EJB
@@ -104,6 +104,27 @@ public class AtividadeServlet extends HttpServlet {
                     url = "/view";
                 }
             }
+            
+        } else if (userPath.equals("/Atividade/delete")) {
+            
+            try{
+                int atividadeid = Integer.parseInt(request.getParameter("id"));
+                Atividade atividadedelete = atividadeFacade.find(atividadeid);
+                atividadeFacade.remove(atividadedelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover a atividade";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Atividade/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Atividade/index");
+            
+            url = "/view";
+        
+            
+            
         } else if (userPath.equals("/Atividade/add")) {
             nomeAtividade = request.getParameter("nomeAtividade");
             descricao = request.getParameter("descricao");

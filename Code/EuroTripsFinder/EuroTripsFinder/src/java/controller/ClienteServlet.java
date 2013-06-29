@@ -40,7 +40,8 @@ import session.UtilizadorFacade;
                 "/Cliente/add",
                 "/Cliente/view",
                 "/Cliente/update",
-                "/Cliente/index"})
+                "/Cliente/index",
+                "/Cliente/delete"})
 public class ClienteServlet extends HttpServlet {
 
     @EJB
@@ -117,6 +118,24 @@ public class ClienteServlet extends HttpServlet {
             }
         }else if(userPath.equals("/Cliente/register")){ 
             url = "register";
+        } else if (userPath.equals("/Cliente/delete")) {
+            
+            try{
+                int clienteId = Integer.parseInt(request.getParameter("id"));
+                Cliente clientedelete = clienteFacade.find(clienteId);
+                clienteFacade.remove(clientedelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover o cliente";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Cliente/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Cliente/index");
+            
+            url = "index";
+        
         }else if (userPath.equals("/Cliente/add")) {
 
             email = request.getParameter("email");

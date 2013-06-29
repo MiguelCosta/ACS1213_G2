@@ -37,7 +37,8 @@ import session.ArtigopublicitarioFacade;
     "/Utilizador/update",
     "/Utilizador/index",
     "/Utilizador/edit",
-    "/Utilizador/updateUser"})
+    "/Utilizador/updateUser",
+    "/Utilizador/delete"})
 public class UtilizadorServlet extends HttpServlet {
 
     @EJB
@@ -126,6 +127,26 @@ public class UtilizadorServlet extends HttpServlet {
             url = "register";
         } else if (userPath.equals("/Utilizador/perfil")) {
             url = "perfil";
+        
+        } else if (userPath.equals("/Utilizador/delete")) {
+            
+            try{
+                int utilizadorid = Integer.parseInt(request.getParameter("id"));
+                Utilizador userdelete = utilizadorFacade.find(utilizadorid);
+                utilizadorFacade.remove(userdelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover o utilizador";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Utilizador/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Utilizador/index");
+            
+            url = "index";
+            
+            
         //edit outros utilizadores
         } else if (userPath.equals("/Utilizador/edit")) {
             url = "edit";

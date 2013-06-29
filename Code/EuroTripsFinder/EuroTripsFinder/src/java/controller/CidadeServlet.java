@@ -6,6 +6,7 @@ package controller;
 
 import entity.Cidade;
 import entity.Coordenada;
+import entity.Utilizador;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -25,7 +26,7 @@ import session.CoordenadaFacade;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "CidadeServlet", urlPatterns = {"/Cidade/register", "/Cidade/add", "/Cidade", "/Cidade/Atividade", "/Cidade/view", "/Cidade/update", "/Cidade/index"})
+@WebServlet(name = "CidadeServlet", urlPatterns = {"/Cidade/register", "/Cidade/add", "/Cidade", "/Cidade/Atividade", "/Cidade/view", "/Cidade/update", "/Cidade/index", "/Cidade/delete"})
 public class CidadeServlet extends HttpServlet {
 
     @EJB
@@ -147,6 +148,25 @@ public class CidadeServlet extends HttpServlet {
             cidade = cidadeFacade.cidade(id);
             session.setAttribute("cidade", cidade);
             url = "/view";
+            
+        } else if (userPath.equals("/Cidade/delete")) {
+            
+            try{
+                int cidadeid = Integer.parseInt(request.getParameter("id"));
+                Cidade cidadedelete = cidadeFacade.find(cidadeid);
+                cidadeFacade.remove(cidadedelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover a cidade";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Cidade/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Cidade/index");
+            
+            url = "/index";
+        
         } else if (userPath.equals("/Cidade/update")) {
 
             nome = (String) request.getParameter("nomeCidade");

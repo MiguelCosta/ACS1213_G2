@@ -34,7 +34,8 @@ import session.ContratoFacade;
     "/Contrato/add",
     "/Contrato/view",
     "/Contrato/update",
-    "/Contrato/index"})
+    "/Contrato/index",
+    "/Contrato/delete"})
 public class ContratoServlet extends HttpServlet {
 
     @EJB
@@ -109,6 +110,25 @@ public class ContratoServlet extends HttpServlet {
         } else if (userPath.equals("/Contrato/register")) {
             request.setAttribute("listclientes", clienteFacade.findAll());
             url = "register";
+            
+        } else if (userPath.equals("/Contrato/delete")) {
+            
+            try{
+                int contratoId = Integer.parseInt(request.getParameter("id"));
+                Contrato contratodelete = contratoFacade.find(contratoId);
+                contratoFacade.remove(contratodelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover o contrato";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Contrato/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Contrato/index");
+            
+            url = "index";
+        
         } else if (userPath.equals("/Contrato/add")) {
             valor = request.getParameter("valor");
             datainicio = request.getParameter("datainicio");

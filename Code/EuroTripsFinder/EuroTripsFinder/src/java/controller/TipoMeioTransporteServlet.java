@@ -29,7 +29,8 @@ import session.TipomeiotransporteFacade;
                 "/TipoMeioTransporte/add",
                 "/TipoMeioTransporte/view",
                 "/TipoMeioTransporte/update",
-                "/TipoMeioTransporte/index"})
+                "/TipoMeioTransporte/index",
+                "/TipoMeioTransporte/delete"})
 public class TipoMeioTransporteServlet extends HttpServlet {
     
     @EJB
@@ -129,6 +130,24 @@ public class TipoMeioTransporteServlet extends HttpServlet {
             
             url= "view";
             request.setAttribute("tipo", tipomeiotransporteFacade.find(Integer.parseInt(request.getParameter("id"))));
+        } else if (userPath.equals("/TipoMeioTransporte/delete")) {
+            
+            try{
+                int meioid = Integer.parseInt(request.getParameter("id"));
+                Tipomeiotransporte meiodelete = tipomeiotransporteFacade.find(meioid);
+                tipomeiotransporteFacade.remove(meiodelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover o meio de transporte";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/TipoMeioTransporte/index");
+            
+            url = "index";
+        
         } else if(userPath.equals("/TipoMeioTransporte/update")){
             nome = request.getParameter("nome");
             tipoid = request.getParameter("id");

@@ -8,7 +8,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 
 
-<h1>Contratos</h1>
+<h1>Contratos
+    <a class="btn btn-success" href="<%= request.getContextPath()%>/Contrato/register" ><i class="icon-plus icon-white"></i></a>
+</h1>
 
 <div class="pagination pagination-centered">
     <ul>
@@ -53,13 +55,17 @@
                     <td>Valor:</td>
                     <td>Data Início:</td>
                     <td>Data Fim:</td>
+                    <td>Opções:</td>
                 </tr> 
             <c:forEach var="row" items="${listcontratos}"> 
                 <tr>
-                    <td><a href="<%= request.getContextPath()%>/Contrato/view?id=${row.id}">${row.id}</a></td>
+                    <td>${row.id}</td>
                     <td>${row.getValor()}</td>
                     <td>${row.getDatainicioString()}</td>
                     <td>${row.getDatafimString()}</td>
+                    <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Contrato/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
+                    <a class="btn btn-danger" href="<%= request.getContextPath()%>/Contrato/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
+
                 </tr>
             </c:forEach> 
 </table>

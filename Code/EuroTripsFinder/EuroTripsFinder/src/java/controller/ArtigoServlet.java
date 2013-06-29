@@ -35,7 +35,8 @@ import session.ContratoFacade;
                 "/Artigo/add",
                 "/Artigo/view",
                 "/Artigo/update",
-                "/Artigo/index"})
+                "/Artigo/index",
+                "/Artigo/delete"})
 public class ArtigoServlet extends HttpServlet {
     
     @EJB
@@ -145,6 +146,25 @@ public class ArtigoServlet extends HttpServlet {
         }else if(userPath.equals("/Artigo/view")){
             url= "view";
             request.setAttribute("artigo", artigoFacade.find(Integer.parseInt(request.getParameter("id"))));
+        } else if (userPath.equals("/Artigo/delete")) {
+            
+            try{
+                int artigoId = Integer.parseInt(request.getParameter("id"));
+                Artigopublicitario artigodelete = artigoFacade.find(artigoId);
+                artigoFacade.remove(artigodelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover o artigo";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Artigo/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Artigo/index");
+            
+            url = "index";
+        
+        
         }else if(userPath.equals("/Artigo/add")){
             
             nome = request.getParameter("nome");

@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 
-<h1>Atividades da Cidade</h1>
+<h1>Atividades da Cidade
+    <a class="btn btn-success" href="<%= request.getContextPath()%>/Atividade/register" ><i class="icon-plus icon-white"></i></a>
+</h1>
 <div class="pagination pagination-centered">
     <ul>
 
@@ -42,12 +44,16 @@
                 <tr>
                     <td>Nome:</td>
                     <td>Descrição:</td> 
+                    <td>Opções:</td>
                                                       
                 </tr> 
             <c:forEach var="row" items="${atividades}"> 
                 <tr>                  
                     <td>${row.nome}</a></td>
-                    <td>${row.descricao}</td>         
+                    <td>${row.descricao}</td>
+                    <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Atividade/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
+                    <a class="btn btn-danger" href="<%= request.getContextPath()%>/Atividade/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
+
                 </tr>
             </c:forEach> 
 </table>

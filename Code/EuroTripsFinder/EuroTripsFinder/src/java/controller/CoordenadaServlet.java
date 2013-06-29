@@ -23,7 +23,7 @@ import session.CoordenadaFacade;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "CoordenadaController", urlPatterns = {"/Coordenada", "/Coordenada/register", "/Coordenada/add", "/Coordenada/view", "/Coordenada/update", "/Coordenada/index"})
+@WebServlet(name = "CoordenadaController", urlPatterns = {"/Coordenada", "/Coordenada/register", "/Coordenada/add", "/Coordenada/view", "/Coordenada/update", "/Coordenada/index", "/Coordenada/delete"})
 public class CoordenadaServlet extends HttpServlet {
 
     @EJB
@@ -142,6 +142,25 @@ public class CoordenadaServlet extends HttpServlet {
             url = "/update";
         } else if (userPath.equals("/Coordenada/register")) {
             url = "/create";
+            
+        } else if (userPath.equals("/Coordenada/delete")) {
+            
+            try{
+                int coordenadaid = Integer.parseInt(request.getParameter("id"));
+                Coordenada coordenadadelete = coordenadaFacade.find(coordenadaid);
+                coordenadaFacade.remove(coordenadadelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover a coordenada";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Coordenada/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Coordenada/index");
+            
+            url = "/view";
+        
         } else if (userPath.equals("/Coordenada/update")) {
             nome = (String) request.getParameter("nomecoordenada");
             latitude = request.getParameter("latitude");

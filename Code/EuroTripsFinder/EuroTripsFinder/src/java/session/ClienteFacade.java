@@ -5,6 +5,7 @@
 package session;
 
 import entity.Cliente;
+import entity.Utilizador;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,5 +36,5 @@ public class ClienteFacade extends AbstractFacade<Cliente> {
         Cliente cliente = (Cliente) q.getSingleResult();
         return cliente;
 
-}
+    }    
 }
