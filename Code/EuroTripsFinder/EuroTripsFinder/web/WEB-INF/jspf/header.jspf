@@ -27,17 +27,15 @@
                 directionsDisplay.setMap(map);
             }
 
-            function calcRoute() {
-                var start = document.getElementById('start').value;
-                var end = document.getElementById('end').value;
+            function calcRoute(partida, destino, intermedios) {
+                var start = partida;
+                var end = destino;
                 var waypts = [];
-                var checkboxArray = document.getElementById('waypoints');
-                for (var i = 0; i < checkboxArray.length; i++) {
-                    if (checkboxArray.options[i].selected == true) {
+                var aux = intermedios.split(" ");
+                for (var i = 0; i < aux.length; i++) {                    
                         waypts.push({
-                            location: checkboxArray[i].value,
+                            location: aux[i],
                             stopover: true});
-                    }
                 }
 
                
@@ -82,7 +80,7 @@
 
         <title>EuroTripsFinder</title>
     </head>
-    <body onload="calcRoute();">
+    <body>
         
         <div class="container">
 

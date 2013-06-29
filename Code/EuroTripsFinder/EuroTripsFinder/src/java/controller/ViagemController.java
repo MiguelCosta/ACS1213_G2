@@ -93,7 +93,7 @@ public class ViagemController extends HttpServlet {
             viag = viagemFacade.getViagemDados(Id);
             request.setAttribute("viagem", viag);
 
-            if (viag.getPercursoid() == null){
+            if (viag.getPercursoid() == null) {
                 session.setAttribute("MessageError", "Esta viagem ainda não possui nenhuma Etapa.");
             } else {
 
@@ -102,24 +102,31 @@ public class ViagemController extends HttpServlet {
                 String origem = null;
                 String destino = null;
                 int index = 0;
-                Etapa aux  = (Etapa) ((List) viag.getPercursoid().getEtapaCollection()).get(0);
-                origem = aux.getLocalparageminicialid().getCoordenadaid().getLatitude().toString() + " , "
-                                + aux.getLocalparageminicialid().getCoordenadaid().getLongitude().toString();
-                aux  = (Etapa) ((List) viag.getPercursoid().getEtapaCollection()).get((((List) viag.getPercursoid().getEtapaCollection()).size()-1));
-                destino = aux.getLocalparagemdestinoid().getCoordenadaid().getLatitude().toString() + " , "
-                                + aux.getLocalparagemdestinoid().getCoordenadaid().getLongitude().toString();
+                Etapa aux = (Etapa) ((List) viag.getPercursoid().getEtapaCollection()).get(0);
+                origem = aux.getLocalparageminicialid().getCoordenadaid().getLatitude().toString() + ","
+                        + aux.getLocalparageminicialid().getCoordenadaid().getLongitude().toString();
+                aux = (Etapa) ((List) viag.getPercursoid().getEtapaCollection()).get((((List) viag.getPercursoid().getEtapaCollection()).size() - 1));
+                destino = aux.getLocalparagemdestinoid().getCoordenadaid().getLatitude().toString() + ","
+                        + aux.getLocalparagemdestinoid().getCoordenadaid().getLongitude().toString();
                 for (Etapa x : viag.getPercursoid().getEtapaCollection()) {
                     if (index != 0) {
-                       
-                        intermedios.add(x.getLocalparageminicialid().getCoordenadaid().getLatitude().toString() + " , "
+
+                        intermedios.add(x.getLocalparageminicialid().getCoordenadaid().getLatitude().toString() + ","
                                 + x.getLocalparageminicialid().getCoordenadaid().getLongitude().toString());
                     }
                     index++;
                 }
                 intermedios.remove(destino);
+                String pontos = "";
+                for (String pontosIntermedios : intermedios) {
+                pontos += pontosIntermedios+" ";
+                }
+                pontos = pontos.substring(0, pontos.length()-2);
+                
+
                 request.setAttribute("origem", origem);
                 request.setAttribute("destino", destino);
-                request.setAttribute("intermedios", intermedios.toArray());
+                request.setAttribute("intermedios", pontos);
             }
             url = "view";
         } else if (userPath.equals("/Viagem/add")) {

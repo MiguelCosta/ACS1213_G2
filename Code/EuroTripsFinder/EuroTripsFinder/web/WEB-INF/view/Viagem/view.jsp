@@ -31,15 +31,12 @@
                 <input type="text" id="inputDataFim" name="datafim" placeholder="Data de Fim" required="required" value="${viagem.getDatafim()}">
             </div>   
         </div>
-        <input type="hidden" id="start" value="${origem}">                
-        <br>
-        <select multiple class="hide" id="waypoints">
-            <c:forEach var="row" items="${intermedios}"> 
-                <option value="${row}" selected></option>
-            </c:forEach>
-        </select>
-        <br>
-        <input type="hidden" id="end" value="${destino}">
+
+        <script type="text/javascript">
+            window.onload = function() {
+                calcRoute('${origem}', '${destino}', '${intermedios}');
+            };
+        </script>
     </div>
 
     <div style="float: right; width: 60%; height: 60%; clear: right; position: static;">
