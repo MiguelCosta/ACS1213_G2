@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,12 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.*;
+import validate.ViagemValidator;
 
 /**
  *
  * @author Miguel
  */
-@WebServlet(name = "ViagemController", urlPatterns = {"/Viagem", "/Viagem/view"})
+@WebServlet(name = "ViagemController", urlPatterns = {"/Viagem", "/Viagem/view", "/Viagem/add", "/Viagem/register"})
 public class ViagemController extends HttpServlet {
 
     @EJB
@@ -52,10 +55,17 @@ public class ViagemController extends HttpServlet {
         HttpSession session = request.getSession();
         String userPath = request.getServletPath();
         String url = "";
-
-        Viagem viag;
-
+        ViagemValidator vv = new ViagemValidator();
         Utilizador user = (Utilizador) session.getAttribute("user");
+        if (user == null) {
+            session.setAttribute("MessageError", "Tem de Iniciar Sessão para Aceder a Viagens!");
+            response.sendRedirect("/EuroTripsFinder/Utilizador");
+            return;
+        }
+
+        Viagem viag = new Viagem();
+
+
 
         // Publiciade
         session.setAttribute("artigorandom", artigoFacade.ArtigoRandom());
@@ -71,6 +81,10 @@ public class ViagemController extends HttpServlet {
                 session.setAttribute("MessageError", "Erro ao obter as viagens." + e.getMessage());
             }
 
+            if (viagens.isEmpty()) {
+                session.setAttribute("MessageError", "Não existem viagens registadas para este Utilizador.");
+            }
+
             request.setAttribute("viagens", viagens);
 
             url = "index";
@@ -79,28 +93,66 @@ public class ViagemController extends HttpServlet {
             viag = viagemFacade.getViagemDados(Id);
             request.setAttribute("viagem", viag);
 
-            //separacao de pontos para mostrar no mapa
-            ArrayList<String> intermedios = new ArrayList<String>();
-            String origem = null;
-            String destino = null;
-            int index = 0;
-            for (Etapa x : viag.getPercursoid().getEtapaCollection()) {
-                if (index == 0) {
-                    origem = x.getLocalparageminicialid().getCoordenadaid().getLatitude().toString() + " , "
-                            + x.getLocalparageminicialid().getCoordenadaid().getLongitude().toString();
-                } else {
-                    intermedios.add(x.getLocalparagemdestinoid().getCoordenadaid().getLatitude().toString() + " , "
-                            + x.getLocalparagemdestinoid().getCoordenadaid().getLongitude().toString());
+            if (viag.getPercursoid() == null){
+                session.setAttribute("MessageError", "Esta viagem ainda não possui nenhuma Etapa.");
+            } else {
+
+                //separacao de pontos para mostrar no mapa
+                ArrayList<String> intermedios = new ArrayList<String>();
+                String origem = null;
+                String destino = null;
+                int index = 0;
+                Etapa aux  = (Etapa) ((List) viag.getPercursoid().getEtapaCollection()).get(0);
+                origem = aux.getLocalparageminicialid().getCoordenadaid().getLatitude().toString() + " , "
+                                + aux.getLocalparageminicialid().getCoordenadaid().getLongitude().toString();
+                aux  = (Etapa) ((List) viag.getPercursoid().getEtapaCollection()).get((((List) viag.getPercursoid().getEtapaCollection()).size()-1));
+                destino = aux.getLocalparagemdestinoid().getCoordenadaid().getLatitude().toString() + " , "
+                                + aux.getLocalparagemdestinoid().getCoordenadaid().getLongitude().toString();
+                for (Etapa x : viag.getPercursoid().getEtapaCollection()) {
+                    if (index != 0) {
+                       
+                        intermedios.add(x.getLocalparageminicialid().getCoordenadaid().getLatitude().toString() + " , "
+                                + x.getLocalparageminicialid().getCoordenadaid().getLongitude().toString());
+                    }
+                    index++;
                 }
-                index++;
+                intermedios.remove(destino);
+                request.setAttribute("origem", origem);
+                request.setAttribute("destino", destino);
+                request.setAttribute("intermedios", intermedios.toArray());
             }
-            destino = intermedios.get(intermedios.size() - 1);
-            intermedios.remove(destino);
-            request.setAttribute("origem", origem);
-            request.setAttribute("destino", destino);
-            request.setAttribute("intermedios", intermedios.toArray());
             url = "view";
+        } else if (userPath.equals("/Viagem/add")) {
+            String dtInicio = (String) request.getParameter("datainicio");
+            String dtFim = (String) request.getParameter("datafim");
+            String nome = (String) request.getParameter("nome");
+            String descricao = (String) request.getParameter("descricao");
+
+            if (vv.validaRegisto(dtInicio, nome, dtFim, request)) {
+                try {
+                    viag.setDatafim(vv.formataData(dtFim));
+                    viag.setDatainicio(vv.formataData(dtInicio));
+                } catch (Exception ex) {
+                    session.setAttribute("error", ex.getMessage().toString());
+                }
+
+                viag.setNome(nome);
+                viag.setDescricao(descricao);
+                viag.setUtilizadorid(user);
+                viagemFacade.register(viag);
+
+            } else {
+
+                session.setAttribute("MessageError", "Os dados inseridos não são válidos!");
+                response.sendRedirect("/EuroTripsFinder/Viagem/register");
+                return;
+            }
+
+            url = "register";
+        } else if (userPath.equals("/Viagem/register")) {
+            url = "register";
         }
+
         try {
             request.getRequestDispatcher("/WEB-INF/view/Viagem/" + url + ".jsp").forward(request, response);
         } catch (Exception e) {

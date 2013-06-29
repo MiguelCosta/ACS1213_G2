@@ -2,7 +2,7 @@
 
 <form action="<%= request.getContextPath()%>/Viagem/view" method=post class="form-horizontal">
 
-    <div style="float: left;">
+    <div style="float: left; clear: left; position: static;">
         <h1>Detalhes da Viagem</h1>
         <div class="control-group">
             <label class="control-label" for="inputNomeViagem">Nome da Viagem</label>
@@ -42,13 +42,13 @@
         <input type="hidden" id="end" value="${destino}">
     </div>
 
-    <div style="float: right; width: 60%; height: 60%;">
+    <div style="float: right; width: 60%; height: 60%; clear: right; position: static;">
         <div id="map-canvas" style="float:left;width:50%;height:70%;"></div>
         <div id="directions_panel" style="margin:20px;background-color:#FFEE77;"></div>
     </div>
 
-    <div style="vertical-align: bottom; height: 40%;">
-        <h1>Etapas</h1>
+    <div style="position: static; clear: both;">
+        <h1>Etapas</h1> 
         <table class="table table-hover"> 
             <thead> 
             <td>ID</td>       
@@ -72,7 +72,15 @@
                     <td>${row.getMeioTransporteid()}</td>
                 </tr>
             </c:forEach> 
-        </table>
+        </table>       
+    </div>
+
+</form>
+<form action="<%= request.getContextPath()%>/Etapa/register" method=post class="form-horizontal">
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary" >Adicionar Nova</button>
     </div>
 </form>
+
+
 

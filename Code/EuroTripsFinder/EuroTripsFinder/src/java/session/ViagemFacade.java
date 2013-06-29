@@ -47,4 +47,19 @@ public class ViagemFacade extends AbstractFacade<Viagem> {
         Viagem x = (Viagem)q.getSingleResult();
         return x;
     }
+    public boolean register(Viagem atividade) {
+
+        boolean sucess = false;
+        try {
+            em.persist(atividade);
+            em.flush();
+            
+            sucess = true;
+        } catch (Exception e) {
+            sucess = false;           
+            return sucess;
+}
+        return sucess;
+
+    }
 }

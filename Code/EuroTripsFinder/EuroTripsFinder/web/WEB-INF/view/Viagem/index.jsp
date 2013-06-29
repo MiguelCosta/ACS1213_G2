@@ -14,7 +14,7 @@
     <td>Nome</td>
     <td>Data Inicio</td>
     <td>Data Fim</td>
-    <td> Percurso</td>
+    <tdPercurso</td>
 </thead> 
 <c:forEach var="row" items="${viagens}"> 
     <tr>

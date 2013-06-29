@@ -55,7 +55,7 @@
             <td> <a href="<%= request.getContextPath()%>/Cidade/view?id=${row.id}">${row.nome}</a></td>
             <td>${row.pais}</td> 
             <td>${row.regiao}</td>
-            <td><a href="<%= request.getContextPath()%>/Cidade/Atividade/view?id=${row.nome}">Ver Atividades</a></td>  
+            <td><a href="<%= request.getContextPath()%>/Atividade/view?id=${row.nome}">Ver Atividades</a></td>  
         </tr>
     </c:forEach> 
 </table>
