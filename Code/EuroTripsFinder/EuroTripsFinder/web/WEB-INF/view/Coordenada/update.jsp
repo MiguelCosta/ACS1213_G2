@@ -4,6 +4,8 @@
     Author     : JorgeMaia
 --%>
 
+<div class="container" style="max-width: 425px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
+
 <h1>Atualizar Coordenadas</h1>
 
 <form action="<%= request.getContextPath()%>/Coordenada/update" method=post class="form-horizontal">
@@ -37,8 +39,10 @@
         }%>
 
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Update</button>
-        <button type="button" class="btn">Limpar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn" href="<%= request.getContextPath()%>/Coordenada/index">Cancelar</a>
     </div>
 
 </form>
+        
+</div>

@@ -6,6 +6,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 
+<div class="container" style="max-width: 390px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
+
 <h1>Contrato ${contrato.getId()}</h1>
 
 <form action="<%= request.getContextPath()%>/Contrato/update" method=post class="form-horizontal">
@@ -33,8 +35,8 @@
     </div>
 
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Update</button>
-        <button type="button" class="btn">Limpar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn" href="<%= request.getContextPath()%>/Contrato/index">Cancelar</a>
     </div>
 
 </form>
@@ -53,3 +55,5 @@
         </table>
     </c:when>
 </c:choose>
+         
+</div>

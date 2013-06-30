@@ -4,6 +4,8 @@
     Author     : miltonnunes52
 --%>
 
+<div class="container" style="max-width: 390px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
+
 
 <h1>Perfil de ${tipo.getNome()}</h1>
 
@@ -22,7 +24,9 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Update</button>
-        <button type="button" class="btn">Limpar</button>
+        <a class="btn" href="<%= request.getContextPath()%>/TipoMeioTransporte/index">Cancelar</a>
     </div>
 
 </form>
+
+</div>
