@@ -498,7 +498,10 @@
     </head>
 
     <body onload="init()">
-        <h1>Adicionar cidade do mapa:</h1>
+        
+    <div class="container" style="max-width:  1100px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
+
+        <h1>Adicionar Cidade:</h1>
 
 
         <form action="<%= request.getContextPath()%>/Cidade/add" method=post class="form-horizontal">
@@ -549,7 +552,8 @@
 
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Registar</button>
-                    <button type="button" class="btn">Limpar</button>
+                    <button type="reset" class="btn">Limpar</button>
+                    <a class="btn" href="<%= request.getContextPath()%>/Cidade/index">Cancelar</a>
                 </div>
 
             </div>
@@ -560,6 +564,8 @@
             <div id="matches"></div>
             </div>
         </form>
+            
+    </div>
 
     </body>
 </html>

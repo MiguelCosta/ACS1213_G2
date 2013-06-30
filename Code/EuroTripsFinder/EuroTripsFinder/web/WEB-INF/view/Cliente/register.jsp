@@ -3,6 +3,10 @@
     Created on : 1/Jun/2013, 22:35:16
     Author     : miltonnunes52
 --%>
+
+
+<div class="container" style="max-width: 390px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
+
 <h1>Registar Cliente</h1>
 
 <form action="<%= request.getContextPath()%>/Cliente/add" method=post class="form-horizontal">
@@ -72,7 +76,10 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Registar</button>
-        <button type="button" class="btn">Limpar</button>
+        <button type="reset" class="btn">Limpar</button>
+        <a class="btn" href="<%= request.getContextPath()%>/Cliente/index">Cancelar</a>
     </div>
 
 </form>
+
+</div>

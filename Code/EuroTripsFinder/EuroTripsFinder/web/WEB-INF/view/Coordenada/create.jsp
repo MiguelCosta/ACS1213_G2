@@ -4,7 +4,9 @@
     Author     : JorgeMaia
 --%>
 
-<h1>Inserir Nova Coordenada</h1>
+<div class="container" style="max-width: 390px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
+
+<h1>Inserir Coordenada</h1>
 
 <form action="<%= request.getContextPath()%>/Coordenada/add" method=post class="form-horizontal">
 
@@ -35,7 +37,10 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Registar</button>
-        <button type="button" class="btn">Limpar</button>
+        <button type="reset" class="btn">Limpar</button>
+        <a class="btn" href="<%= request.getContextPath()%>/Coordenada/index">Cancelar</a>
     </div>
 
 </form>
+
+</div>
