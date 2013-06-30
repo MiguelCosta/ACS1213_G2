@@ -34,7 +34,7 @@ public class TempoparagemFacade extends AbstractFacade<Tempoparagem> {
 
     public List<Tempoparagem> caminhos(int localOrigemId, int localDestinoId) {
 
-        Query query = em.createNamedQuery(" SELECT tempoparagemid FROM tempoparagem WHERE transporteviagemid IN ("
+        Query query = em.createNativeQue-ry(" SELECT * FROM tempoparagem WHERE transporteviagemid IN ("
                 + " SELECT transporteviagem.transporteviagemid "
                 + " FROM transporteviagem,calendario,rota "
                 + " WHERE transporteviagemid IN ( "
