@@ -33,7 +33,9 @@ import session.ContratoFacade;
     "/Contrato/register",
     "/Contrato/add",
     "/Contrato/view",
-    "/Contrato/update"})
+    "/Contrato/update",
+    "/Contrato/index",
+    "/Contrato/delete"})
 public class ContratoServlet extends HttpServlet {
 
     @EJB
@@ -80,11 +82,53 @@ public class ContratoServlet extends HttpServlet {
 
 
         if (userPath.equals("/Contrato")) {
-            request.setAttribute("listcontratos", contratoFacade.findAll());
-            url = "index";
+            response.sendRedirect("/EuroTripsFinder/Contrato/index?page="+1);
+        } else if(userPath.equals("/Contrato/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            try{
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = contratoFacade.count();
+                int nrpages;
+                if(ct<=20) nrpages= 1;
+                else if((ct)%contratoFacade.limitepage == 0) nrpages = ct/contratoFacade.limitepage;
+                else nrpages = (ct/contratoFacade.limitepage)+1;
+                if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
+                    page = 1;
+                    response.sendRedirect("/EuroTripsFinder/Contrato/index?page="+1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page*contratoFacade.limitepage;
+                if(max > ct) max = ct;
+                request.setAttribute("listcontratos", contratoFacade.findAll().subList((page-1)*contratoFacade.limitepage, max));
+                url = "index";
+            }
+            catch(NumberFormatException e){
+                response.sendRedirect("/EuroTripsFinder/Contrato/index?page="+1);
+            }
         } else if (userPath.equals("/Contrato/register")) {
             request.setAttribute("listclientes", clienteFacade.findAll());
             url = "register";
+            
+        } else if (userPath.equals("/Contrato/delete")) {
+            
+            try{
+                int contratoId = Integer.parseInt(request.getParameter("id"));
+                Contrato contratodelete = contratoFacade.find(contratoId);
+                contratoFacade.remove(contratodelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover o contrato";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Contrato/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Contrato/index");
+            
+            url = "index";
+        
         } else if (userPath.equals("/Contrato/add")) {
             valor = request.getParameter("valor");
             datainicio = request.getParameter("datainicio");

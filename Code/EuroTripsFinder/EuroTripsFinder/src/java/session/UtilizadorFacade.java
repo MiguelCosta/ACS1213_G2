@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -13,7 +14,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author JorgeMaia
+ * @author Miguel
  */
 @Stateless
 public class UtilizadorFacade extends AbstractFacade<Utilizador> {
@@ -29,7 +30,7 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
     public UtilizadorFacade() {
         super(Utilizador.class);
     }
-    
+
     public Utilizador UtilizadorLogin(String username, String password) {
         Query q = em.createNamedQuery("Utilizador.findByUsernameAndPassword");
         q.setParameter("username", username);
@@ -40,7 +41,7 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
             return users.get(0);
         } else {
             return null;
-}
+        }
     }
     
     public Utilizador UtilizadorByUsername(String username){
@@ -58,5 +59,13 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
         List<Utilizador> users = q.getResultList();
             return users.get(users.size()-1);
         
+    }
+    
+     public List<Utilizador> UtilizadorPages(int page) {
+        Query q = em.createNamedQuery("Utilizador.findAll");
+        q.setFirstResult(page*limitepage);
+        q.setMaxResults(limitepage);
+        List<Utilizador> users = q.getResultList();
+        return users;
     }
 }

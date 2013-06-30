@@ -14,15 +14,15 @@
     <td>Nome</td>
     <td>Data Inicio</td>
     <td>Data Fim</td>
-    <td> Percurso</td>
+    <tdPercurso</td>
 </thead> 
 <c:forEach var="row" items="${viagens}"> 
     <tr>
-        <td><a href="#"><c:out value="${row.getId()}"/></a></td>            
-        <td><c:out value="${row.getNome()}"/></td>
-        <td><c:out value="${row.getDatainicio()}"/></td>
-        <td><c:out value="${row.getDatafim()}"/></td>
-        <td><c:out value="${row.getPercursoid()}"/></td>
+        <td><a href="<%= request.getContextPath()%>/Viagem/view?id=${row.getId()}">${row.getId()}</a></td>
+        <td>${row.getNome()}</td>
+        <td>${row.getDatainicio()}</td>
+        <td>${row.getDatafim()}</td>
+        <td>${row.getPercursoid()}</td>
     </tr>
 </c:forEach> 
 </table>

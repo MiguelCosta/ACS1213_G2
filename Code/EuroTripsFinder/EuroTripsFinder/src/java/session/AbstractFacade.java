@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,10 +10,11 @@ import javax.persistence.EntityManager;
 
 /**
  *
- * @author JorgeMaia
+ * @author Miguel
  */
 public abstract class AbstractFacade<T> {
     private Class<T> entityClass;
+    public int limitepage = 20;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;

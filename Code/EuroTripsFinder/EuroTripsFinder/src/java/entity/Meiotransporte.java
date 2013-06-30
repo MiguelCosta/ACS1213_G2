@@ -146,7 +146,7 @@ public class Meiotransporte implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Meiotransporte[ id=" + id + " ]";
+        return this.nome;
     }
     
 }

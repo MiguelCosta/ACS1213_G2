@@ -181,7 +181,7 @@ public class Localparagem implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Localparagem[ id=" + id + " ]";
+        return this.nome;
     }
     
 }

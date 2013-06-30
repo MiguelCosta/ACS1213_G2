@@ -6,6 +6,7 @@ package controller;
 
 import entity.Cidade;
 import entity.Coordenada;
+import entity.Utilizador;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -25,7 +26,7 @@ import session.CoordenadaFacade;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "CidadeServlet", urlPatterns = {"/Cidade/register", "/Cidade/add", "/Cidade", "/Cidade/Atividade", "/Cidade/view", "/Cidade/update"})
+@WebServlet(name = "CidadeServlet", urlPatterns = {"/Cidade/register", "/Cidade/add", "/Cidade", "/Cidade/Atividade", "/Cidade/view", "/Cidade/update", "/Cidade/index", "/Cidade/delete"})
 public class CidadeServlet extends HttpServlet {
 
     @EJB
@@ -117,15 +118,55 @@ public class CidadeServlet extends HttpServlet {
 
             response.sendRedirect(request.getServletContext().getContextPath() + "/Cidade");
         } else if (userPath.equals("/Cidade")) {
-
-            List<Cidade> myList = cidadeFacade.findAll();
-            request.setAttribute("resultado", myList);
-            url = "/index";
+            response.sendRedirect("/EuroTripsFinder/Cidade/index?page="+1);
+        }else if(userPath.equals("/Cidade/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            try{
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = cidadeFacade.count();
+                int nrpages;
+                if(ct<=20) nrpages= 1;
+                else if((ct)%cidadeFacade.limitepage == 0) nrpages = ct/cidadeFacade.limitepage;
+                else nrpages = (ct/cidadeFacade.limitepage)+1;
+                if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
+                    page = 1;
+                    response.sendRedirect("/EuroTripsFinder/Cidade/index?page="+1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page*cidadeFacade.limitepage;
+                if(max > ct) max = ct;
+                request.setAttribute("resultado", cidadeFacade.findAll().subList((page-1)*cidadeFacade.limitepage, max));
+                url = "/index";
+            }
+            catch(NumberFormatException e){
+                response.sendRedirect("/EuroTripsFinder/Cidade/index?page="+1);
+            }  
         } else if (userPath.equals("/Cidade/view")) {
             int id = Integer.parseInt(request.getParameter("id"));
             cidade = cidadeFacade.cidade(id);
             session.setAttribute("cidade", cidade);
             url = "/view";
+            
+        } else if (userPath.equals("/Cidade/delete")) {
+            
+            try{
+                int cidadeid = Integer.parseInt(request.getParameter("id"));
+                Cidade cidadedelete = cidadeFacade.find(cidadeid);
+                cidadeFacade.remove(cidadedelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover a cidade";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Cidade/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Cidade/index");
+            
+            url = "/index";
+        
         } else if (userPath.equals("/Cidade/update")) {
 
             nome = (String) request.getParameter("nomeCidade");

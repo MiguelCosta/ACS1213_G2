@@ -34,7 +34,11 @@ import session.ArtigopublicitarioFacade;
     "/Utilizador/register",
     "/Utilizador/addUser",
     "/Utilizador/perfil",
-    "/Utilizador/update"})
+    "/Utilizador/update",
+    "/Utilizador/index",
+    "/Utilizador/edit",
+    "/Utilizador/updateUser",
+    "/Utilizador/delete"})
 public class UtilizadorServlet extends HttpServlet {
 
     @EJB
@@ -91,7 +95,30 @@ public class UtilizadorServlet extends HttpServlet {
                 session.setAttribute("user", null);
                 url = "login";
             }
-
+         }else if(userPath.equals("/Utilizador/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            try{
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = utilizadorFacade.count();
+                int nrpages;
+                if(ct<=20) nrpages= 1;
+                else if((ct)%utilizadorFacade.limitepage == 0) nrpages = ct/utilizadorFacade.limitepage;
+                else nrpages = (ct/utilizadorFacade.limitepage)+1;
+                if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
+                    page = 1;
+                    response.sendRedirect("/EuroTripsFinder/Utilizador/index?page="+1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page*utilizadorFacade.limitepage;
+                if(max > ct) max = ct;
+                request.setAttribute("listutilizadores", utilizadorFacade.findAll().subList((page-1)*utilizadorFacade.limitepage, max));
+                url = "index";
+            }
+            catch(NumberFormatException e){
+                response.sendRedirect("/EuroTripsFinder/Utilizador/index?page="+1);
+            }  
         } else if (userPath.equals("/Utilizador/logout")) {
             session.invalidate();
             response.sendRedirect("/EuroTripsFinder");
@@ -100,6 +127,79 @@ public class UtilizadorServlet extends HttpServlet {
             url = "register";
         } else if (userPath.equals("/Utilizador/perfil")) {
             url = "perfil";
+        
+        } else if (userPath.equals("/Utilizador/delete")) {
+            
+            try{
+                int utilizadorid = Integer.parseInt(request.getParameter("id"));
+                Utilizador userdelete = utilizadorFacade.find(utilizadorid);
+                utilizadorFacade.remove(userdelete);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover o utilizador";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Utilizador/index");
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder/Utilizador/index");
+            
+            url = "index";
+            
+            
+        //edit outros utilizadores
+        } else if (userPath.equals("/Utilizador/edit")) {
+            url = "edit";
+            int utilizadorid = Integer.parseInt(request.getParameter("id"));
+            Utilizador useredit = utilizadorFacade.find(utilizadorid);
+            request.setAttribute("useredit", useredit);
+            
+            
+        //update outros utilizadores
+        } else if (userPath.equals("/Utilizador/updateUser")) {
+            
+            int utilizadorid = Integer.parseInt(request.getParameter("id"));
+            Utilizador useredit = utilizadorFacade.find(utilizadorid);
+            email = request.getParameter("email");
+            password = request.getParameter("password");
+            nome = request.getParameter("nome");
+            morada = request.getParameter("morada");
+            datanascimnto = request.getParameter("datanascimento");
+
+            // Valida de informação do form
+            ok = validate.UtilizadorValidator.validateFormRegister(email,
+                    useredit.getUsername(),
+                    password,
+                    nome,
+                    morada,
+                    datanascimnto,
+                    request);
+
+            try {
+                dataNasc = formataData(datanascimnto);
+            } catch (Exception e) {
+                erro = "Formato da Data inválido";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Utilizador/edit");
+                return;
+            }
+
+            
+            useredit.setEmail(email);
+            useredit.setPassword(password);
+            useredit.setNome(nome);
+            useredit.setMorada(morada);
+            useredit.setDatanascimento(dataNasc);
+
+            try {
+                utilizadorFacade.edit(useredit);
+            } catch (Exception e) {
+                session.setAttribute("MessageError", "Erro ao atualizar a informação.");
+                response.sendRedirect("/EuroTripsFinder/Utilizador/edit");
+                return;
+            }
+
+            response.sendRedirect("/EuroTripsFinder/Utilizador/index");
 
         } else if (userPath.equals("/Utilizador/update")) {
 
@@ -183,7 +283,7 @@ public class UtilizadorServlet extends HttpServlet {
             user.setDatanascimento(dataNasc);
 
             user.setDataregisto(new Date());
-            user.setFuncao("user");
+            user.setFuncao("Utilizador");
             user.setPercursoCollection(new ArrayList<Percurso>());
             user.setViagemCollection(new ArrayList<Viagem>());
 
