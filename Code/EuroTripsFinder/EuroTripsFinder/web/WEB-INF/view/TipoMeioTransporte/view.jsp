@@ -8,7 +8,7 @@
 
 
 <h1>Perfil de ${tipo.getNome()}</h1>
-
+<hr>
 <form action="<%= request.getContextPath()%>/TipoMeioTransporte/update" method=post class="form-horizontal">
 
     <input type="hidden" name ="id" value="${tipo.getId()}">

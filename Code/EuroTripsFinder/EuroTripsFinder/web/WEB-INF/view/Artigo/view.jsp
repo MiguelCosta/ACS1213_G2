@@ -8,6 +8,7 @@
 
 
 <h1>${artigo.getNome()}</h1>
+<hr>
 
 <form action="<%= request.getContextPath()%>/Artigo/update" method=post class="form-horizontal">
 
