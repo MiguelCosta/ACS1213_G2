@@ -97,32 +97,10 @@
             <input type="text" id="inputCusto" name="custo" placeholder="custo" required="required" pattern="\d*">
         </div>   
     </div>
-
+    
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Registar</button>
         <button type="button" class="btn">Limpar</button>
     </div>
-
-    <table class="table table-hover"> 
-        <tr>
-            <td>campo 1</td>
-            <td>2</td> 
-             <td>3</td>
-            <td>4</td> 
-             <td>5</td>
-
-        </tr> 
-        <c:forEach var="row" items="${caminhos}"> 
-            <tr>                  
-                <td> ${row.transporteviagemid}</td>
-                <td>${row.horachegada}</td> 
-                <td> ${row.horapartida}</td>
-                <td>${row.localparagemid}</td> 
-                <td> ${row.localparagemsequencia}</td>
-                <td> ${row.tempoparagemid}</a></td>
-
-            </tr>
-        </c:forEach> 
-    </table>
 
 </form>

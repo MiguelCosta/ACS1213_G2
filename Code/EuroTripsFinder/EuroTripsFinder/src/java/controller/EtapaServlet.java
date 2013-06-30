@@ -66,7 +66,7 @@ public class EtapaServlet extends HttpServlet {
             localOrigemId = Integer.parseInt((String) request.getParameter("localInicial"));
             localDestinoId = Integer.parseInt((String) request.getParameter("localFinal"));
             request.setAttribute("caminhos", TempoparagemFacade.caminhos(localOrigemId, localDestinoId));
-            url = "/register";
+            url = "/selecionaretapa";
 
         } else if (userPath.equals("/Etapa")) {
 
