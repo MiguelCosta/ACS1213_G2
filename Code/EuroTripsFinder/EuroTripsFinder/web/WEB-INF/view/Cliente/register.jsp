@@ -5,10 +5,10 @@
 --%>
 
 
-<div class="container" style="max-width: 390px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
+<div class="container" style="max-width: 445px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
 
 <h1>Registar Cliente</h1>
-
+<hr>
 <form action="<%= request.getContextPath()%>/Cliente/add" method=post class="form-horizontal">
 
     <div class="control-group">

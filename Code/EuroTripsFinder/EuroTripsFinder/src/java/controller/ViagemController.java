@@ -155,7 +155,7 @@ public class ViagemController extends HttpServlet {
                 return;
             }
 
-            url = "register";
+            url = "index";
         } else if (userPath.equals("/Viagem/register")) {
             url = "register";
         }

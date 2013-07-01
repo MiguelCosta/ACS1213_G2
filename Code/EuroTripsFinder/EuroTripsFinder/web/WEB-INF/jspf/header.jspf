@@ -89,7 +89,7 @@
                 <li class="brand" style="color:white">EuroTripsFinder</li>
                 <ul class="nav">
                     <li><a href="/EuroTripsFinder">Home</a></li>
-                    <li><a href="#">Viagem</a></li>
+                    <li><a href="/EuroTripsFinder/Viagem">Viagem</a></li>
                     <!--Menus do Admin e admin-->                
                     <% if (session.getAttribute("user") != null){
                         String funcao = ((Utilizador)session.getAttribute("user")).getFuncao();

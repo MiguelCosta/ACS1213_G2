@@ -9,7 +9,7 @@
 <div class="container" style="max-width: 390px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
 
 <h1>Contrato ${contrato.getId()}</h1>
-
+<hr>
 <form action="<%= request.getContextPath()%>/Contrato/update" method=post class="form-horizontal">
 
     <input type="hidden" name ="id" value="${contrato.getId()}">

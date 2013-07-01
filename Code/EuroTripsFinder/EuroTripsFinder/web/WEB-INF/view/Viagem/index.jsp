@@ -15,14 +15,21 @@
     <td>Data Inicio</td>
     <td>Data Fim</td>
     <tdPercurso</td>
-</thead> 
-<c:forEach var="row" items="${viagens}"> 
-    <tr>
-        <td><a href="<%= request.getContextPath()%>/Viagem/view?id=${row.getId()}">${row.getId()}</a></td>
-        <td>${row.getNome()}</td>
-        <td>${row.getDatainicio()}</td>
-        <td>${row.getDatafim()}</td>
-        <td>${row.getPercursoid()}</td>
-    </tr>
-</c:forEach> 
+        </thead> 
+        <c:forEach var="row" items="${viagens}"> 
+            <tr>
+                <td><a href="<%= request.getContextPath()%>/Viagem/view?id=${row.getId()}">${row.getId()}</a></td>
+                <td>${row.getNome()}</td>
+                <td>${row.getDatainicio()}</td>
+                <td>${row.getDatafim()}</td>
+                <td>${row.getPercursoid()}</td>
+            </tr>
+        </c:forEach> 
 </table>
+<div class="form-actions">
+
+    <a class="btn btn-primary" href="<%= request.getContextPath()%>/Viagem/register">Criar Nova Viagem</a>
+</div>
+
+
+

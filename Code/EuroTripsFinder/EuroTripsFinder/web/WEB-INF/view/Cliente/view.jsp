@@ -10,7 +10,7 @@
 
 
 <h1>Perfil de ${cliente.getUtilizador().getNome()}</h1>
-
+<hr>
 <form action="<%= request.getContextPath()%>/Cliente/update" method=post class="form-horizontal">
 
     <input type="hidden" name ="id" value="${cliente.getId()}">
