@@ -17,6 +17,8 @@
 
 <h1>Adicionar Nova Etapa</h1>
 
+Percurso: ${percurso.getId()} - ${percurso.getNome()}
+
 <form action="<%= request.getContextPath()%>/Etapa/add" method=post class="form-horizontal">
 
     <div class="control-group">
@@ -25,8 +27,6 @@
             <input type="text" id="inputNomeEtapa" name="nomeEtapa" placeholder="Nome" required="required">
         </div>   
     </div>
-
-
 
     <div class="control-group">
         <label class="control-label" for="inputLocalInicial">Local Inicial</label>
@@ -97,7 +97,7 @@
             <input type="text" id="inputCusto" name="custo" placeholder="custo" required="required" pattern="\d*">
         </div>   
     </div>
-    
+
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Registar</button>
         <button type="button" class="btn">Limpar</button>

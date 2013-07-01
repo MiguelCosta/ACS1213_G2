@@ -3,9 +3,14 @@
 
 <h1>Viagens disponíveis</h1>
 
+Local de partida: ${etapa.getLocalparageminicialid()} <br/>
+Data de partida: ${etapa.getDatapartida()} <br/>
+Local de chegada: ${etapa.getLocalparagemdestinoid()} <br/>
+Data de chegada: ${etapa.getDatachegada()} <br/>
+
 <p class="text-info">Número de viagens disponíveis: ${caminhos.size()}</p>
 
-<form action="<%= request.getContextPath()%>/Etapa/add" method=post class="form-horizontal">
+<form action="<%= request.getContextPath()%>/Etapa/addEtapa" method=post class="form-horizontal">
 
     <c:forEach var="row" items="${caminhos}"> 
         <label class="radio">
