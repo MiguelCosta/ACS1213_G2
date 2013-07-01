@@ -62,6 +62,8 @@ public class PercursoServlet extends HttpServlet {
         if (userPath.equals("/Percurso")) {
             request.setAttribute("percursos", ((Utilizador) session.getAttribute("user")).getPercursoCollection());
             url = "index";
+        } else if (userPath.equals("/Percurso/view")) {
+            url = "register";
         } else if (userPath.equals("/Percurso/register")) {
             url = "register";
         } else if (userPath.equals("/Percurso/add")) {
