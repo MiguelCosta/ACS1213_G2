@@ -483,9 +483,9 @@
         <style type="text/css">
             #mapcontainer {
                 position: relative;
-                width: 500px;
-                height: 400px;
-                margin: 50px;
+                width: 480px;
+                height: 380px;
+                margin: 0px;
                 float: right;
             }
 

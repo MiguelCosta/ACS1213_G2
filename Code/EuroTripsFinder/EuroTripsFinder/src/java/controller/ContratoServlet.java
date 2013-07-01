@@ -91,7 +91,7 @@ public class ContratoServlet extends HttpServlet {
                 page = new Integer(request.getParameter("page"));
                 int ct = contratoFacade.count();
                 int nrpages;
-                if(ct<=20) nrpages= 1;
+                if(ct<=contratoFacade.limitepage) nrpages= 1;
                 else if((ct)%contratoFacade.limitepage == 0) nrpages = ct/contratoFacade.limitepage;
                 else nrpages = (ct/contratoFacade.limitepage)+1;
                 if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){

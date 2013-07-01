@@ -100,7 +100,7 @@ public class ClienteServlet extends HttpServlet {
                 page = new Integer(request.getParameter("page"));
                 int ct = clienteFacade.count();
                 int nrpages;
-                if(ct<=20) nrpages= 1;
+                if(ct<=clienteFacade.limitepage) nrpages= 1;
                 else if((ct)%clienteFacade.limitepage == 0) nrpages = ct/clienteFacade.limitepage;
                 else nrpages = (ct/clienteFacade.limitepage)+1;
                 if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){

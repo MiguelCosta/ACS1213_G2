@@ -6,6 +6,9 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 
+
+<div class="row-fluid">
+        <div class="span6">
 <div class="container" style="max-width: 390px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
 
 
@@ -77,22 +80,36 @@
         <a class="btn" href="<%= request.getContextPath()%>/Cliente/index">Cancelar</a>
     </div>
 
-</form>    
+</form>  
+</div>
+    
+</div>
+    
+   <div class="span6">
+    <div class="container" style="max-width: 390px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
 
-<c:choose>
-    <c:when test="${contratos.size() > 0}">
+
         <h1>Contratos</h1>
         <table class="table table-hover"> 
             <tr> 
                 <td>ID:</td>
             </tr>
+            <c:choose>
+            <c:when test="${contratos.size() > 0}">
             <c:forEach var="row" items="${contratos}"> 
                 <tr>
                     <td><a href="<%= request.getContextPath()%>/Contrato/view?id=${row.id}">${row.id}</a></td>
                 </tr>
             </c:forEach> 
+            </c:when>
+            <c:otherwise>
+                <tr>
+                    <td>Cliente sem contratos</td>
+                </tr>
+            </c:otherwise>
+            </c:choose>
         </table>
-    </c:when>
-</c:choose>
+    </div>
         
+</div>
 </div>

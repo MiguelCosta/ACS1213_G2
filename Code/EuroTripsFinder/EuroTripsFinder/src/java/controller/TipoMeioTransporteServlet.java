@@ -79,7 +79,7 @@ public class TipoMeioTransporteServlet extends HttpServlet {
                 page = new Integer(request.getParameter("page"));
                 int ct = tipomeiotransporteFacade.count();
                 int nrpages;
-                if(ct<=20) nrpages= 1;
+                if(ct<=tipomeiotransporteFacade.limitepage) nrpages= 1;
                 else if((ct)%tipomeiotransporteFacade.limitepage == 0) nrpages = ct/tipomeiotransporteFacade.limitepage;
                 else nrpages = (ct/tipomeiotransporteFacade.limitepage)+1;
                 if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
