@@ -26,6 +26,13 @@
             <TEXTAREA id="inputDescricao" name="descricao" ROWS=3 COLS=30 required="required" >${atividade.getDescricao()}</TEXTAREA>
         </div>   
     </div>
+    <div class="control-group">
+        <label class="control-label" for="inputCidade">Cidade:</label>
+        <div class="controls">
+        <a class="btn" href="<%= request.getContextPath()%>/Cidade/view?id=${atividade.getCidadeid().getId()}">${atividade.getCidadeid().getNome()}</a>
+        </div>   
+    </div>
+
     
 
     <div class="form-actions">

@@ -38,6 +38,14 @@
                             <input type="date" id="inputDataFim" name="datafim" placeholder="yyyy-MM-dd" min="1900-01-01" max="2020-01-01" value="${contrato.getDatafimString()}">
                         </div>   
                     </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="inputCliente">Cliente</label>
+                        <div class="controls">
+                        <a class="btn" href="<%= request.getContextPath()%>/Cliente/view?id=${contrato.getClienteid().getId()}">${contrato.getClienteid().getId()}</a>
+                        </div>   
+                    </div>
+
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Guardar</button>
