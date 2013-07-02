@@ -97,7 +97,10 @@
                             <li><a href="/EuroTripsFinder/Utilizador/index">Utilizadores</a></li>
                             <li><a href="/EuroTripsFinder/Cliente">Clientes</a></li>
                             <li><a href="/EuroTripsFinder/Contrato">Contratos</a></li>
-                            <li><a href="/EuroTripsFinder/Artigo">Artigos Publicitário</a></li>
+                            <li><a href="/EuroTripsFinder/Artigo">Artigos</a></li>
+                            <li><a href="/EuroTripsFinder/Cidade">Cidades</a></li>
+                            <li><a href="/EuroTripsFinder/Coordenada">Coordenadas</a></li>
+                            <li><a href="/EuroTripsFinder/Atividade">Atividades</a></li>
                         <%}
                         else if(funcao.equals("user")){%>
                             <li><a href="#">Minhas Viagens</a></li>

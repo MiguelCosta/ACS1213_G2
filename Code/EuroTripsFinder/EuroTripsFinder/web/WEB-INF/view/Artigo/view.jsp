@@ -26,8 +26,14 @@
             <input type="text" id="inputNome" name="conteudo" placeholder="Conteudo" required="required" value="${artigo.getConteudo()}">
         </div>   
     </div>
-    
+     <div class="control-group">
+        <label class="control-label" for="inputContrato">Contrato</label>
+        <div class="controls">
+        <a class="btn" href="<%= request.getContextPath()%>/Contrato/view?id=${artigo.getContratoid().getId()}">${artigo.getContratoid().getId()}</a>
+        </div>   
+    </div>
 
+        
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn" href="<%= request.getContextPath()%>/Artigo/index">Cancelar</a>

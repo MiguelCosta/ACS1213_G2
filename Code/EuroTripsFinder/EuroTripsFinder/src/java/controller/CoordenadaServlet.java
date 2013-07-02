@@ -103,7 +103,7 @@ public class CoordenadaServlet extends HttpServlet {
                 page = new Integer(request.getParameter("page"));
                 int ct = coordenadaFacade.count();
                 int nrpages;
-                if(ct<=20) nrpages= 1;
+                if(ct<=coordenadaFacade.limitepage) nrpages= 1;
                 else if((ct)%coordenadaFacade.limitepage == 0) nrpages = ct/coordenadaFacade.limitepage;
                 else nrpages = (ct/coordenadaFacade.limitepage)+1;
                 if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){

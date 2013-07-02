@@ -68,8 +68,16 @@
         <td><c:out value="${row.getUsername()}"/></td>
         <td><c:out value="${row.getFuncao()}"/></td>
         <td><c:out value="${row.getDataregisto()}"/></td>
-        <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Utilizador/edit?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
+        <c:choose>
+        <c:when test="${row.getFuncao() != 'Administrador'}">
+        <td><a class="btn btn-info"  href="<%= request.getContextPath()%>/Utilizador/edit?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
         <a class="btn btn-danger" href="<%= request.getContextPath()%>/Utilizador/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
+        </c:when>
+        <c:otherwise>
+        <td><a class="btn active"  ><i class="icon-pencil icon-white"></i></a>
+        <a class="btn active" ><i class="icon-remove icon-white"></i></a></td>
+        </c:otherwise>
+        </c:choose>
     </tr>
 </c:forEach> 
 </table>
