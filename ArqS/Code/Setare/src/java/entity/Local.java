@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -37,8 +39,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Local.findByLatitude", query = "SELECT l FROM Local l WHERE l.latitude = :latitude"),
     @NamedQuery(name = "Local.findByLongitude", query = "SELECT l FROM Local l WHERE l.longitude = :longitude")})
 public class Local implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
@@ -177,5 +181,4 @@ public class Local implements Serializable {
     public String toString() {
         return "entity.Local[ id=" + id + " ]";
     }
-    
 }

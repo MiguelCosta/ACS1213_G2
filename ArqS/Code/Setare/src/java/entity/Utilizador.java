@@ -33,7 +33,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Utilizador.findAll", query = "SELECT u FROM Utilizador u"),
     @NamedQuery(name = "Utilizador.findById", query = "SELECT u FROM Utilizador u WHERE u.id = :id"),
     @NamedQuery(name = "Utilizador.findByNome", query = "SELECT u FROM Utilizador u WHERE u.nome = :nome"),
-    @NamedQuery(name = "Utilizador.findByEmail", query = "SELECT u FROM Utilizador u WHERE u.email = :email")})
+    @NamedQuery(name = "Utilizador.findByEmail", query = "SELECT u FROM Utilizador u WHERE u.email = :email"),
+    @NamedQuery(name = "Utilizador.findByPassword", query = "SELECT u FROM Utilizador u WHERE u.password = :password"),
+    @NamedQuery(name = "Utilizador.findByUsernameAndPassword", query = "Select u FROM Utilizador u WHERE u.nome = :username AND u.password = :password")})
 public class Utilizador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,6 +54,11 @@ public class Utilizador implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "email")
     private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "password")
+    private String password;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilizadorid")
     private Collection<Servico> servicoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilizadorid")
@@ -64,10 +71,11 @@ public class Utilizador implements Serializable {
         this.id = id;
     }
 
-    public Utilizador(Integer id, String nome, String email) {
+    public Utilizador(Integer id, String nome, String email, String password) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -92,6 +100,14 @@ public class Utilizador implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @XmlTransient
@@ -136,5 +152,4 @@ public class Utilizador implements Serializable {
     public String toString() {
         return "entity.Utilizador[ id=" + id + " ]";
     }
-    
 }

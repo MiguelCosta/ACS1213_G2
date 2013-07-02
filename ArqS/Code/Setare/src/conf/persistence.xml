@@ -3,9 +3,10 @@
     <persistence-unit name="SetarePU" transaction-type="JTA">
         <jta-data-source>jdbc/setare</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
-        <properties/>
         <properties>
             <property name="eclipselink.logging.level" value="FINEST"/>
+            <property name="eclipselink.flush-clear.cache" value="Drop"/>
         </properties>
     </persistence-unit>
 </persistence>
+
