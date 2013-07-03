@@ -89,7 +89,7 @@ public class ArtigoServlet extends HttpServlet {
                 page = new Integer(request.getParameter("page"));
                 int ct = artigoFacade.count();
                 int nrpages;
-                if(ct<=20) nrpages= 1;
+                if(ct<=artigoFacade.limitepage) nrpages= 1;
                 else if((ct)%artigoFacade.limitepage == 0) nrpages = ct/artigoFacade.limitepage;
                 else nrpages = (ct/artigoFacade.limitepage)+1;
                 if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){

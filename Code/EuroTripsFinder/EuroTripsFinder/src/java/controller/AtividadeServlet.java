@@ -27,7 +27,7 @@ import validate.AtividadeValidator;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "AtividadeServlet", urlPatterns = {"/Atividade", "/Atividade/register", "/Atividade/add", "/Atividade/view", "/Cidade/Atividade/view", "/Atividade/index", "/Atividade/delete"})
+@WebServlet(name = "AtividadeServlet", urlPatterns = {"/Atividade", "/Atividade/register", "/Atividade/add", "/Atividade/view", "/Atividade/update", "/Atividade/index", "/Atividade/delete"})
 public class AtividadeServlet extends HttpServlet {
 
     @EJB
@@ -46,10 +46,12 @@ public class AtividadeServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String userPath = request.getServletPath();
         String url = "";
+        String atividadeid;
         String nomeCidade;
         String nomeAtividade;
         String descricao;
         Cidade cidade;
+        String cidadeid;
         Atividade atividade;
         Collection<Atividade> atividades = null;
                 
@@ -70,7 +72,7 @@ public class AtividadeServlet extends HttpServlet {
                 page = new Integer(request.getParameter("page"));
                 int ct = atividadeFacade.count();
                 int nrpages;
-                if(ct<=20) nrpages= 1;
+                if(ct<=atividadeFacade.limitepage) nrpages= 1;
                 else if((ct)%atividadeFacade.limitepage == 0) nrpages = ct/atividadeFacade.limitepage;
                 else nrpages = (ct/atividadeFacade.limitepage)+1;
                 if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
@@ -81,12 +83,12 @@ public class AtividadeServlet extends HttpServlet {
                 int max = page*atividadeFacade.limitepage;
                 if(max > ct) max = ct;
                 request.setAttribute("atividades", atividadeFacade.findAll().subList((page-1)*atividadeFacade.limitepage, max));
-                url = "/view";
+                url = "/index";
             }
             catch(NumberFormatException e){
                 response.sendRedirect("/EuroTripsFinder/Atividade/index?page="+1);
             }  
-        } else if (userPath.equals("/Cidade/Atividade/view") || userPath.equals("/Atividade/view")) {
+        /*} else if (userPath.equals("/Cidade/Atividade/view") || userPath.equals("/Atividade/view")) {
             nomeCidade = (String) request.getParameter("id");
             cidade = cidadeFacade.checkIfExistcidade(nomeCidade);
             if (cidadeFacade.checkIfExistcidade(nomeCidade) == null) {
@@ -103,13 +105,50 @@ public class AtividadeServlet extends HttpServlet {
                     request.getServletContext().setAttribute("atividades", atividades);
                     url = "/view";
                 }
+            }*/
+        }else if(userPath.equals("/Atividade/view")){
+            url= "/view";
+            request.setAttribute("atividade", atividadeFacade.find(Integer.parseInt(request.getParameter("id"))));
+        
+        }else if (userPath.equals("/Atividade/update")) {
+            nomeAtividade = request.getParameter("nome");
+            descricao = request.getParameter("descricao");
+            atividadeid = request.getParameter("id");
+            
+            ok = validate.AtividadeValidator.validateFormRegister(nomeAtividade,
+                    descricao,                  
+                    request);
+            
+            if (!ok || !erro.isEmpty()) {
+                session.setAttribute("MessageError", request.getAttribute("MessageError"));
+                response.sendRedirect("/EuroTripsFinder/Atividade/view?id="+atividadeid);
+                return;
             }
+            
+            
+            atividade = atividadeFacade.find(Integer.parseInt(request.getParameter("id")));
+
+            atividade.setNome(nomeAtividade);
+            atividade.setDescricao(descricao);
+            
+            
+             try {
+                atividadeFacade.edit(atividade);
+            } catch (Exception ex) {             
+                session.setAttribute("MessageError", "Erro ao atualizar a informação.");
+                response.sendRedirect("/EuroTripsFinder/Atividade/view?id="+atividadeid);
+                return;
+            }
+             
+            session.setAttribute("MessageSuccess", "Atividade actualizada.");
+            
+            response.sendRedirect("/EuroTripsFinder/Atividade");
+            return;
             
         } else if (userPath.equals("/Atividade/delete")) {
             
             try{
-                int atividadeid = Integer.parseInt(request.getParameter("id"));
-                Atividade atividadedelete = atividadeFacade.find(atividadeid);
+                Atividade atividadedelete = atividadeFacade.find(Integer.parseInt(request.getParameter("id")));
                 atividadeFacade.remove(atividadedelete);
             }
             catch(Exception e){
@@ -121,7 +160,7 @@ public class AtividadeServlet extends HttpServlet {
             
             response.sendRedirect("/EuroTripsFinder/Atividade/index");
             
-            url = "/view";
+            url = "/index";
         
             
             
@@ -129,21 +168,35 @@ public class AtividadeServlet extends HttpServlet {
             nomeAtividade = request.getParameter("nomeAtividade");
             descricao = request.getParameter("descricao");
 
-            if (!AtividadeValidator.validateFormRegister(nomeAtividade, descricao, request)) {
+            if (AtividadeValidator.validateFormRegister(nomeAtividade, descricao, request)) {
                 atividade = new Atividade();
                 atividade.setDescricao(descricao);
                 atividade.setNome(nomeAtividade);
-                atividade.setCidadeid((Cidade) session.getAttribute("cidade"));
-                atividadeFacade.register(atividade);
-                session.setAttribute("MessageSuccess", "Nova Atividade inserida com sucesso!");
 
+                cidadeid = request.getParameter("cidadeid");
+                Cidade cidad = (Cidade) cidadeFacade.find(Integer.parseInt(cidadeid));
+                atividade.setCidadeid(cidad);
+                
+                try {
+                   //nao sei se é preciso adicionar mais qualquer coisa
+                    atividadeFacade.create(atividade);
+                    session.setAttribute("MessageSuccess", "Nova Atividade inserida com sucesso!");
+                } catch (Exception ex) {
+                    erro = "Erro ao inserir atividade";
+                    session.setAttribute("MessageError", erro);
+                    response.sendRedirect("/EuroTripsFinder/Atividade/register");
+                    return;
+                }
+               
 
             } else {
                 session.setAttribute("MessageError", "Ocorreu um erro.");
 
             }
-            response.sendRedirect("/EuroTripsFinder/Cidade");
+            response.sendRedirect("/EuroTripsFinder/Atividade");
         } else if (userPath.equals("/Atividade/register")) {
+            List<Cidade> cidades = cidadeFacade.findAll();
+            request.setAttribute("listcidades", cidades);
             url = "/register";
         }
 

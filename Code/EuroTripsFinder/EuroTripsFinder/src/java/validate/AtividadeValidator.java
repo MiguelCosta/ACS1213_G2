@@ -15,13 +15,13 @@ public class AtividadeValidator {
     
     public static boolean validateFormRegister(String nome, String c, HttpServletRequest request) {
 
-        boolean errorFlag = false;
+        boolean errorFlag = true;
 
-        if ( nome== null || nome.equals("")) {
-            errorFlag = true;
+        if ( c == null || c.equals("")) {
+            errorFlag = false;
             request.setAttribute("MessageError", "A descricao não pode ser vazia!");
         }  else if (nome == null || nome.equals("")) {
-            errorFlag = true;
+            errorFlag = false;
             request.setAttribute("MessageError", "Tem de estar um nome Associado!");
         }      
 

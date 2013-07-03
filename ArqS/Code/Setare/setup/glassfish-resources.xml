@@ -8,6 +8,6 @@
     <description>connects to setare</description>
     <property name="URL" value="jdbc:mysql://localhost:3306/setare"/>
     <property name="User" value="root"/>
-    <property name="Password" value="s"/>
+    <property name="Password" value=""/>
   </jdbc-connection-pool>
 </resources>
