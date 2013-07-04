@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import session.UtilizadorFacade;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -41,18 +40,7 @@ public class UtilizadorServlet extends HttpServlet {
 
     @EJB
     private UtilizadorFacade utilizadorFacade;
-   
-
-    /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -64,19 +52,21 @@ public class UtilizadorServlet extends HttpServlet {
         String url = "";
 
 
-        Utilizador user;       
+        Utilizador user;
+        
         String email;
-        String nome;
+        String username;
         String password;
-    
-  
+      
+         
+     
         
        
         if (userPath.equals("/Utilizador")) {
-            nome = request.getParameter("nome");
+            username = request.getParameter("nome");
             password = request.getParameter("password");
 
-            user = utilizadorFacade.UtilizadorLogin(nome, password);
+            user = utilizadorFacade.UtilizadorLogin(username, password);
             
             if (user != null) {
                 session.setAttribute("user", user);
@@ -87,14 +77,13 @@ public class UtilizadorServlet extends HttpServlet {
                 url = "login";
             }
          }else if(userPath.equals("/Utilizador/index")){
-            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
-            
+           
             try{
                 int page = 1;
                 page = new Integer(request.getParameter("page"));
                 int ct = utilizadorFacade.count();
                 int nrpages;
-                if(ct<=20) nrpages= 1;
+                if(ct<=utilizadorFacade.limitepage) nrpages= 1;
                 else if((ct)%utilizadorFacade.limitepage == 0) nrpages = ct/utilizadorFacade.limitepage;
                 else nrpages = (ct/utilizadorFacade.limitepage)+1;
                 if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
@@ -153,22 +142,21 @@ public class UtilizadorServlet extends HttpServlet {
             Utilizador useredit = utilizadorFacade.find(utilizadorid);
             email = request.getParameter("email");
             password = request.getParameter("password");
-            nome = request.getParameter("nome");
-            
+            username = request.getParameter("nome");
 
             // Valida de informação do form
-            ok = validate.UtilizadorValidator.validateFormRegister(email, 
+            ok = validate.UtilizadorValidator.validateFormRegister(email,
                     useredit.getNome(),
                     password,
                     request);
 
-           
+         
 
             
             useredit.setEmail(email);
             useredit.setPassword(password);
-            useredit.setNome(nome);
-         
+            useredit.setNome(username);
+          
 
             try {
                 utilizadorFacade.edit(useredit);
@@ -184,7 +172,7 @@ public class UtilizadorServlet extends HttpServlet {
 
             email = request.getParameter("email");
             password = request.getParameter("password");
-            nome = request.getParameter("nome");
+            username = request.getParameter("nome");
            
 
             // Valida de informação do form
@@ -193,13 +181,13 @@ public class UtilizadorServlet extends HttpServlet {
                     password,
                     request);
 
-         
+          
 
             user = (Utilizador) session.getAttribute("user");
             user.setEmail(email);
             user.setPassword(password);
-            user.setNome(nome);
-          
+            user.setNome(username);
+           
 
             try {
                 utilizadorFacade.edit(user);
@@ -214,16 +202,17 @@ public class UtilizadorServlet extends HttpServlet {
         } else if (userPath.equals("/Utilizador/addUser")) {
 
             email = request.getParameter("email");
-            nome = request.getParameter("nome");
+            username = request.getParameter("nome");
             password = request.getParameter("password");
+           
 
             // Valida de informação do form
             ok = validate.UtilizadorValidator.validateFormRegister(email,
-                    nome,
+                    username,
                     password,
                     request);
 
-          
+           
 
             if (!ok || !erro.isEmpty()) {
                 session.setAttribute("MessageError", erro);
@@ -232,12 +221,9 @@ public class UtilizadorServlet extends HttpServlet {
             }
 
             user = new Utilizador();
-            user.setEmail(email);           
+            user.setEmail(email);         
             user.setPassword(password);
-            user.setNome(nome);        
-
-          
-         
+            user.setNome(username);
 
             try {
                 utilizadorFacade.create(user);

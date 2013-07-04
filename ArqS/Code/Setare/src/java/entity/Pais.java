@@ -34,12 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pais.findById", query = "SELECT p FROM Pais p WHERE p.id = :id"),
     @NamedQuery(name = "Pais.findByNome", query = "SELECT p FROM Pais p WHERE p.nome = :nome")})
 public class Pais implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -111,4 +109,5 @@ public class Pais implements Serializable {
     public String toString() {
         return "entity.Pais[ id=" + id + " ]";
     }
+    
 }

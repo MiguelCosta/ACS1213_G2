@@ -33,13 +33,9 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> {
         Query q = em.createNamedQuery("Utilizador.findByUsernameAndPassword");
         q.setParameter("username", username);
         q.setParameter("password", password);
-
-        List<Utilizador> users = q.getResultList();
-        if (users.size() > 0) {
-            return users.get(0);
-        } else {
-            return null;
-        }
+       
+        if(q.getResultList().isEmpty()) return null;
+        else return (Utilizador)q.getSingleResult();
     }
     
     public Utilizador UtilizadorByUsername(String username){
