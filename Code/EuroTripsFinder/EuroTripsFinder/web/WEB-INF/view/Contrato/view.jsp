@@ -58,14 +58,17 @@
         </div>
                     
         <div class="span6">
-           <div class="container" style="max-width: 390px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
-
-            
-                     <h2>Artigos Publicitários:</h2>
+           <div class="container" style="max-width: 390px;   border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
+                
+                    <h2>Artigos Publicitários:</h2>
+                     
+                    <div style="max-height: 322px; overflow: auto">
                     <table class="table table-hover"> 
                             <tr> 
                                 <td>Nome:</td>
+                           
                             </tr>
+                           
                             <c:choose>
                             <c:when test="${artigos.size() > 0}">
                             <c:forEach var="row" items="${artigos}"> 
@@ -81,6 +84,7 @@
                             </c:otherwise>
                             </c:choose>
                     </table>
+                     </div>
         </div>
         </div>
     </div>

@@ -90,6 +90,8 @@
 
 
         <h1>Contratos</h1>
+        
+        <div style="max-height: 322px; overflow: auto">
         <table class="table table-hover"> 
             <tr> 
                 <td>ID:</td>
@@ -109,6 +111,7 @@
             </c:otherwise>
             </c:choose>
         </table>
+        </div>
     </div>
         
 </div>

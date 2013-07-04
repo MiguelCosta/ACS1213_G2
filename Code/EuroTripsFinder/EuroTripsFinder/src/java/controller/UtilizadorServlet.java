@@ -21,6 +21,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.servlet.ServletContext;
+import mail.EmailUtility;
 import session.ArtigopublicitarioFacade;
 
 /**
@@ -38,7 +40,10 @@ import session.ArtigopublicitarioFacade;
     "/Utilizador/index",
     "/Utilizador/edit",
     "/Utilizador/updateUser",
-    "/Utilizador/delete"})
+    "/Utilizador/delete",
+    "/About",
+    "/Contact",
+    "/Contact/sendemail"})
 public class UtilizadorServlet extends HttpServlet {
 
     @EJB
@@ -95,6 +100,39 @@ public class UtilizadorServlet extends HttpServlet {
                 session.setAttribute("user", null);
                 url = "login";
             }
+         }else if(userPath.equals("/About")){
+             url ="about";
+         }else if(userPath.equals("/Contact")){
+             url ="contact";
+         }else if(userPath.equals("/Contact/sendemail")){
+            ServletContext context = getServletContext();
+            String host = context.getInitParameter("host");
+            String port = context.getInitParameter("port");
+            String usermail = context.getInitParameter("user");
+            String pass = context.getInitParameter("pass");
+            // reads form fields
+            //enviar para milton
+            String recipient = "milton.nunes52@gmail.com";
+            String subject = "Contact EuroTripsFinder";
+            String content = "Nome: "+request.getParameter("nome")+
+            "\n Email: "+ request.getParameter("email")
+              +"\n Conteúdo: "+request.getParameter("conteudo");
+
+            String resultMessage = "";
+
+            try {
+                EmailUtility.sendEmail(host, port, usermail, pass, recipient, subject,
+                        content);
+                resultMessage = "The e-mail was sent successfully";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                resultMessage = "There were an error: " + ex.getMessage();
+            } finally {
+
+                request.setAttribute("Message", resultMessage);
+                response.sendRedirect("/EuroTripsFinder");
+
+            }  
          }else if(userPath.equals("/Utilizador/index")){
             //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
             
