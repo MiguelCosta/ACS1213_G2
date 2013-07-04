@@ -38,7 +38,9 @@ import session.ArtigopublicitarioFacade;
     "/Utilizador/index",
     "/Utilizador/edit",
     "/Utilizador/updateUser",
-    "/Utilizador/delete"})
+    "/Utilizador/delete",
+    "/About",
+    "/Contact"})
 public class UtilizadorServlet extends HttpServlet {
 
     @EJB
@@ -95,6 +97,11 @@ public class UtilizadorServlet extends HttpServlet {
                 session.setAttribute("user", null);
                 url = "login";
             }
+         }else if(userPath.equals("/About")){
+             url ="about";
+         
+         }else if(userPath.equals("/Contact")){
+             url ="contact";    
          }else if(userPath.equals("/Utilizador/index")){
             //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
             

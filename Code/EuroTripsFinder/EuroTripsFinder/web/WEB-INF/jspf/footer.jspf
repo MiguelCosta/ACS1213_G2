@@ -4,11 +4,11 @@
 
 <div class="footer">
             <hr>
-            Created by... 
+            EuroTripsFinder2013 
             <div class="muted credit" style="float: right">
-                <a href="#" style="color: graytext">About</a>
+                <a href="/EuroTripsFinder/About" style="color: graytext">About</a>
                 |
-                <a href="#" style="color: graytext">Contact us</a>
+                <a href="/EuroTripsFinder/Contact" style="color: graytext">Contact us</a>
             </div>
             
        
