@@ -17,7 +17,7 @@
 <h1>Contact Us</h1>
 <hr>
 
-<form action="<%= request.getContextPath()%>" method=post class="form-horizontal">
+<form action="<%= request.getContextPath()%>/Contact/sendemail" method=post class="form-horizontal">
 
     <div class="control-group">
         <label class="control-label" for="inputNome">Nome</label>
@@ -43,6 +43,7 @@
         <button type="submit" class="btn btn-primary" >Enviar</button>
 
     </div>
+                       
     
 </form>
 
