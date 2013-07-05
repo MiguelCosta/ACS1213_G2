@@ -1,6 +1,7 @@
 package controller;
 
 import entity.Servico;
+import entity.Servicotaxi;
 import entity.Utilizador;
 import mail.EmailUtility;
 import java.io.IOException;
@@ -20,7 +21,8 @@ import session.UtilizadorFacade;
  * @author miltonnunes52
  */
 @WebServlet(name = "EmailServlet",
-  urlPatterns = {"/enviarmail"})
+  urlPatterns = {"/enviarmailrent",
+                "/enviarmailtaxi"})
 public class EmailServlet extends HttpServlet {
     @EJB
     private UtilizadorFacade utilizadorFacade;
@@ -54,41 +56,82 @@ public class EmailServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String userPath = request.getServletPath();
         
-        // reads form fields
+        
         Utilizador utilizador = (Utilizador) session.getAttribute("user");
-        Servico servico = (Servico) request.getAttribute("servico");
         
         
-        String recipient = utilizador.getEmail();
-        String subject = "Confirmacao de Servico";
-        String content = "\nConfirmamos a compra do nosso serviço. Abaixo apresenta-se os detalhes do serviço"
-          + "\nUtilizador: " + utilizador.getNome()
-          + "\nCategoria do veículo: " + servico.getCarroid().getCategoriaid().getNome()
-          + "\nDescrição do veículo: " + servico.getCarroid().getDescricao()
-          + "\nEstação de partida: " + servico.getLocalPartidaid().getNome()
-          + "\nData: "+ servico.getDataPartida()
-          + "\nEstação de entrega: " + servico.getLocalChegadaid().getNome()
-          + "\nData" + servico.getDataChegada()
-          + "\nTotal a pagar: " + servico.getPreco()
-          + "\nAgradecemos a sua escolha e desejamos-lhe uma excelente viagem!" 
-          + "\n"
-          + "\n";
- 
-        String resultMessage = "";
- 
-        try {
-            EmailUtility.sendEmail(host, port, user, pass, recipient, subject,
-                    content);
-            resultMessage = "The e-mail was sent successfully";
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            resultMessage = "There were an error: " + ex.getMessage();
-        } finally {
+        if (userPath.equals("/enviarmailrent")) {
+            Servico servico = (Servico) request.getAttribute("servico");
+            String recipient = utilizador.getEmail();
+            String subject = "Confirmacao de Servico";
+            String content = "\nConfirmamos a compra do nosso serviço. Abaixo apresenta-se os detalhes do serviço"
+              + "\nUtilizador: " + utilizador.getNome()
+              + "\nCategoria do veículo: " + servico.getCarroid().getCategoriaid().getNome()
+              + "\nDescrição do veículo: " + servico.getCarroid().getDescricao()
+              + "\nEstação de partida: " + servico.getLocalPartidaid().getNome()
+              + "\nData: "+ servico.getDataPartida()
+              + "\nEstação de entrega: " + servico.getLocalChegadaid().getNome()
+              + "\nData" + servico.getDataChegada()
+              + "\nTotal a pagar: " + servico.getPreco()
+              + "\nAgradecemos a sua escolha e desejamos-lhe uma excelente viagem!" 
+              + "\n"
+              + "\n";
+
+            String resultMessage = "";
+
+            try {
+                EmailUtility.sendEmail(host, port, user, pass, recipient, subject,
+                        content);
+                resultMessage = "The e-mail was sent successfully";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                resultMessage = "There were an error: " + ex.getMessage();
+            } finally {
+
+                request.setAttribute("Message", resultMessage);
+                request.getRequestDispatcher("/bilhete").forward(request, response);
+
+
+            }
             
-            request.setAttribute("Message", resultMessage);
-            request.getRequestDispatcher("/bilhete").forward(request, response);
+        
+        
+        } else if (userPath.equals("/enviarmailtaxi")) {
             
-             
+            Servicotaxi servico = (Servicotaxi) request.getAttribute("servico");
+            
+            String recipient = utilizador.getEmail();
+            String subject = "Confirmacao de Servico";
+            String content = "\nConfirmamos a compra do nosso serviço. Abaixo apresenta-se os detalhes do serviço"
+              + "\nUtilizador: " + utilizador.getNome()
+              + "\nTaxi: " + servico.getCodigotaxi()
+              + "\nEstação de partida: " + servico.getLocalpartidaid().getNome()
+              + "\nData: "+ servico.getDatapartida()
+              + "\nEstação de entrega: " + servico.getLocalchegadaid().getNome()
+              + "\nAgradecemos a sua escolha e desejamos-lhe uma excelente viagem!" 
+              + "\n"
+              + "\n";
+
+            String resultMessage = "";
+
+            try {
+                EmailUtility.sendEmail(host, port, user, pass, recipient, subject,
+                        content);
+                resultMessage = "The e-mail was sent successfully";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                resultMessage = "There were an error: " + ex.getMessage();
+            } finally {
+
+                request.setAttribute("Message", resultMessage);
+                request.getRequestDispatcher("/bilhete").forward(request, response);
+
+
+            }
+        
         }
+        
+        
+       
     }
 }
