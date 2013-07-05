@@ -10,8 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author JorgeMaia
+ * @author Miguel
  */
 @Entity
 @Table(name = "companhia")
@@ -41,8 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Companhia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -75,8 +73,6 @@ public class Companhia implements Serializable {
     @Size(min = 1, max = 1024)
     @Column(name = "ticketurl")
     private String ticketurl;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companhiaid")
-    private Collection<Meiotransporte> meiotransporteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "companhiaid")
     private Collection<Rota> rotaCollection;
 
@@ -151,15 +147,6 @@ public class Companhia implements Serializable {
 
     public void setTicketurl(String ticketurl) {
         this.ticketurl = ticketurl;
-    }
-
-    @XmlTransient
-    public Collection<Meiotransporte> getMeiotransporteCollection() {
-        return meiotransporteCollection;
-    }
-
-    public void setMeiotransporteCollection(Collection<Meiotransporte> meiotransporteCollection) {
-        this.meiotransporteCollection = meiotransporteCollection;
     }
 
     @XmlTransient

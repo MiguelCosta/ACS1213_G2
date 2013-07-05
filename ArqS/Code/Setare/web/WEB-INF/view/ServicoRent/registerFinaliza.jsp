@@ -101,7 +101,7 @@
         </div>
         <div style="width :33%;float : left;text-align: center;"> 
             <div class="control-group">
-                <label class="control-label" for="inputPrecoDia">Preco/Dia do Veiculo:</label>
+                <label class="control-label" for="inputPrecoDia">Preco/Hora:</label>
                 <div class="controls">
                     <input type="text" id="inputPrecoDia" name="precoDia" value="${categoria.precoPorHora}&#8364">
                 </div>   

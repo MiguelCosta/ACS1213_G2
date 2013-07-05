@@ -99,6 +99,7 @@ public class ServicoRentServlet extends HttpServlet {
             session.setAttribute("localLevantamentoId", localLevantamentoId);
             session.setAttribute("localEntregaId", localEntregaId);
             session.setAttribute("categoriaId", categoriaId);
+            request.setAttribute("precoCategoria", categoriaFacade.find(categoriaId).getPrecoPorHora().intValue());
 
             String horaLevantamento = (String) request.getParameter("horalevantamento");
             String horaEntrega = (String) request.getParameter("horaentrega");
@@ -112,6 +113,8 @@ public class ServicoRentServlet extends HttpServlet {
 
             Date DatahoraLevantamento = formatDate(dataLevantamento, horaLevantamento);
             Date DatahoraEntrega = formatDate(dataEntrega, horaEntrega);
+            session.setAttribute("dataPartida", DatahoraLevantamento);
+            session.setAttribute("dataChegada", DatahoraEntrega);
 
             int diffInDays = (int) ((DatahoraEntrega.getTime() - DatahoraLevantamento.getTime()) / (1000 * 60 * 60 * 24));
             session.setAttribute("dias", diffInDays);
@@ -127,74 +130,99 @@ public class ServicoRentServlet extends HttpServlet {
                 response.sendRedirect("/Setare/Utilizador");
             } else {
 
-                Categoria cat = categoriaFacade.find((Integer) session.getAttribute("categoriaId"));
+                
                 int carroId = Integer.parseInt((String) request.getParameter("id"));
-                BigDecimal precoHora = (BigDecimal) cat.getPrecoPorHora();
-                BigDecimal dias = new BigDecimal(session.getAttribute("dias").toString());
-                BigDecimal total = dias.multiply(precoHora);
+                String horaLevantamento = request.getParameter("horalevantamento");
+                String horaEntrega = request.getParameter("horaEntrega");
+                String dataEntrega = request.getParameter("datachegada");
+                String dataLevantamento = request.getParameter("datapartida");
+                Date DatahoraLevantamento = formatDate(dataLevantamento, horaLevantamento);
+                Date DatahoraEntrega = formatDate(dataEntrega, horaEntrega);
+                
+                if (servicoFacade.verificaCarro(carroFacade.find(carroId), DatahoraEntrega, DatahoraLevantamento)) {
 
-                request.setAttribute("categoria", cat);
-                session.setAttribute("carro", carroFacade.find(carroId));
-                request.setAttribute("localLevantamento", localFacade.find((Integer) session.getAttribute("localLevantamentoId")));
-                request.setAttribute("localEntrega", localFacade.find((Integer) session.getAttribute("localEntregaId")));
+                    Categoria cat = categoriaFacade.find((Integer) session.getAttribute("categoriaId"));
+                    BigDecimal precoHora = (BigDecimal) cat.getPrecoPorHora();
+                    BigDecimal dias = new BigDecimal(session.getAttribute("dias").toString());
+                    BigDecimal total = dias.multiply(precoHora);
 
-                String aux;
+                    request.setAttribute("categoria", cat);
+                    session.setAttribute("carro", carroFacade.find(carroId));
+                    request.setAttribute("localLevantamento", localFacade.find((Integer) session.getAttribute("localLevantamentoId")));
+                    request.setAttribute("localEntrega", localFacade.find((Integer) session.getAttribute("localEntregaId")));
 
-                String condExtra = "condExtra" + carroId;
-                String sctr = "sctr" + carroId;
-                String gps = "gps" + carroId;
-                String cadeira = "cadeira" + carroId;
-                String deposito = "deposito" + carroId;
-                String descricao = null;
+                    String aux;
+
+                    String condExtra = "condExtra" + carroId;
+                    String sctr = "sctr" + carroId;
+                    String gps = "gps" + carroId;
+                    String cadeira = "cadeira" + carroId;
+                    String deposito = "deposito" + carroId;
+                    String descricao = null;
 
 
-                int valorExtras = 0;
-                aux = request.getParameter(condExtra);
-                if (aux != null) {
-                    valorExtras = 5 * (Integer) session.getAttribute("dias");
-                    descricao = "Condutor Adicional; ";
-                    session.setAttribute("condExtra", true);
+                    int valorExtras = 0;
+                    aux = request.getParameter(condExtra);
+                    if (aux != null) {
+                        valorExtras = 5 * (Integer) session.getAttribute("dias");
+                        descricao = "Condutor Adicional; ";
+                        session.setAttribute("condExtra", true);
+                    } else {
+                        session.setAttribute("condExtra", false);
+                    }
+
+                    aux = request.getParameter(deposito);
+                    if (aux != null) {
+                        valorExtras = valorExtras + cat.getPrecoDeposito().intValue();
+                        descricao += "Deposito Cheio; ";
+                        session.setAttribute("deposito", true);
+                    } else {
+                        session.setAttribute("deposito", false);
+                    }
+
+                    aux = request.getParameter(sctr);
+                    if (aux != null) {
+
+                        valorExtras = valorExtras + 35 * (Integer) session.getAttribute("dias");
+                        descricao += "Seguro Contra todos os risco; ";
+                        session.setAttribute("sctr", true);
+                    } else {
+                        session.setAttribute("sctr", false);
+                    }
+
+                    aux = request.getParameter(gps);
+                    if (aux != null) {
+                        valorExtras = valorExtras + 6 * (Integer) session.getAttribute("dias");
+                        descricao += "GPS; ";
+                        session.setAttribute("gps", true);
+                    } else {
+                        session.setAttribute("gps", false);
+                    }
+
+                    aux = request.getParameter(cadeira);
+                    if (aux != null) {
+                        valorExtras = valorExtras + 8 * (Integer) session.getAttribute("dias");
+                        descricao += "Cadeira de Bébé; ";
+                        session.setAttribute("cadeira", true);
+                    } else {
+                        session.setAttribute("cadeira", false);
+                    }
+
+                    BigDecimal totalTudo = new BigDecimal(total.intValue() + valorExtras);
+                    request.setAttribute("extras", descricao);
+                    request.setAttribute("valorExtras", valorExtras);
+                    session.setAttribute("total", totalTudo);
+                    url = "registerFinaliza";
+                } else {
+                    session.setAttribute("MessageError", "Esta viatura já se encontra reservada neste intervalo de datas!");
+                    url = "registerContinua";
+
                 }
-                else{session.setAttribute("condExtra", false);}
-                
-                aux = request.getParameter(deposito);
-                if (aux != null) {
-                    valorExtras = valorExtras + 50;
-                    descricao += "Deposito Cheio; ";
-                    session.setAttribute("deposito", true);
-                }else{session.setAttribute("deposito", false);}
-                
-                aux = request.getParameter(sctr);
-                if (aux != null) {
 
-                    valorExtras = valorExtras + 35 * (Integer) session.getAttribute("dias");
-                    descricao += "Seguro Contra todos os risco; ";
-                    session.setAttribute("sctr", true);
-                }else{session.setAttribute("sctr", false);}
-                
-                aux = request.getParameter(gps);
-                if (aux != null) {
-                    valorExtras = valorExtras + 6 * (Integer) session.getAttribute("dias");
-                    descricao += "GPS; ";
-                    session.setAttribute("gps", true);
-                }else{session.setAttribute("gps", false);}
-                
-                aux = request.getParameter(cadeira);
-                if (aux != null) {
-                    valorExtras = valorExtras + 8 * (Integer) session.getAttribute("dias");
-                    descricao += "Cadeira de Bébé; ";
-                    session.setAttribute("cadeira", true);
-                }else{session.setAttribute("cadeira", false);}
-                
-                BigDecimal totalTudo = new BigDecimal(total.intValue() + valorExtras);
-                request.setAttribute("extras", descricao);
-                request.setAttribute("valorExtras", valorExtras);
-                session.setAttribute("total", totalTudo);
+
 
             }
 
-
-            url = "registerFinaliza";
 
 
         } else if (userPath.equals("/ServicoRent/registerFinaliza")) {
@@ -223,7 +251,7 @@ public class ServicoRentServlet extends HttpServlet {
             Local chegada = localFacade.find(localEntregaId);
 
             boolean deposito = (Boolean) session.getAttribute("deposito");
-            BigDecimal preco = (BigDecimal)session.getAttribute("total");
+            BigDecimal preco = (BigDecimal) session.getAttribute("total");
             boolean cadeira = (Boolean) session.getAttribute("cadeira");
             boolean condExtra = (Boolean) session.getAttribute("condExtra");
             boolean sctr = (Boolean) session.getAttribute("sctr");

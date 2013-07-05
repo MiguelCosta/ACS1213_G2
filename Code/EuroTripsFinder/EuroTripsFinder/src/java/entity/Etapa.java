@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -29,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author JorgeMaia
+ * @author Miguel
  */
 @Entity
 @Table(name = "etapa")
@@ -39,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Etapa.findById", query = "SELECT e FROM Etapa e WHERE e.id = :id"),
     @NamedQuery(name = "Etapa.findByDatapartida", query = "SELECT e FROM Etapa e WHERE e.datapartida = :datapartida"),
     @NamedQuery(name = "Etapa.findByDatachegada", query = "SELECT e FROM Etapa e WHERE e.datachegada = :datachegada"),
-    @NamedQuery(name = "Etapa.findByValor", query = "SELECT e FROM Etapa e WHERE e.valor = :valor")})
+    @NamedQuery(name = "Etapa.findByValor", query = "SELECT e FROM Etapa e WHERE e.valor = :valor"),
+    @NamedQuery(name = "Etapa.findByMeioTransporteid", query = "SELECT e FROM Etapa e WHERE e.meioTransporteid = :meioTransporteid")})
 public class Etapa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,20 +62,18 @@ public class Etapa implements Serializable {
     @NotNull
     @Column(name = "valor")
     private BigDecimal valor;
-    @JoinTable(name = "percurso_etapa", joinColumns = {
-        @JoinColumn(name = "Etapaid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "Percursoid", referencedColumnName = "id")})
-    @ManyToMany
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MeioTransporteid")
+    private int meioTransporteid;
+    @ManyToMany(mappedBy = "etapaCollection")
     private Collection<Percurso> percursoCollection;
-    @JoinColumn(name = "MeioTransporteid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Meiotransporte meioTransporteid;
-    @JoinColumn(name = "localparagemdestinoid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Localparagem localparagemdestinoid;
     @JoinColumn(name = "localparageminicialid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Localparagem localparageminicialid;
+    @JoinColumn(name = "localparagemdestinoid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Localparagem localparagemdestinoid;
 
     public Etapa() {
     }
@@ -84,11 +82,12 @@ public class Etapa implements Serializable {
         this.id = id;
     }
 
-    public Etapa(Integer id, Date datapartida, Date datachegada, BigDecimal valor) {
+    public Etapa(Integer id, Date datapartida, Date datachegada, BigDecimal valor, int meioTransporteid) {
         this.id = id;
         this.datapartida = datapartida;
         this.datachegada = datachegada;
         this.valor = valor;
+        this.meioTransporteid = meioTransporteid;
     }
 
     public Integer getId() {
@@ -123,6 +122,14 @@ public class Etapa implements Serializable {
         this.valor = valor;
     }
 
+    public int getMeioTransporteid() {
+        return meioTransporteid;
+    }
+
+    public void setMeioTransporteid(int meioTransporteid) {
+        this.meioTransporteid = meioTransporteid;
+    }
+
     @XmlTransient
     public Collection<Percurso> getPercursoCollection() {
         return percursoCollection;
@@ -132,12 +139,12 @@ public class Etapa implements Serializable {
         this.percursoCollection = percursoCollection;
     }
 
-    public Meiotransporte getMeioTransporteid() {
-        return meioTransporteid;
+    public Localparagem getLocalparageminicialid() {
+        return localparageminicialid;
     }
 
-    public void setMeioTransporteid(Meiotransporte meioTransporteid) {
-        this.meioTransporteid = meioTransporteid;
+    public void setLocalparageminicialid(Localparagem localparageminicialid) {
+        this.localparageminicialid = localparageminicialid;
     }
 
     public Localparagem getLocalparagemdestinoid() {
@@ -146,14 +153,6 @@ public class Etapa implements Serializable {
 
     public void setLocalparagemdestinoid(Localparagem localparagemdestinoid) {
         this.localparagemdestinoid = localparagemdestinoid;
-    }
-
-    public Localparagem getLocalparageminicialid() {
-        return localparageminicialid;
-    }
-
-    public void setLocalparageminicialid(Localparagem localparageminicialid) {
-        this.localparageminicialid = localparageminicialid;
     }
 
     @Override

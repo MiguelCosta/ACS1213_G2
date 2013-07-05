@@ -6,13 +6,17 @@ package controller;
 
 import entity.Cidade;
 import entity.Etapa;
+import entity.Percurso;
 import entity.Tempoparagem;
 import entity.Utilizador;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,8 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.CidadeFacade;
-import session.TipomeiotransporteFacade;
+import session.EtapaFacade;
 import session.LocalparagemFacade;
+import session.PercursoFacade;
 import session.TempoparagemFacade;
 
 /**
@@ -40,11 +45,13 @@ public class EtapaServlet extends HttpServlet {
     @EJB
     private CidadeFacade cidadeFacade;
     @EJB
-    private TipomeiotransporteFacade tipomeiotransporteFacade;
-    @EJB
     private LocalparagemFacade localparagemFacade;
     @EJB
     private TempoparagemFacade tempoparagemFacade;
+    @EJB
+    private EtapaFacade etapaFacade;
+    @EJB
+    private PercursoFacade percursoFacade;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -58,7 +65,6 @@ public class EtapaServlet extends HttpServlet {
         int localOrigemId;
         int localDestinoId;
         Utilizador utilizador = (Utilizador) session.getAttribute("user");
-        int utilizadorId = utilizador.getId();
 
 
         if (userPath.equals("/Etapa/register")) {
@@ -91,36 +97,58 @@ public class EtapaServlet extends HttpServlet {
 
             url = "/selecionaretapa";
 
-        } else if (userPath.equals("/addEtapa")) {
+        } else if (userPath.equals("/Etapa/addEtapa")) {
             int idInicio;
             int idFim;
             Tempoparagem tempoInicio;
             Tempoparagem tempoFim;
             Date dataInicio;
             Date dataFinal;
-            
+
             idInicio = Integer.parseInt(request.getParameter("viagemselec").split("-")[0]);
             idFim = Integer.parseInt(request.getParameter("viagemselec").split("-")[1]);
-            
+
             tempoInicio = tempoparagemFacade.find(idInicio);
             tempoFim = tempoparagemFacade.find(idFim);
-            
+
             Etapa et = (Etapa) session.getAttribute("etapa");
             dataInicio = et.getDatapartida();
             dataFinal = et.getDatachegada();
-            
+
+            int horas = tempoInicio.getHorapartida().getHours();
+
             dataInicio.setHours(tempoInicio.getHorapartida().getHours());
             dataInicio.setMinutes(tempoInicio.getHorapartida().getMinutes());
             dataInicio.setSeconds(tempoInicio.getHorapartida().getSeconds());
-            
+
             dataFinal.setHours(tempoFim.getHorachegada().getHours());
             dataFinal.setMinutes(tempoFim.getHorachegada().getMinutes());
             dataFinal.setSeconds(tempoFim.getHorachegada().getSeconds());
-            
+
             et.setDatapartida(dataInicio);
             et.setDatachegada(dataFinal);
+            et.setValor(BigDecimal.ZERO);
 
-            url = "/index";
+
+            et.setPercursoCollection(new ArrayList<Percurso>());
+            et.getPercursoCollection().add((Percurso) session.getAttribute("percurso"));
+
+            Percurso p = (Percurso) session.getAttribute("percurso");
+            p.getEtapaCollection().add(et);
+
+            try {
+                percursoFacade.edit(p);
+            } catch (Exception ex) {
+                erro = "Erro ao inserir etapa. ";
+                session.setAttribute("MessageError", erro + ex.getMessage());
+                response.sendRedirect("/EuroTripsFinder/Etapa/register");
+                return;
+            }
+
+            session.setAttribute("MessageSuccess", "Etapa adicionada com sucesso.");
+            response.sendRedirect("/EuroTripsFinder/Percurso/view?id="+ p.getId());
+            return;
+
         } else if (userPath.equals("/Etapa")) {
 
             url = "/index";

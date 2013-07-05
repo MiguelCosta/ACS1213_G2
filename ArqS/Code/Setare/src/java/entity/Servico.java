@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Servico.findByGps", query = "SELECT s FROM Servico s WHERE s.gps = :gps"),
     @NamedQuery(name = "Servico.findByCadeiraBebe", query = "SELECT s FROM Servico s WHERE s.cadeiraBebe = :cadeiraBebe"),
     @NamedQuery(name = "Servico.findBySeguroCTRiscos", query = "SELECT s FROM Servico s WHERE s.seguroCTRiscos = :seguroCTRiscos"),
+    @NamedQuery(name = "Servico.findByDatas", query = "SELECT s FROM Servico s WHERE s.carroid = :carroid AND s.dataPartida >=:dataPartida AND s.dataChegada <= :dataChegada"),
     @NamedQuery(name = "Servico.findByCondutorExtra", query = "SELECT s FROM Servico s WHERE s.condutorExtra = :condutorExtra")})
 public class Servico implements Serializable {
     private static final long serialVersionUID = 1L;

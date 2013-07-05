@@ -16,12 +16,13 @@
     }
 </script>
 
+<form  action="<%= request.getContextPath()%>/ServicoRent/registerContinua" method=post>
 
 
-<div style="float: left; clear: left; position: static;">
-    <div class="container" style="max-width: 250px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px;">
+    <div style="float: left; clear: left; position: static;">
+        <div class="container" style="max-width: 250px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px;">
 
-        <form class="form-signin">
+
             <h1 class="form-signin-heading" style="text-align: center">Dados da Reserva:</h1>
             <hr>
 
@@ -98,14 +99,13 @@
 
 
 
-        </form>
 
-    </div> <!-- /container -->
-    <img src="http://www.conceptvehicleleasing.co.uk/images/usability-Nov11/fuel1.png" width="90%" height="90%" style="vertical-align: middle;">
+        </div> <!-- /container -->
+        <img src="http://www.conceptvehicleleasing.co.uk/images/usability-Nov11/fuel1.png" width="90%" height="90%" style="vertical-align: middle;">
 
-</div>
-<div style="float: right; clear: right; position: relative; width: 70%;">
-    <form  action="<%= request.getContextPath()%>/ServicoRent/registerContinua" method=post>
+    </div>
+    <div style="float: right; clear: right; position: relative; width: 70%;">
+
         <table class="table table-hover"> 
 
 
@@ -117,7 +117,7 @@
                         <table style="width: 100%; height: 100%;">
                             <tr>
                                 <td>
-                                    ${row.descricao}
+                                    ${row.descricao} <br> <b>Preço por Hora:</b>${precoCategoria}&#8364
                                 </td>
                             </tr>
                             <tr style="text-align: center; vertical-align:  bottom;">
@@ -220,8 +220,9 @@
             </c:forEach> 
 
         </table>
-    </form>
-</div>
+
+    </div>
+</form>
 
 
 
