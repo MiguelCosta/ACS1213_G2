@@ -37,7 +37,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Servico.findByDataChegada", query = "SELECT s FROM Servico s WHERE s.dataChegada = :dataChegada"),
     @NamedQuery(name = "Servico.findByDepositoCheio", query = "SELECT s FROM Servico s WHERE s.depositoCheio = :depositoCheio"),
     @NamedQuery(name = "Servico.findByPreco", query = "SELECT s FROM Servico s WHERE s.preco = :preco"),
-    @NamedQuery(name = "Servico.findByObs", query = "SELECT s FROM Servico s WHERE s.obs = :obs")})
+    @NamedQuery(name = "Servico.findByObs", query = "SELECT s FROM Servico s WHERE s.obs = :obs"),
+    @NamedQuery(name = "Servico.findByGps", query = "SELECT s FROM Servico s WHERE s.gps = :gps"),
+    @NamedQuery(name = "Servico.findByCadeiraBebe", query = "SELECT s FROM Servico s WHERE s.cadeiraBebe = :cadeiraBebe"),
+    @NamedQuery(name = "Servico.findBySeguroCTRiscos", query = "SELECT s FROM Servico s WHERE s.seguroCTRiscos = :seguroCTRiscos"),
+    @NamedQuery(name = "Servico.findByCondutorExtra", query = "SELECT s FROM Servico s WHERE s.condutorExtra = :condutorExtra")})
 public class Servico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -66,6 +70,22 @@ public class Servico implements Serializable {
     private BigDecimal preco;
     @Column(name = "Obs")
     private Integer obs;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "GPS")
+    private boolean gps;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cadeiraBebe")
+    private boolean cadeiraBebe;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "seguroCTRiscos")
+    private boolean seguroCTRiscos;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "condutorExtra")
+    private boolean condutorExtra;
     @JoinColumn(name = "Carroid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Carro carroid;
@@ -86,12 +106,16 @@ public class Servico implements Serializable {
         this.id = id;
     }
 
-    public Servico(Integer id, Date dataPartida, Date dataChegada, boolean depositoCheio, BigDecimal preco) {
+    public Servico(Integer id, Date dataPartida, Date dataChegada, boolean depositoCheio, BigDecimal preco, boolean gps, boolean cadeiraBebe, boolean seguroCTRiscos, boolean condutorExtra) {
         this.id = id;
         this.dataPartida = dataPartida;
         this.dataChegada = dataChegada;
         this.depositoCheio = depositoCheio;
         this.preco = preco;
+        this.gps = gps;
+        this.cadeiraBebe = cadeiraBebe;
+        this.seguroCTRiscos = seguroCTRiscos;
+        this.condutorExtra = condutorExtra;
     }
 
     public Integer getId() {
@@ -140,6 +164,38 @@ public class Servico implements Serializable {
 
     public void setObs(Integer obs) {
         this.obs = obs;
+    }
+
+    public boolean getGps() {
+        return gps;
+    }
+
+    public void setGps(boolean gps) {
+        this.gps = gps;
+    }
+
+    public boolean getCadeiraBebe() {
+        return cadeiraBebe;
+    }
+
+    public void setCadeiraBebe(boolean cadeiraBebe) {
+        this.cadeiraBebe = cadeiraBebe;
+    }
+
+    public boolean getSeguroCTRiscos() {
+        return seguroCTRiscos;
+    }
+
+    public void setSeguroCTRiscos(boolean seguroCTRiscos) {
+        this.seguroCTRiscos = seguroCTRiscos;
+    }
+
+    public boolean getCondutorExtra() {
+        return condutorExtra;
+    }
+
+    public void setCondutorExtra(boolean condutorExtra) {
+        this.condutorExtra = condutorExtra;
     }
 
     public Carro getCarroid() {
