@@ -5,6 +5,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -44,6 +45,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Calendario.findByDatainicio", query = "SELECT c FROM Calendario c WHERE c.datainicio = :datainicio"),
     @NamedQuery(name = "Calendario.findByDatafim", query = "SELECT c FROM Calendario c WHERE c.datafim = :datafim")})
 public class Calendario implements Serializable {
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "preco")
+    private BigDecimal preco;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -223,6 +229,14 @@ public class Calendario implements Serializable {
     @Override
     public String toString() {
         return "entity.Calendario[ servicoid=" + servicoid + " ]";
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
     }
     
 }

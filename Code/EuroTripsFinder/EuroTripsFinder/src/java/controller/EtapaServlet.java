@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.CidadeFacade;
 import session.EtapaFacade;
-import session.TipomeiotransporteFacade;
 import session.LocalparagemFacade;
 import session.PercursoFacade;
 import session.TempoparagemFacade;
@@ -45,8 +44,6 @@ public class EtapaServlet extends HttpServlet {
 
     @EJB
     private CidadeFacade cidadeFacade;
-    @EJB
-    private TipomeiotransporteFacade tipomeiotransporteFacade;
     @EJB
     private LocalparagemFacade localparagemFacade;
     @EJB
@@ -68,7 +65,6 @@ public class EtapaServlet extends HttpServlet {
         int localOrigemId;
         int localDestinoId;
         Utilizador utilizador = (Utilizador) session.getAttribute("user");
-        int utilizadorId = utilizador.getId();
 
 
         if (userPath.equals("/Etapa/register")) {
@@ -119,6 +115,8 @@ public class EtapaServlet extends HttpServlet {
             dataInicio = et.getDatapartida();
             dataFinal = et.getDatachegada();
 
+            int horas = tempoInicio.getHorapartida().getHours();
+
             dataInicio.setHours(tempoInicio.getHorapartida().getHours());
             dataInicio.setMinutes(tempoInicio.getHorapartida().getMinutes());
             dataInicio.setSeconds(tempoInicio.getHorapartida().getSeconds());
@@ -131,26 +129,26 @@ public class EtapaServlet extends HttpServlet {
             et.setDatachegada(dataFinal);
             et.setValor(BigDecimal.ZERO);
 
-//
-//            et.setPercursoCollection(new ArrayList<Percurso>());
-//            et.getPercursoCollection().add((Percurso) session.getAttribute("percurso"));
+
+            et.setPercursoCollection(new ArrayList<Percurso>());
+            et.getPercursoCollection().add((Percurso) session.getAttribute("percurso"));
 
             Percurso p = (Percurso) session.getAttribute("percurso");
             p.getEtapaCollection().add(et);
 
             try {
                 percursoFacade.edit(p);
-                
             } catch (Exception ex) {
-                erro = "Erro ao inserir etapa";
-                session.setAttribute("MessageError", erro);
-                response.sendRedirect("/EuroTripsFinder/Artigo/register");
+                erro = "Erro ao inserir etapa. ";
+                session.setAttribute("MessageError", erro + ex.getMessage());
+                response.sendRedirect("/EuroTripsFinder/Etapa/register");
                 return;
             }
 
-            etapaFacade.create(et);
+            session.setAttribute("MessageSuccess", "Etapa adicionada com sucesso.");
+            response.sendRedirect("/EuroTripsFinder/Percurso/view?id="+ p.getId());
+            return;
 
-            url = "/Percurso";
         } else if (userPath.equals("/Etapa")) {
 
             url = "/index";
