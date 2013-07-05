@@ -57,8 +57,7 @@
             <td>${row.nome}</td>
             <td>${row.pais}</td> 
             <td>${row.regiao}</td>
-            <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Atividade/view?id=${row.nome}">Atividades</a>
-            <a class="btn btn-info" href="<%= request.getContextPath()%>/Cidade/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
+            <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Cidade/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
             <a class="btn btn-danger" href="<%= request.getContextPath()%>/Cidade/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
 
         </tr>

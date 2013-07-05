@@ -149,6 +149,8 @@ public class CidadeServlet extends HttpServlet {
             session.setAttribute("cidade", cidade);
             url = "/view";
             
+            request.setAttribute("atividades", cidade.getAtividadeCollection());
+            
         } else if (userPath.equals("/Cidade/delete")) {
             
             try{

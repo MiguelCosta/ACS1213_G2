@@ -38,12 +38,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Categoria.findByPrecoDeposito", query = "SELECT c FROM Categoria c WHERE c.precoDeposito = :precoDeposito"),
     @NamedQuery(name = "Categoria.findByPrecoPorHora", query = "SELECT c FROM Categoria c WHERE c.precoPorHora = :precoPorHora")})
 public class Categoria implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -156,4 +154,5 @@ public class Categoria implements Serializable {
     public String toString() {
         return "entity.Categoria[ id=" + id + " ]";
     }
+    
 }

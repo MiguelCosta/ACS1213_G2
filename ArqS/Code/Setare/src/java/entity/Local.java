@@ -39,12 +39,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Local.findByLatitude", query = "SELECT l FROM Local l WHERE l.latitude = :latitude"),
     @NamedQuery(name = "Local.findByLongitude", query = "SELECT l FROM Local l WHERE l.longitude = :longitude")})
 public class Local implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -181,4 +179,5 @@ public class Local implements Serializable {
     public String toString() {
         return "entity.Local[ id=" + id + " ]";
     }
+    
 }

@@ -4,7 +4,9 @@
  */
 package session;
 
+import entity.Carro;
 import entity.Categoria;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +27,12 @@ public class CategoriaFacade extends AbstractFacade<Categoria> {
 
     public CategoriaFacade() {
         super(Categoria.class);
+    }
+    
+    public List<Carro> listacarros (int categoria){
+        Categoria cat = em.find(Categoria.class, categoria);        
+        List<Carro> lista = (List<Carro>)cat.getCarroCollection();
+        return lista;
     }
     
 }
