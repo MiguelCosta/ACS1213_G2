@@ -14,6 +14,8 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
+import entity.Servico;
+import entity.Utilizador;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +28,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author miltonnunes52
  */
-@WebServlet(name = "PDFServlet", urlPatterns = {"/PDFServlet"})
+@WebServlet(name = "PDFServlet", urlPatterns = {"/bilhete"})
 public class PDFServlet extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException{
@@ -43,6 +45,9 @@ public class PDFServlet extends HttpServlet {
 			HttpServletResponse response) 
 			throws ServletException, IOException{
         
+        HttpSession session = request.getSession();
+        String userPath = request.getServletPath();
+        
         Font bfBold20 = new Font(FontFamily.TIMES_ROMAN, 20, Font.BOLD, new BaseColor(0, 0, 0));         
         Font bfBold18 = new Font(FontFamily.TIMES_ROMAN, 18, Font.BOLD, new BaseColor(0, 0, 0)); 
         Font bfBold12 = new Font(FontFamily.TIMES_ROMAN, 12, Font.BOLDITALIC, new BaseColor(0, 0, 0)); 
@@ -55,15 +60,32 @@ public class PDFServlet extends HttpServlet {
 			PdfWriter.getInstance(document, 
 				response.getOutputStream()); // Code 2
 			document.open();
+            
+            Utilizador utilizador = (Utilizador) session.getAttribute("user");
+        Servico servico = (Servico) request.getAttribute("servico");
+        
+        
+        String recipient = utilizador.getEmail();
+        String content = "\nDados do Bilhete:"
+          + "\nUtilizador: " + utilizador.getNome()
+          + "\nCategoria do veículo: " + servico.getCarroid().getCategoriaid().getNome()
+          + "\nDescrição do veículo: " + servico.getCarroid().getDescricao()
+          + "\nEstação de partida: " + servico.getLocalPartidaid().getNome()
+          + "\nData: "+ servico.getDataPartida()
+          + "\nEstação de entrega: " + servico.getLocalChegadaid().getNome()
+          + "\nData" + servico.getDataChegada()
+          + "\nTotal a pagar: " + servico.getPreco()
+          + "\nAgradecemos a sua escolha e desejamos-lhe uma excelente viagem!" 
+          + "\n"
+          + "\n";
+ 
 			
             
-            document.add(new Paragraph("EurotripsFinder", bfBold20));
+            document.add(new Paragraph("Seture", bfBold20));
             document.add(new Paragraph(" ",bfBold18));
-            document.add(new Paragraph("Bilhete número: 20012", bfBold18));
+            document.add(new Paragraph("Bilhete", bfBold18));
             document.add(new Paragraph(" ",bfBold18));
-            document.add(new Paragraph("Utilizador: antonio jose", bf12));
-            document.add(new Paragraph(" ",bfBold12));
-            document.add(new Paragraph("Data: 15/03/2014 15:00h", bf12));
+            document.add(new Paragraph(content, bf12));
             document.add(new Paragraph(" ",bfBold12));
             document.add(new Paragraph("Pagamento: efectuado",bf12));
             document.add(new Paragraph(" ",bfBold18));
@@ -71,11 +93,13 @@ public class PDFServlet extends HttpServlet {
             document.add(new Paragraph("Não perca este bilhete. A sua viagem depende dele!",bfBold12));
             document.add(new Paragraph("",bfBold18));
             document.add(new Paragraph("Muito Obrigado pela sua preferência!",bfBold12));
+            
             	
 			document.close(); 
 		}catch(DocumentException e){
 			e.printStackTrace();
 		}
+
 	}
 	
 }
