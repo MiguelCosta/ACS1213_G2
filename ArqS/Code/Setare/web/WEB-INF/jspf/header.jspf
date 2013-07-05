@@ -28,10 +28,12 @@
     <body>
 
         <div class="container">
+            
+            <div class="masthead">
+        <h3 class="muted">Setare</h3>
 
-            <div class="navbar navbar-inverse">
-                <div class="navbar-inner">
-                    <li class="brand" style="color:white">Setare</li>
+            <div class="navbar navbar-inner">
+
                     <ul class="nav">
                         <li><a href="/Setare">Home</a></li>
 
@@ -66,8 +68,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-
+            
 
             <!-- Código da publicidade-->
             <% if (session.getAttribute("artigorandom") != null) {%>
@@ -79,6 +80,7 @@
                 </div>
             </div>
             <% }%>
+            </div>
 
 
             <!-- Mensagem de erro -->

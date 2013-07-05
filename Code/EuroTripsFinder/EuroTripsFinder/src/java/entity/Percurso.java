@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author JorgeMaia
+ * @author Miguel
  */
 @Entity
 @Table(name = "percurso")
@@ -38,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Percurso.findById", query = "SELECT p FROM Percurso p WHERE p.id = :id"),
     @NamedQuery(name = "Percurso.findByLimiteetapas", query = "SELECT p FROM Percurso p WHERE p.limiteetapas = :limiteetapas"),
     @NamedQuery(name = "Percurso.findByNumeroetapas", query = "SELECT p FROM Percurso p WHERE p.numeroetapas = :numeroetapas"),
-    @NamedQuery(name = "Percurso.findByValortotal", query = "SELECT p FROM Percurso p WHERE p.valortotal = :valortotal")})
+    @NamedQuery(name = "Percurso.findByValortotal", query = "SELECT p FROM Percurso p WHERE p.valortotal = :valortotal"),
+    @NamedQuery(name = "Percurso.findByNome", query = "SELECT p FROM Percurso p WHERE p.nome = :nome")})
 public class Percurso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,7 +64,10 @@ public class Percurso implements Serializable {
     @Size(max = 255)
     @Column(name = "nome")
     private String nome;
-    @ManyToMany(mappedBy = "percursoCollection")
+    @JoinTable(name = "percurso_etapa", joinColumns = {
+        @JoinColumn(name = "Percursoid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "Etapaid", referencedColumnName = "id")})
+    @ManyToMany
     private Collection<Etapa> etapaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "percursoid")
     private Collection<Viagem> viagemCollection;

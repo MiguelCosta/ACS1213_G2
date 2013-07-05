@@ -43,7 +43,7 @@ Percurso: ${percurso.getId()} - ${percurso.getNome()}
     <div class="control-group">
         <label class="control-label" for="inputLocalFinal">Local Final</label>
         <div class="controls">
-            <select id="inputLocalFinal" name="localFinal">
+            <select id="inputLocalFinal" name="localFinal" required="required">
                 <c:forEach var="row" items="${locais}">
                     <option value="${row.id}">${row.nome}</option>
                 </c:forEach>
@@ -61,7 +61,8 @@ Percurso: ${percurso.getId()} - ${percurso.getNome()}
                    min="1900-01-01" 
                    max="2020-01-01" 
                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" 
-                   title="yyyy-MM-dd">
+                   title="yyyy-MM-dd"
+                   required="required">
         </div>   
     </div>
 
@@ -75,7 +76,8 @@ Percurso: ${percurso.getId()} - ${percurso.getNome()}
                    min="1900-01-01" 
                    max="2020-01-01" 
                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" 
-                   title="yyyy-MM-dd">
+                   title="yyyy-MM-dd"
+                   required="required">
         </div>   
     </div>
 
@@ -83,7 +85,7 @@ Percurso: ${percurso.getId()} - ${percurso.getNome()}
     <div class="control-group">  
         <label class="control-label" for="inputMeioTransporte">Meio de Transporte</label>
         <div class="controls">
-            <select id="inputMeioTransporte" name="meioTransporte">
+            <select id="inputMeioTransporte" name="meioTransporte" required="required">
                 <c:forEach var="row" items="${listmeiostransporte}">
                     <option value="${row.id}">${row.nome}</option>
                 </c:forEach>
