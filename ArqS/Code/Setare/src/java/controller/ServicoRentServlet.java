@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -35,7 +36,7 @@ import validate.DataHoraValidator;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "ServicoRentServlet", urlPatterns = {"/ServicoRentServlet", "/ServicoRent/view", "/ServicoRent/index", "/ServicoRent", "/ServicoRent/register", "/ServicoRent/registerContinua", "/ServicoRent/registerFinaliza"})
+@WebServlet(name = "ServicoRentServlet", urlPatterns = {"/ServicoRentServlet", "/ServicoRent/view", "/ServicoRent/index", "/ServicoRent/indexUtilizador", "/ServicoRent", "/ServicoRent/register", "/ServicoRent/registerContinua", "/ServicoRent/registerFinaliza"})
 public class ServicoRentServlet extends HttpServlet {
 
     @EJB
@@ -306,7 +307,7 @@ public class ServicoRentServlet extends HttpServlet {
             response.sendRedirect("/Setare");
 
         } else if (userPath.equals(
-                "/ServicoRent/index")) {
+                "/ServicoRent/indexUtilizador")) {
 
 
             List<Servico> servicos = (List<Servico>) user.getServicoCollection();
@@ -317,9 +318,9 @@ public class ServicoRentServlet extends HttpServlet {
             } else {
                 request.setAttribute("servicosRent", servicos);
             }
-            url = "index";
-        } else if (userPath.equals(
-                "/ServicoRent/view")) {
+            url = "indexUtilizador";
+        } else if (userPath.equals("/ServicoRent/view")) {
+            
             Servico servico = servicoFacade.find(Integer.parseInt(request.getParameter("id")));
             if (servico == null) {
                 session.setAttribute("MessageError", "Não existe nenhum pedido.");
@@ -327,8 +328,40 @@ public class ServicoRentServlet extends HttpServlet {
             } else {
                 request.setAttribute("servico", servico);
             }
+            
             url = "view";
 
+        } else if (userPath.equals(
+                "/ServicoRent/index")) {
+
+            try {
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = servicoFacade.count();
+                int nrpages;
+                if (ct <= servicoFacade.limitepage) {
+                    nrpages = 1;
+                } else if ((ct) % servicoFacade.limitepage == 0) {
+                    nrpages = ct / servicoFacade.limitepage;
+                } else {
+                    nrpages = (ct / servicoFacade.limitepage) + 1;
+                }
+                if (Integer.parseInt(request.getParameter("page")) > nrpages || page == 0) {
+                    page = 1;
+                    response.sendRedirect("/Setare/ServicoRent/index?page=" + 1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page * servicoFacade.limitepage;
+                if (max > ct) {
+                    max = ct;
+                }
+                request.setAttribute("servicosRent", servicoFacade.findAll().subList((page - 1) * servicoFacade.limitepage, max));
+                url = "/index";
+            } catch (NumberFormatException e) {
+                response.sendRedirect("/Setare/ServicoRent/index?page=" + 1);
+            }
+
+//           
         }
 
 
