@@ -117,7 +117,7 @@
                         <table style="width: 100%; height: 100%;">
                             <tr>
                                 <td>
-                                    ${row.descricao} <br> <b>Preço por Hora:</b>${precoCategoria}&#8364
+                                    ${row.descricao} <br> <b>Preço por Hora:</b>${precoCategoria}&#8364<br><b>Preço do Depósito:</b>${row.getCategoriaid().getPrecoDeposito()}&#8364
                                 </td>
                             </tr>
                             <tr style="text-align: center; vertical-align:  bottom;">

@@ -99,7 +99,7 @@ public class ServicoRentServlet extends HttpServlet {
                     int localLevantamentoId = Integer.parseInt((String) request.getParameter("localorigem"));
                     int localEntregaId = Integer.parseInt((String) request.getParameter("localchegada"));
 
-                    List<Carro> listacarros = categoriaFacade.listacarros(categoriaId);
+                    List<Carro> listacarros = categoriaFacade.listacarros(categoriaId);                   
 
                     session.setAttribute("listacarros", listacarros);
                     session.setAttribute("localLevantamentoId", localLevantamentoId);
@@ -108,8 +108,8 @@ public class ServicoRentServlet extends HttpServlet {
                     request.setAttribute("precoCategoria", categoriaFacade.find(categoriaId).getPrecoPorHora().intValue());
 
 
-                    session.setAttribute("horaLevantamento", horaLevantamento);
-                    session.setAttribute("horaEntrega", horaEntrega);
+                    request.setAttribute("horaLevantamento", horaLevantamento);
+                    request.setAttribute("horaEntrega", horaEntrega);
                     session.setAttribute("dataEntrega", dataEntrega);
                     session.setAttribute("dataLevantamento", dataLevantamento);
 
@@ -161,8 +161,8 @@ public class ServicoRentServlet extends HttpServlet {
 
                         request.setAttribute("categoria", cat);
                         session.setAttribute("carro", carroFacade.find(carroId));
-                        request.setAttribute("localLevantamento", localFacade.find((Integer) session.getAttribute("localLevantamentoId")));
-                        request.setAttribute("localEntrega", localFacade.find((Integer) session.getAttribute("localEntregaId")));
+                        session.setAttribute("localLevantamento", localFacade.find(Integer.parseInt(request.getParameter("localorigem"))));
+                        session.setAttribute("localEntrega", localFacade.find(Integer.parseInt(request.getParameter("localchegada"))));
                         request.setAttribute("dias", dias);
                         String aux;
 
@@ -220,6 +220,9 @@ public class ServicoRentServlet extends HttpServlet {
                         } else {
                             session.setAttribute("cadeira", false);
                         }
+                        if (descricao.equals("")) {
+                        descricao = "Não foi requisitado nenhum extra no pedido.";
+                        }
 
                         BigDecimal totalTudo = new BigDecimal(total.intValue() + valorExtras);
                         request.setAttribute("extras", descricao);
@@ -231,6 +234,8 @@ public class ServicoRentServlet extends HttpServlet {
 
                         request.setAttribute("datachegadaString", dataEntrega);
                         request.setAttribute("datapartidaString", dataLevantamento);
+                        request.setAttribute("horaEntrega", horaEntrega);
+                        request.setAttribute("horaLevantamento", horaLevantamento);
 
 
 
@@ -252,8 +257,7 @@ public class ServicoRentServlet extends HttpServlet {
         } else if (userPath.equals(
                 "/ServicoRent/registerFinaliza")) {
 
-            int localLevantamentoId = (Integer) session.getAttribute("localLevantamentoId");
-            int localEntregaId = (Integer) session.getAttribute("localEntregaId");
+
             Carro carro = (Carro) session.getAttribute("carro");
             //BigDecimal total = new BigDecimal (carro.getId());
 
@@ -262,8 +266,8 @@ public class ServicoRentServlet extends HttpServlet {
             Date DatahoraEntrega = (Date) session.getAttribute("dataChegada");
 
 
-            Local partida = localFacade.find(localLevantamentoId);
-            Local chegada = localFacade.find(localEntregaId);
+            Local partida = (Local) session.getAttribute("localLevantamento");
+            Local chegada = (Local) session.getAttribute("localEntrega");
 
             boolean deposito = (Boolean) session.getAttribute("deposito");
             BigDecimal preco = (BigDecimal) session.getAttribute("total");
