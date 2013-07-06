@@ -35,7 +35,7 @@ import validate.DataHoraValidator;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "ServicoRentServlet", urlPatterns = {"/ServicoRentServlet", "/ServicoRent/index", "/ServicoRent", "/ServicoRent/register", "/ServicoRent/registerContinua", "/ServicoRent/registerFinaliza"})
+@WebServlet(name = "ServicoRentServlet", urlPatterns = {"/ServicoRentServlet", "/ServicoRent/view", "/ServicoRent/index", "/ServicoRent", "/ServicoRent/register", "/ServicoRent/registerContinua", "/ServicoRent/registerFinaliza"})
 public class ServicoRentServlet extends HttpServlet {
 
     @EJB
@@ -310,6 +310,17 @@ public class ServicoRentServlet extends HttpServlet {
                 request.setAttribute("servicosRent", servicos);
             }
             url="index";
+        }
+        else if(userPath.equals("/ServicoRent/view")){
+        Servico servico = servicoFacade.find(Integer.parseInt(request.getParameter("id")));
+         if (servico == null) {
+                session.setAttribute("MessageError", "Não existe nenhum pedido.");
+                url = "index";
+            } else {
+                request.setAttribute("servico", servico);
+            }
+            url="view";
+                    
         }
 
 
