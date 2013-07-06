@@ -55,7 +55,7 @@
                         <div class="control-group">
 
                             <div class="controls">
-                                <input type="time" id="inputHoraEntrega" name="horaEntrega" style="width:90px;" value="${horaEntrega}">
+                                <input type="time" id="inputHoraEntrega" name="horaEntrega" style="width:90px;" value="${horaLevantamento}">
                             </div>   
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                         <div class="control-group">
 
                             <div class="controls">
-                                <input type="time" id="inputHoraLevantamento" name="horalevantamento" style="width:90px;" value="${horaLevantamento}">
+                                <input type="time" id="inputHoraLevantamento" name="horalevantamento" style="width:90px;" value="${horaEntrega}">
                             </div>   
                         </div>
                     </div>
