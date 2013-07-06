@@ -35,7 +35,7 @@ import session.ServicotaxiFacade;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "ServicoTaxiServlet", urlPatterns = {"/ServicoTaxiServlet", "/ServicoTaxi", "/ServicoTaxi/register", "/ServicoTaxi/registerContinua", "/ServicoTaxi/registerFinaliza"})
+@WebServlet(name = "ServicoTaxiServlet", urlPatterns = {"/ServicoTaxiServlet", "/ServicoTaxi", "/ServicosTaxi", "/ServicosTaxi/index", "/ServicoTaxi/register", "/ServicoTaxi/registerContinua", "/ServicoTaxi/registerFinaliza"})
 public class ServicoTaxiServlet extends HttpServlet {
 
     @EJB
@@ -84,6 +84,32 @@ public class ServicoTaxiServlet extends HttpServlet {
             session.setAttribute("listacategorias", categoriaFacade.findAll());
 
             url = "register";
+        } else if (userPath.equals("/ServicosTaxi")) {
+            response.sendRedirect("/Setare/ServicosTaxi/index?page="+1);
+        }else if(userPath.equals("/ServicosTaxi/index")){
+            //request.setAttribute("listartigos", artigoFacade.ArtigoPages(page-1));
+            
+            try{
+                int page = 1;
+                page = new Integer(request.getParameter("page"));
+                int ct = servicoFacade.count();
+                int nrpages;
+                if(ct<=servicoFacade.limitepage) nrpages= 1;
+                else if((ct)%servicoFacade.limitepage == 0) nrpages = ct/servicoFacade.limitepage;
+                else nrpages = (ct/servicoFacade.limitepage)+1;
+                if(Integer.parseInt(request.getParameter("page")) > nrpages || page == 0){
+                    page = 1;
+                    response.sendRedirect("/Setare/ServicosTaxi/index?page="+1);
+                }
+                request.setAttribute("nrpages", String.valueOf(nrpages));
+                int max = page*servicoFacade.limitepage;
+                if(max > ct) max = ct;
+                request.setAttribute("resultado", servicoFacade.findAll().subList((page-1)*servicoFacade.limitepage, max));
+                url = "/index";
+            }
+            catch(NumberFormatException e){
+                response.sendRedirect("/Setare/ServicosTaxi/index?page="+1);
+            }  
         } else if (userPath.equals("/ServicoTaxi/register")) {
 
             //if hora e Data e Veiculo disponiveis fixe
