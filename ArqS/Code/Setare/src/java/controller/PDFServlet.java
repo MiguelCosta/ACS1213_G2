@@ -68,6 +68,7 @@ public class PDFServlet extends HttpServlet {
             Servico servico = (Servico) request.getAttribute("servico");
 
 
+            
             String content = "\nDados do Bilhete:"
               + "\n     Utilizador: " + utilizador.getNome()
               + "\n     Categoria do veículo: " + servico.getCarroid().getCategoriaid().getNome()
@@ -75,9 +76,14 @@ public class PDFServlet extends HttpServlet {
               + "\n     Estação de partida: " + servico.getLocalPartidaid().getNome()
               + "\n     Data: "+ servico.getDataPartida()
               + "\n     Estação de entrega: " + servico.getLocalChegadaid().getNome()
-              + "\n     Data" + servico.getDataChegada()
-              + "\n     Total a pagar: " + servico.getPreco()
-              + "\n     Agradecemos a sua escolha e desejamos-lhe uma excelente viagem!" 
+              + "\n     Data: " + servico.getDataChegada()
+              + "\n     Extras: "
+              + "\n         Cadeira bebe: " + servico.getCadeiraBebe()
+              + "\n         GPS: " + servico.getGps()
+              + "\n         Depósito Cheio: " + servico.getDepositoCheio()
+              + "\n         Condutor Adicional: " + servico.getCondutorExtra()
+              + "\n         Seguro contra todos os riscos: " + servico.getSeguroCTRiscos()
+              + "\n     Total pago: " + servico.getPreco()
               + "\n"
               + "\n";
 
@@ -116,13 +122,14 @@ public class PDFServlet extends HttpServlet {
 
 
             String content = "\nDados do Bilhete:"
-              + "\n     Utilizador: " + utilizador.getNome()
               + "\n     Descrição: Bilhete de Taxi "
+              + "\n     Utilizador: " + utilizador.getNome()             
               + "\n     Taxi: " + servico.getCodigotaxi()
               + "\n     Estação de partida: " + servico.getLocalpartidaid().getNome()
               + "\n     Data: "+ servico.getDatapartida()
               + "\n     Estação de entrega: " + servico.getLocalchegadaid().getNome()
-              + "\n     Agradecemos a sua escolha e desejamos-lhe uma excelente viagem!" 
+              + "\n     Bagagem: " + servico.getBagagem()
+              + "\n     Passageiros: " + servico.getPassageiros()
               + "\n"
               + "\n";
 

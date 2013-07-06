@@ -35,31 +35,55 @@
             <div class="navbar navbar-inner">
 
                     <ul class="nav">
-                        <li><a href="/Setare">Home</a></li>
+                        <li class="divider-vertical"><a href="/Setare">Home</a></li>
 
 
 
-                        <li><a href="/Setare/Utilizador/index">Utilizadores</a></li>
-                        <li><a href="/Setare/Cliente">Clientes</a></li>
+                        <li class="divider-vertical"><a href="/Setare/ServicoTaxi">Taxis</a></li>
+                        <li class="divider-vertical"><a href="/Setare/ServicoRent">Rent-a-car</a></li>
+                        
+                        <%if (session.getAttribute("user") != null){
+                        
+                            if (((Utilizador)session.getAttribute("user")).getFuncao().equals("User")) {%>
+                            <li class="divider-vertical"><a href="/Setare/ServicoTaxi/index">Serviços Taxi</a></li>
+                            <li class="divider-vertical"><a href="/Setare/ServicoRent/indexUtilizador">Serviços Rent</a></li>
+                            
+                        <%}
+                        }%>
+                        
+                        <% if (session.getAttribute("user") != null){
+                        
+                            if (((Utilizador)session.getAttribute("user")).getFuncao().equals("Admin")) {%>
+                            <li class="divider-vertical"><a href="/Setare/Utilizador/index">Utilizador</a></li>
+                            <li class="divider-vertical"><a href="/Setare/Categoria">Categorias</a></li>
+                            <li class="divider-vertical"><a href="/Setare/ServicosTaxi/index">Serviços Taxi</a></li>
+                            <li class="divider-vertical"><a href="/Setare/ServicoRent/index">Serviços Rent</a></li>
+                        <%}
+                        }%>
+                        
+                        
+                        
+                        
+                        
 
 
 
 
                     </ul>
                     <ul class="nav pull-right">
-                        <li class="">
+                        <li class="divider-vertical">
                             <% if (session.getAttribute("user") == null) {%>
                             <a href="/Setare/Utilizador/register">Registar</a>
                             <%}%>
                         </li>
-                        <li class="">
+                        <li class="divider-vertical">
                             <% if (session.getAttribute("user") != null) {%>
                         <li><a href="/Setare/Utilizador/perfil">
                                 <%= ((Utilizador) session.getAttribute("user")).getNome()%>
                             </a></li>
                             <%}%>
                         </li>
-                        <li class="">
+                        <li class="divider-vertical">
                             <% if (session.getAttribute("user") == null) {%>
                             <a href="/Setare/Utilizador">Login</a>
                             <%} else {%>

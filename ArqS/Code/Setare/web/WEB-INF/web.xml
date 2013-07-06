@@ -30,6 +30,20 @@
     </filter-mapping>
     
     
+     <filter-mapping>
+        <filter-name>UserFilter</filter-name>
+        <url-pattern>/Utilizador/perfil</url-pattern>
+        <url-pattern>/Utilizador/delete</url-pattern>
+        <url-pattern>/Utilizador/view</url-pattern>
+        <url-pattern>/Utilizador/edit</url-pattern>
+        <url-pattern>/ServicoTaxi/index</url-pattern>
+        <url-pattern>/ServicoTaxi/view</url-pattern>
+        <url-pattern>/ServicoTaxi/registerFinaliza</url-pattern>
+        <url-pattern>/ServicoRent/indexUtilizador</url-pattern>
+        <url-pattern>/ServicoRent/view</url-pattern>
+        <url-pattern>/ServicoRent/registerFinaliza</url-pattern>
+    </filter-mapping>
+    
     <jsp-config>
         <jsp-property-group>
             <description>header e footer</description>
