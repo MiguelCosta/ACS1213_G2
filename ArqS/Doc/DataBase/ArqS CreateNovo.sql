@@ -1,10 +1,3 @@
-CREATE TABLE Categoria (
-  id            int(10) NOT NULL AUTO_INCREMENT, 
-  nome          varchar(255) NOT NULL UNIQUE, 
-  descricao     varchar(1023) NOT NULL, 
-  precoDeposito decimal(10, 2) NOT NULL, 
-  precoPorHora  decimal(10, 2) NOT NULL, 
-  PRIMARY KEY (id));
 CREATE TABLE ServicoTaxi (
   id             int(10) NOT NULL AUTO_INCREMENT, 
   Utilizadorid   int(10) NOT NULL, 
@@ -20,6 +13,7 @@ CREATE TABLE Utilizador (
   nome     varchar(255) NOT NULL, 
   email    varchar(255) NOT NULL UNIQUE, 
   password varchar(45) NOT NULL, 
+  funcao   varchar(255), 
   PRIMARY KEY (id));
 CREATE TABLE Servico (
   id             int(10) NOT NULL AUTO_INCREMENT, 
@@ -36,6 +30,13 @@ CREATE TABLE Servico (
   cadeiraBebe    tinyint(1), 
   seguroCTRiscos tinyint, 
   condutorExtra  tinyint, 
+  PRIMARY KEY (id));
+CREATE TABLE Categoria (
+  id            int(10) NOT NULL AUTO_INCREMENT, 
+  nome          varchar(255) NOT NULL UNIQUE, 
+  descricao     varchar(1023) NOT NULL, 
+  precoDeposito decimal(10, 2) NOT NULL, 
+  precoPorHora  decimal(10, 2) NOT NULL, 
   PRIMARY KEY (id));
 CREATE TABLE Carro (
   id          int(10) NOT NULL AUTO_INCREMENT, 
