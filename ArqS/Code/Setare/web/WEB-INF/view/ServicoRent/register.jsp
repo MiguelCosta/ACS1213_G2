@@ -39,14 +39,14 @@
                 <div class="control-group">
                     <label class="control-label" for="inputDataLevantamento">Data:</label>
                     <div class="controls">          
-                        <input type="date" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA" style="width: 50%" >
+                        <input type="date" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA" style="width: 50%; height: 30px;" >
                     </div>   
                 </div>
 
                 <div class="control-group">
                     <label class="control-label" for="inputHoraLevantamento">Hora:</label>
                     <div class="controls">
-                        <input type="time" id="inputHoraLevantamento" name="horalevantamento" placeholder="00:00" style="width: 25%">
+                        <input type="time" id="inputHoraLevantamento" name="horalevantamento" placeholder="00:00" style="width: 35%; height: 30px;">
                     </div>   
                 </div>
 
@@ -66,14 +66,14 @@
                 <div class="control-group">
                     <label class="control-label" for="inputDataEntrega">Data:</label>
                     <div class="controls">            
-                        <input type="date" id="inputDataEntrega" name="datachegada" placeholder="Data de Entrega" style="width: 50%" >
+                        <input type="date" id="inputDataEntrega" name="datachegada" placeholder="Data de Entrega" style="width: 50%; height: 30px;" >
                     </div>   
                 </div>
 
                 <div class="control-group">
                     <label class="control-label" for="inputHoraEntrega">Hora:</label>
                     <div class="controls">
-                        <input type="time" id="inputHoraEntrega" name="horaentrega" placeholder="00:00" style="width: 25%">
+                        <input type="time" id="inputHoraEntrega" name="horaentrega" placeholder="00:00" style="width: 35%; height: 30px;">
                     </div>   
                 </div>
             </div>
