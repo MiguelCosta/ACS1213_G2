@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 
+
+
 <form  action="<%= request.getContextPath()%>/ServicoRent/register" method=post class="form-signin">
     <div class="container" style="max-width: 80%; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px;">
         <div class="row-fluid">
@@ -34,7 +36,7 @@
                 <div class="control-group">
                     <label class="control-label" for="inputDataLevantamento">Data:</label>
                     <div class="controls">          
-                        <input type="date" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA">
+                        <input type="date" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA" >
                     </div>   
                 </div>
 
@@ -63,7 +65,7 @@
                 <div class="control-group">
                     <label class="control-label" for="inputDataEntrega">Data:</label>
                     <div class="controls">            
-                        <input type="date" id="inputDataEntrega" name="datachegada" placeholder="Data de Entrega">
+                        <input type="date" id="inputDataEntrega" name="datachegada" placeholder="Data de Entrega" >
                     </div>   
                 </div>
 

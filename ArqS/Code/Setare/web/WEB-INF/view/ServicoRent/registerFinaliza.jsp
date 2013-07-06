@@ -45,7 +45,7 @@
                         <div class="control-group">
 
                             <div class="controls">          
-                                <input type="date" id="inputDataEntrega" name="datachegada" placeholder="dd-MM-AAAA" style="width:150px;" value="${dataEntrega}">
+                                <input type="date" id="inputDataEntrega" name="datachegada" placeholder="dd-MM-AAAA" style="width:150px;" value="${datapartidaString}">
                             </div>   
                         </div>
 
@@ -66,7 +66,7 @@
                         <div class="control-group">
 
                             <div class="controls">          
-                                <input type="date" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA" style="width:150px;" value="${dataLevantamento}">
+                                <input type="date" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA" style="width:150px;" value="${datachegadaString}">
                             </div>   
                         </div>
 
@@ -95,7 +95,7 @@
             <div class="control-group">
                 <label class="control-label" for="inputPrecoDia">Nº de Dias:</label>
                 <div class="controls">
-                    <input type="text" id="inputPrecoDia" name="precoDia" value="${dias}">
+                    <input type="text" id="inputPrecoDia" name="dias" value="${dias}">
                 </div>   
             </div>
         </div>

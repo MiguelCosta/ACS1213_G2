@@ -38,6 +38,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Utilizador.findByUsernameAndPassword", query = "Select u FROM Utilizador u WHERE u.nome = :username AND u.password = :password")})
 
 public class Utilizador implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "funcao")
+    private String funcao;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -152,6 +157,14 @@ public class Utilizador implements Serializable {
     @Override
     public String toString() {
         return "entity.Utilizador[ id=" + id + " ]";
+    }
+
+    public String getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
     }
     
 }

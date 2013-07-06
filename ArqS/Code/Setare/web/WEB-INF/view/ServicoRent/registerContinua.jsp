@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div style="text-align: center;">
-                <b>Nº de Dias: ${dias}</b>
+                <b>Dias:</b><input type="text" name="dias" value="${dias}">
             </div>
 
 
