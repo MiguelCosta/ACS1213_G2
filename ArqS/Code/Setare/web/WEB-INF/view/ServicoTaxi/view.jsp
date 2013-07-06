@@ -1,4 +1,12 @@
+<% Utilizador user = (Utilizador) session.getAttribute("user");
+    String aux = "";
+    if (user.getFuncao().equals("User")) {
+        aux = "/ServicoTaxi/index";
 
+    } else if (user.getFuncao().equals("Admin")) {
+        aux = "/ServicosTaxi/index";
+    }
+%>
 
 
 <form>
@@ -95,7 +103,7 @@
 
         <div style="width: 100%; text-align: center;" >
 
-            <a class="btn btn-large btn-primary" href="/Setare/ServicosTaxi">Voltar</a>
+            <a class="btn btn-large btn-primary" href="/Setare<%=aux%>">Voltar</a>
 
         </div>
 

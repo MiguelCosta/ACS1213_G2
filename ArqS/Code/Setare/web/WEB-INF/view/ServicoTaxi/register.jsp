@@ -65,7 +65,7 @@
             <div class="control-group">
                     <label class="control-label" for="inputPassageiros">Passageiros:</label>
                     <div class="controls">               
-                         <input type="number" id="inputHoraLevantamento" name="passageiros" placeholder="Número de passageiros" required="required">
+                        <input type="number" style="height: 30px;" id="inputHoraLevantamento" name="passageiros" placeholder="Número de passageiros" required="required">
                          
                     </div>   
                 </div>
