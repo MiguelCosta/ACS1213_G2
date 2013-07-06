@@ -12,11 +12,9 @@ import entity.Servico;
 import entity.Utilizador;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -30,13 +28,14 @@ import session.CarroFacade;
 import session.CategoriaFacade;
 import session.LocalFacade;
 import session.ServicoFacade;
+import session.UtilizadorFacade;
 import validate.DataHoraValidator;
 
 /**
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "ServicoRentServlet", urlPatterns = {"/ServicoRentServlet", "/ServicoRent", "/ServicoRent/register", "/ServicoRent/registerContinua", "/ServicoRent/registerFinaliza"})
+@WebServlet(name = "ServicoRentServlet", urlPatterns = {"/ServicoRentServlet", "/ServicoRent/index", "/ServicoRent", "/ServicoRent/register", "/ServicoRent/registerContinua", "/ServicoRent/registerFinaliza"})
 public class ServicoRentServlet extends HttpServlet {
 
     @EJB
@@ -47,6 +46,8 @@ public class ServicoRentServlet extends HttpServlet {
     private ServicoFacade servicoFacade;
     @EJB
     private CarroFacade carroFacade;
+    @EJB
+    private UtilizadorFacade utilizadorFacade;
 
     /**
      * Processes requests for both HTTP
@@ -99,7 +100,7 @@ public class ServicoRentServlet extends HttpServlet {
                     int localLevantamentoId = Integer.parseInt((String) request.getParameter("localorigem"));
                     int localEntregaId = Integer.parseInt((String) request.getParameter("localchegada"));
 
-                    List<Carro> listacarros = categoriaFacade.listacarros(categoriaId);                   
+                    List<Carro> listacarros = categoriaFacade.listacarros(categoriaId);
 
                     session.setAttribute("listacarros", listacarros);
                     session.setAttribute("localLevantamentoId", localLevantamentoId);
@@ -221,7 +222,7 @@ public class ServicoRentServlet extends HttpServlet {
                             session.setAttribute("cadeira", false);
                         }
                         if (descricao.equals("")) {
-                        descricao = "Não foi requisitado nenhum extra no pedido.";
+                            descricao = "Não foi requisitado nenhum extra no pedido.";
                         }
 
                         BigDecimal totalTudo = new BigDecimal(total.intValue() + valorExtras);
@@ -297,6 +298,18 @@ public class ServicoRentServlet extends HttpServlet {
 
             response.sendRedirect("/Setare");
 
+        } else if (userPath.equals("/ServicoRent/index")) {
+
+
+            List<Servico> servicos = (List<Servico>) user.getServicoCollection();      
+
+            if (servicos.isEmpty()) {
+                session.setAttribute("MessageError", "Não possui nenhum pedido.");
+                
+            } else {
+                request.setAttribute("servicosRent", servicos);
+            }
+            url="index";
         }
 
 
