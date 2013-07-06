@@ -54,7 +54,7 @@
 
 <table class="table table-hover" style> 
     <thead> 
-    <td>ID</td>    <
+    <td>ID</td>    
     <td>Username</td>  
     <td>Email</td>
     <td>Opções</td>

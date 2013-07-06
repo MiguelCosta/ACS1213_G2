@@ -5,7 +5,7 @@
 <div style="float: left; clear: left; position: static;">
     <div class="container" style="max-width: 250px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px;">
 
-        <form class="form-signin">
+        <form  action="<%= request.getContextPath()%>/ServicoTaxi/registerContinua" method=post>
             <h1 class="form-signin-heading" style="text-align: center">Dados da Reserva:</h1>
             <hr>
 
@@ -70,7 +70,10 @@
                         </select>
                     </div>   
           </div>
+                    <td  style="text-align: center; vertical-align: middle; width: 18%;"> 
+                        <button class="btn btn-large btn-primary" type="submit" name="id">Reservar</button>
 
+                    </td>
 
         </form>
 
@@ -78,7 +81,6 @@
 
 </div>
       <div>
-        <td  style="text-align: center; vertical-align: middle; width: 18%;"><a class="btn btn-large btn-primary" href="<%= request.getContextPath()%>/ServicoTaxi/registerContinua">Efectuar Pagamento</a></td>
         <img src="/Setare/img/paypal_now_accepted.png">
       </div>
 </div>
