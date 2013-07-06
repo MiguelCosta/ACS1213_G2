@@ -89,7 +89,7 @@ public class EmailServlet extends HttpServlet {
             } finally {
 
                 request.setAttribute("Message", resultMessage);
-                request.getRequestDispatcher("/bilhete").forward(request, response);
+                request.getRequestDispatcher("/bilheterent").forward(request, response);
 
 
             }
@@ -124,7 +124,7 @@ public class EmailServlet extends HttpServlet {
             } finally {
 
                 request.setAttribute("Message", resultMessage);
-                request.getRequestDispatcher("/bilhete").forward(request, response);
+                request.getRequestDispatcher("/bilhetetaxi").forward(request, response);
 
 
             }

@@ -234,6 +234,10 @@ public class ServicoTaxiServlet extends HttpServlet {
 
                 session.setAttribute("MessageSuccess", "Inserido com sucesso");
                 
+                request.setAttribute("servico", serv);
+                request.getRequestDispatcher("/enviarmailtaxi").forward(request, response);
+
+                
                 response.sendRedirect("/Setare");
           
         }

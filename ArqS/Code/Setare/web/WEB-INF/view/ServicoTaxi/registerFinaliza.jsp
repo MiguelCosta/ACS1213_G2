@@ -1,6 +1,6 @@
 
 
-<form  action="<%= request.getContextPath()%>/ServicoTaxi/registerFinaliza" method=post">
+<form  action="<%= request.getContextPath()%>/ServicoTaxi/registerFinaliza" method=post" target="_blank">
  <div class="container" style="max-width: 600px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px;">
 
        
@@ -107,7 +107,7 @@
 
             <div style="width: 100%; text-align: center;" >
 
-                <button class="btn btn-large btn-primary" type="submit">Confirmar</button>
+                <button class="btn btn-large btn-primary" onclick="this.disabled=true;this.form.submit();" type="submit" >Imprimir Bilhete</button>
 
             </div>
 
