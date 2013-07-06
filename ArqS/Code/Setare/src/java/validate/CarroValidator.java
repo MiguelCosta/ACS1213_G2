@@ -30,14 +30,14 @@ public class CarroValidator {
 
         if (nome == null
                 || nome.equals("")
-                || nome.length() < 4) {
+                || nome.length() < 8) {
             errorFlag = true;
-            request.setAttribute("MessageError", "O nome não é valido!");
+            request.setAttribute("MessageError", "Matrícula inválida!");
         } else if (desc == null
                 || desc.equals("")
                 || desc.length() < 4) {
             errorFlag = true;
-            request.setAttribute("MessageError", "A coordenada da latitude não é válida!");
+            request.setAttribute("MessageError", "Descrição inválida!");
         }
         
 
