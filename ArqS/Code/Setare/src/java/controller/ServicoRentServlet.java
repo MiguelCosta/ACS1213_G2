@@ -304,7 +304,11 @@ public class ServicoRentServlet extends HttpServlet {
 
             session.setAttribute("MessageSuccess", "Inserido com sucesso");
 
-            response.sendRedirect("/Setare");
+            request.setAttribute("servico", serv);
+            request.getRequestDispatcher("/enviarmailrent").forward(request, response);
+            
+            
+            //response.sendRedirect("/Setare");
 
         } else if (userPath.equals(
                 "/ServicoRent/indexUtilizador")) {
