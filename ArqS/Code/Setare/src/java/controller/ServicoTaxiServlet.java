@@ -70,15 +70,7 @@ public class ServicoTaxiServlet extends HttpServlet {
         Utilizador user = new Utilizador();
         user = (Utilizador) session.getAttribute("user");
 
-
-
-
-
-
-
-
-
-
+        
         if (userPath.equals("/ServicoTaxi")) {
             session.setAttribute("listalocais", localFacade.findAll());
             session.setAttribute("listacategorias", categoriaFacade.findAll());
@@ -116,30 +108,28 @@ public class ServicoTaxiServlet extends HttpServlet {
             //verifica Hora e Data
             //Verifica Veiculo Disponivel
 
-            int categoriaId = Integer.parseInt((String) request.getParameter("categoria"));
             int localLevantamentoId = Integer.parseInt((String) request.getParameter("localorigem"));
             int localEntregaId = Integer.parseInt((String) request.getParameter("localchegada"));
 
-            List<Carro> listacarros = categoriaFacade.listacarros(categoriaId);
-
-            session.setAttribute("listacarros", listacarros);
+            
+            
+            
             session.setAttribute("localLevantamentoId", localLevantamentoId);
             session.setAttribute("localEntregaId", localEntregaId);
-            session.setAttribute("categoriaId", categoriaId);
+            
+            
 
             String horaLevantamento = (String) request.getParameter("horalevantamento");
             String dataLevantamento = (String) request.getParameter("datapartida");
+            String bagagem = (String) request.getParameter("bagagem");
+            int  passageiros = Integer.parseInt((String) request.getParameter("passageiros"));
 
+            session.setAttribute("bagagem", bagagem);
+            session.setAttribute("passageiros", passageiros);
             session.setAttribute("horaLevantamento", horaLevantamento);
             session.setAttribute("dataLevantamento", dataLevantamento);
 
             Date DatahoraLevantamento = formatDate(dataLevantamento, horaLevantamento);
-
-
-
-            
-
-
 
             url = "registerContinua";
 
@@ -149,45 +139,76 @@ public class ServicoTaxiServlet extends HttpServlet {
                 session.setAttribute("MessageError", "Tem de ter Login efetuado para efectuar reserva!");
                 response.sendRedirect("/Setare/Utilizador");
             } else {
+              /*   
+                 int localLevantamentoId = Integer.parseInt((String) request.getAttribute("localLevantamentoId"));
+            int localEntregaId = Integer.parseInt((String) request.getAttribute("localLevantamentoId"));
+
             
-            Categoria cat = categoriaFacade.find((Integer)session.getAttribute("categoriaId"));
-              int carroId = Integer.parseInt((String)request.getParameter("id"));
-              BigDecimal precoHora = (BigDecimal)cat.getPrecoPorHora();
-              BigDecimal dias = new BigDecimal(session.getAttribute("dias").toString());
-              BigDecimal total = dias.multiply(precoHora);
-              
-              
-              request.setAttribute("categoria",cat);
-              session.setAttribute("carro",carroFacade.find(carroId));
-              request.setAttribute("localLevantamento", localFacade.find((Integer)session.getAttribute("localLevantamentoId")));
-              request.setAttribute("localEntrega", localFacade.find((Integer)session.getAttribute("localEntregaId")));
-              request.setAttribute("total", total );
+            
+            
+            request.setAttribute("localLevantamentoId", localLevantamentoId);
+            request.setAttribute("localEntregaId", localEntregaId);
+            
+            
+
+            String horaLevantamento = (String) request.getParameter("horaLevantamento");
+            String dataLevantamento = (String) request.getParameter("dataLevantamento");
+            String bagagem = (String) request.getParameter("bagagem");
+            int  passageiros = Integer.parseInt((String) request.getParameter("passageiros"));
+
+            request.setAttribute("bagagem", bagagem);
+            request.setAttribute("passageiros", passageiros);
+            request.setAttribute("horaLevantamento", horaLevantamento);
+            request.setAttribute("dataLevantamento", dataLevantamento);
+*/
+                 
+              int localLevantamentoId1 =  (Integer)session.getAttribute("localLevantamentoId");
+              int localEntregaId1 = (Integer)session.getAttribute("localEntregaId");
+              Local localLevantamentoId = localFacade.find(localLevantamentoId1);
+              Local localEntregaId = localFacade.find(localEntregaId1);
+              session.setAttribute("localLevantamentoId", localLevantamentoId);
+              session.setAttribute("localEntregaId", localEntregaId);
+            
+            
              } 
               url="registerFinaliza";
 
 
         } else if (userPath.equals("/ServicoTaxi/registerFinaliza")) {
 
+            /*
+                String horaLevantamento = (String) request.getParameter("horaLevantamento");
+                String dataLevantamento = (String) request.getParameter("dataLevantamento");
+                int localLevantamentoId = Integer.parseInt(request.getParameter("localLevantamentoId"));
+                int localEntregaId = Integer.parseInt(request.getParameter("localEntregaId"));
+                int passageiros = Integer.parseInt(request.getParameter("passageiros"));
+                String bagagem = (String)request.getParameter("bagagem");
+*/
+            
                 String horaLevantamento = (String) session.getAttribute("horaLevantamento");
                 String dataLevantamento = (String) session.getAttribute("dataLevantamento");
-                int localLevantamentoId = (Integer) session.getAttribute("localLevantamentoId");
-                int localEntregaId = (Integer) session.getAttribute("localEntregaId");
-
+                Local localLevantamento = (Local)session.getAttribute("localLevantamentoId");
+                Local localEntrega = (Local)session.getAttribute("localEntregaId");
+                int passageiros = (Integer)session.getAttribute("passageiros");
+                String bagagem = (String)session.getAttribute("bagagem");
+                    
+                
+                
                 Date DatahoraLevantamento = formatDate(dataLevantamento, horaLevantamento);
           
                 //fdx lá o bigdecimal...
               
-                Local partida = localFacade.find(localLevantamentoId);
-                Local chegada = localFacade.find(localEntregaId);
-                Carro carro= (Carro)session.getAttribute("carro");
+                
+                
              
                 Servicotaxi serv = new Servicotaxi();
-                serv.setCodigotaxi(carro.getId().toString());
+                serv.setCodigotaxi("1");
+                serv.setBagagem(true);
+                serv.setPassageiros(passageiros);
     
                 serv.setDatapartida(DatahoraLevantamento);
-                serv.setLocalchegadaid(chegada);
-                serv.setLocalpartidaid(partida);
-                serv.setLocalchegadaid(chegada);
+                serv.setLocalchegadaid(localEntrega);
+                serv.setLocalpartidaid(localLevantamento);
                 
                 serv.setUtilizadorid(user);
                 servicoFacade.create(serv);

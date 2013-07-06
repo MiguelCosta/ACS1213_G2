@@ -7,25 +7,14 @@
             <h1 class="form-signin-heading" style="text-align: center">Dados da Reserva:</h1>
 
 
-            <div class="control-group">
-                <label class="control-label" for="inputCategoria">Categoria:</label>
-                <div class="controls">               
-                    <input type="text" id="inputCategoria" name="vcategoria" value=" ${categoria.nome}">
-                </div>   
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="inputDescricao">Descrição do Veiculo:</label>
-                <div class="controls">               
-                    <input type="text" id="inputDescricao" name="descricao" value=" ${veiculo.descricao}" style="width: 100%;">
-                </div>   
-            </div>
+           
 
             <table style="width: 100%" >
                 <tr>
                     <td style="width: 50%; text-align: center;">                  
                         <label class="control-label" for="inputLocalOrigem">Levantamento:</label>
                         <div class="controls">
-                            <input id="inputLocalOrigem" type="text" value="${localLevantamento.nome}" name="localLevantamento" >
+                            <input id="inputLocalOrigem" type="text" value="${localLevantamentoId.nome}" name="localLevantamentoId" >
                         </div>   
                         </div>
                     </td>
@@ -33,7 +22,7 @@
                         <div class="control-group">
                             <label class="control-label" for="inputLocalEntrega">Entrega:</label>
                             <div class="controls">
-                                <input type="text" id="inputLocalChegada" value="${localEntrega.nome}" name="localchegada">
+                                <input type="text" id="inputLocalChegada" value="${localEntregaId.nome}" name="localEntregaId">
                             </div>   
                         </div>
                     </td>
@@ -47,9 +36,10 @@
                     <td>
                         <div style="float: left; clear: left; position: static;">
                             <div class="control-group">
+                            <label class="control-label" for="inputLocalEntrega">Data Levantamento:</label>
 
                                 <div class="controls">          
-                                    <input type="date" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA" style="width:150px;" value="${dataLevantamento}">
+                                    <input type="date" id="inputDataLevantamento" name="dataLevantamento" placeholder="dd-MM-AAAA" style="width:150px;" value="${dataLevantamento}">
                                 </div>   
                             </div>
 
@@ -57,12 +47,36 @@
                         </div>
                         <div style="float: right; clear: right; position: static;">
                             <div class="control-group">
+                            <label class="control-label" for="inputLocalEntrega">Hora Levantamento:</label>
 
                                 <div class="controls">
-                                    <input type="time" id="inputHoraLevantamento" name="horalevantamento" style="width:90px;" value="${horaLevantamento}">
+                                    <input type="time" id="inputHoraLevantamento" name="horaLevantamento" style="width:90px;" value="${horaLevantamento}">
                                 </div>   
                             </div>
                         </div>
+                    </td>
+                    
+                    <td>
+                        <div style="float: right; clear: left; position: static;">
+                            <div class="control-group">
+                            <label class="control-label" for="inputLocalEntrega">Bagagem:</label>
+
+                                <div class="controls">
+                                    <input type="checkbox" name="bagagem" value="${bagagem}">Bagagem
+                                </div>   
+                            </div>
+                        </div>
+                                <div style="float: right; clear: right; position: static;">
+                            <div class="control-group">
+                            <label class="control-label" for="inputLocalEntrega">Passageiros:</label>
+
+                                <div class="controls">
+                                    <input type="number" id="inputPassageiros" name="passageiros" style="width:90px;" value="${passageiros}">
+                                </div>   
+                            </div>
+                        </div>
+                        
+                        
                     </td>
                 </tr>
             </table>

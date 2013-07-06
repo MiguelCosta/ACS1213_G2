@@ -6,18 +6,6 @@
             <div class="span4">
 
 
-                <div class="control-group">
-                    <label class="control-label" for="inputCategoria">Categoria:</label>
-                    <div class="controls">               
-                        <select id="inputCategoria" name="categoria">
-                            <c:forEach var="row" items="${listacategorias}">
-                                <option value="${row.id}">${row.nome}</option>
-                            </c:forEach>
-                        </select>
-                    </div>   
-                </div>
-
-
             </div>
             <div class="span4">
                 <div class="control-group">
@@ -45,7 +33,7 @@
                     </div>   
                 </div>
                 <label class="checkbox">
-                    <input type="checkbox"> Devolver nesta Estação
+                    <input type="checkbox" name="bagagem">Bagagem
                 </label>
             </div>
             <div class="span4">
@@ -63,6 +51,14 @@
                 
 
         </div>
+            
+            <div class="control-group">
+                    <label class="control-label" for="inputPassageiros">Passageiros:</label>
+                    <div class="controls">               
+                         <input type="number" id="inputHoraLevantamento" name="passageiros" placeholder="Número de passageiros">
+                         
+                    </div>   
+                </div>
 
 
         <div class="jumbotron" style="text-align: center;">
