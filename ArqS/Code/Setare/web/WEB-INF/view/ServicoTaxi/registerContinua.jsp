@@ -13,7 +13,7 @@
             <div class="control-group">
                 <label class="control-label" for="localLevantamentoId">Levantamento:</label>
                 <div class="controls">
-                    <select id="localLevantamentoId" name="localLevantamentoId" style="width: 100%">
+                    <select id="localLevantamentoId" name="localLevantamentoId" style="width: 100%" required="required">
                         <c:forEach var="row" items="${listalocais}">
                             <option  name ="localLevantamentoId"value="${row.id}" ${row.id == localLevantamentoId ? 'selected' : ''}>${row.nome}</option>
                         </c:forEach>
@@ -24,7 +24,7 @@
                 <div class="control-group">
 
                     <div class="controls">          
-                        <input type="date" id="inputDataLevantamento" name="dataLevantamento" placeholder="dd-MM-AAAA" style="width:150px;" value="${dataLevantamento}">
+                        <input type="date" id="inputDataLevantamento" name="dataLevantamento" placeholder="dd-MM-AAAA" style="width:150px;" value="${dataLevantamento}" required="required">
                     </div>   
                 </div>
 
@@ -34,14 +34,14 @@
                 <div class="control-group">
 
                     <div class="controls">
-                        <input type="time" id="inputHoraLevantamento" name="horalevantamento" style="width:90px;" value="${horaLevantamento}">
+                        <input type="time" id="inputHoraLevantamento" name="horalevantamento" style="width:90px;" value="${horaLevantamento}" required="required">
                     </div>   
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="localEntregaId">Entrega:</label>
                 <div class="controls">
-                    <select id="localEntregaId" name="localEntregaId" style="width: 100%">
+                    <select id="localEntregaId" name="localEntregaId" style="width: 100%" required="required">
                         <c:forEach var="row" items="${listalocais}">
                             <option name ="localEntregaId" value="${row.id}" ${row.id == localEntregaId ? 'selected' : ''}>${row.nome}</option>
                         </c:forEach>
@@ -53,14 +53,23 @@
                 <div class="control-group">
 
                     <div class="controls">
-                        <input type="number" id="inputpassageiros" name="passageiros" style="width:90px;" value="${passageiros}">
+                        <input type="number" id="inputpassageiros" name="passageiros" style="width:90px;" value="${passageiros}" required="required">
                     </div>   
                 </div>
             </div>
                     
-            <label class="checkbox">
-                <input type="checkbox" name="bagagem" value="${bagagem}">Bagagem
-                </label>
+           <div class="control-group">
+                    <label class="control-label" for="inputBagagem">Bagagem</label>
+                    <div class="controls">
+                        <select id="inputLocalOrigem" name="bagagem" required="required">
+                               <option name ="localEntregaId" value="Não" ${'Não' == bagagem ? 'selected' : ''}>Não</option>
+                               <option name ="localEntregaId" value="Sim" ${'Sim' == bagagem ? 'selected' : ''}>Sim</option>
+
+                                
+                            
+                        </select>
+                    </div>   
+          </div>
 
 
         </form>

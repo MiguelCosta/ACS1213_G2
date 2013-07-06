@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -196,14 +197,15 @@ public class ServicoTaxiServlet extends HttpServlet {
                 
                 Date DatahoraLevantamento = formatDate(dataLevantamento, horaLevantamento);
           
-                //fdx lá o bigdecimal...
+                boolean bag=false;
+                if(bagagem.equals("Sim")) bag = true;
               
                 
-                
-             
+                Random gen = new Random();
+                int randomInt = gen.nextInt(1000);
                 Servicotaxi serv = new Servicotaxi();
-                serv.setCodigotaxi("1");
-                serv.setBagagem(true);
+                serv.setCodigotaxi(String.valueOf(randomInt));
+                serv.setBagagem(bag);
                 serv.setPassageiros(passageiros);
     
                 serv.setDatapartida(DatahoraLevantamento);

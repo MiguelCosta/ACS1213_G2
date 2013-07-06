@@ -11,7 +11,7 @@
                 <div class="control-group">
                     <label class="control-label" for="inputLocalOrigem">Estação Levantamento:</label>
                     <div class="controls">
-                        <select id="inputLocalOrigem" name="localorigem">
+                        <select id="inputLocalOrigem" name="localorigem" required="required">
                             <c:forEach var="row" items="${listalocais}">
                                 <option value="${row.id}">${row.nome}</option>
                             </c:forEach>
@@ -22,20 +22,30 @@
                 <div class="control-group">
                     <label class="control-label" for="inputDataLevantamento">Data:</label>
                     <div class="controls">          
-                        <input type="date" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA">
+                        <input type="date" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA" required="required">
                     </div>   
                 </div>
 
                 <div class="control-group">
                     <label class="control-label" for="inputHoraLevantamento">Hora:</label>
                     <div class="controls">
-                        <input type="time" id="inputHoraLevantamento" name="horalevantamento" placeholder="00:00">
+                        <input type="time" id="inputHoraLevantamento" name="horalevantamento" placeholder="00:00" required="required">
+                    </div>   
+                </div> 
+                <div class="control-group">
+                    <label class="control-label" for="inputBagagem">Bagagem</label>
+                    <div class="controls">
+                        <select id="inputLocalOrigem" name="bagagem" required="required">
+                                <option value="Não">Não</option>
+                                <option value="Sim">Sim</option>
+                                
+                            
+                        </select>
                     </div>   
                 </div>
-                <label class="checkbox">
-                    <input type="checkbox" name="bagagem">Bagagem
-                </label>
             </div>
+            
+            
             <div class="span4">
                 <div class="control-group">
                     <label class="control-label" for="inputLocalChegada">Estação Entrega</label>
@@ -55,7 +65,7 @@
             <div class="control-group">
                     <label class="control-label" for="inputPassageiros">Passageiros:</label>
                     <div class="controls">               
-                         <input type="number" id="inputHoraLevantamento" name="passageiros" placeholder="Número de passageiros">
+                         <input type="number" id="inputHoraLevantamento" name="passageiros" placeholder="Número de passageiros" required="required">
                          
                     </div>   
                 </div>

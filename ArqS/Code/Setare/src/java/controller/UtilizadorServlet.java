@@ -197,7 +197,7 @@ public class UtilizadorServlet extends HttpServlet {
                 return;
             }
 
-            url = "perfil";
+            response.sendRedirect("/Setare");
 
         } else if (userPath.equals("/Utilizador/addUser")) {
 
@@ -223,6 +223,7 @@ public class UtilizadorServlet extends HttpServlet {
             user = new Utilizador();
             user.setEmail(email);         
             user.setPassword(password);
+            user.setFuncao("User");
             user.setNome(username);
 
             try {
