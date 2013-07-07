@@ -313,7 +313,11 @@ public class ServicoRentServlet extends HttpServlet {
         } else if (userPath.equals(
                 "/ServicoRent/indexUtilizador")) {
 
-
+             try{
+                user = (Utilizador) session.getAttribute("user");
+            }catch(Exception e){
+                response.sendRedirect("/Setare");
+            }
             List<Servico> servicos = (List<Servico>) user.getServicoCollection();
 
             if (servicos.isEmpty()) {
