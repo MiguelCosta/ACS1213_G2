@@ -214,6 +214,9 @@
                         <button class="btn btn-large btn-primary" type="submit" name="id" value="${row.id}">Reservar</button>
 
                     </td>
+                    <td  style="text-align: center; vertical-align: middle; width: 18%;"> 
+                        <img src="/Setare/img/logo-paypal.png"/>
+                    </td>
 
                 </tr>
 

@@ -65,7 +65,6 @@
         <td><c:out value="${row.getNome()}"/></td>       
         <td><c:out value="${row.getEmail()}"/></td>
         <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Utilizador/edit?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
-        <a class="btn btn-danger" href="<%= request.getContextPath()%>/Utilizador/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
     </tr>
 </c:forEach> 
 </table>
