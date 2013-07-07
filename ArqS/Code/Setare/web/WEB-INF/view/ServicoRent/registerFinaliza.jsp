@@ -16,20 +16,21 @@
         <div class="control-group">
             <label class="control-label" for="inputDescricao">Descrição do Veiculo:</label>
             <div class="controls">               
-                <input type="text" id="inputDescricao" name="descricao" value=" ${carro.descricao}" style="width: 100%;height: 30px;" disabled>
+                <input type="text" id="inputDescricao" name="descricao" value=" ${carro.descricao}" style="width: 97%;height: 30px;" disabled>
             </div>   
         </div>
 
         <table style="width: 100%" >
             <tr>
-                <td style="width: 50%; text-align: center;">                  
+                <td style="width: 50%; ">   
+                    <div class="control-group">
                     <label class="control-label" for="inputLocalOrigem">Levantamento:</label>
                     <div class="controls">
                         <input id="inputLocalOrigem" type="text" value="${localLevantamento.nome}" name="localLevantamento" disabled style="width: 95%; height: 30px;">
                     </div>   
                     </div>
                 </td>
-                <td style="width: 50%; text-align: center;">
+                <td style="width: 50%; ">
                     <div class="control-group">
                         <label class="control-label" for="inputLocalEntrega">Entrega:</label>
                         <div class="controls">
@@ -51,7 +52,7 @@
 
 
                     </div>
-                    <div style="float: right; clear: right; position: static;">
+                    <div style="float: right; clear: right; position: static;  padding-right: 15px;">
                         <div class="control-group">
 
                             <div class="controls">
@@ -72,7 +73,7 @@
 
 
                     </div>
-                    <div style="float: right; clear: right; position: static;">
+                    <div style="float: right; clear: right; position: static;  padding-right: 15px;">
                         <div class="control-group">
 
                             <div class="controls">
@@ -90,7 +91,7 @@
 
 
 
-        <div style="width :33%;float : left; text-align: center;"> 
+        <div style="width :33%;float : left;"> 
 
             <div class="control-group">
                 <label class="control-label" for="inputPrecoDia">Nº de Dias:</label>
@@ -99,7 +100,7 @@
                 </div>   
             </div>
         </div>
-        <div style="width :33%;float : left;text-align: center;"> 
+        <div style="width :33%;float : left;"> 
             <div class="control-group">
                 <label class="control-label" for="inputPrecoDia">Preco/Hora:</label>
                 <div class="controls">
@@ -107,9 +108,9 @@
                 </div>   
             </div>
         </div>
-        <div style="width :33%;float : left;text-align: center;"> 
+        <div style="width :33%;float : left;"> 
             <div class="control-group">
-                <label class="control-label" for="inputTotal" style="height: 30px;">Total a Pagar:</label>
+                <label class="control-label" for="inputTotal">Total a Pagar:</label>
                 <div class="controls">
                     <input type="text" id="inputTotal" name="precoTotal" value="${total}&#8364" disabled style="height: 30px;">
                 </div>   
@@ -118,7 +119,7 @@
 
 
 
-        <div style="width :79%;float : left;text-align: center;"> 
+        <div style="width :79%;float : left;"> 
             <div class="control-group">
                 <label class="control-label" for="inputTotal">Extras Descricao:</label>
                 <div class="controls">
@@ -126,11 +127,11 @@
                 </div>   
             </div>
         </div>
-        <div style="width :19%;float : right;text-align: center;"> 
+        <div style="width :20%;float : right; "> 
             <div class="control-group">
                 <label class="control-label" for="inputTotal">Extras Valor:</label>
                 <div class="controls">
-                    <input type="text" id="inputTotal" name="valorExtras" value="${valorExtras}&#8364" style="width: 70%; height: 30px;" disabled>
+                    <input type="text" id="inputTotal" name="valorExtras" value="${valorExtras}&#8364" style="width: 88%; height: 30px;" disabled>
                 </div>   
             </div>
         </div>
@@ -140,16 +141,16 @@
 
 
 
-        <div style="width: 49%; text-align: center;float : left;">
+        <div style="width: 49%;float : left;">
             <label class="control-label" for="inputNomeUtilizador">Nome de Cliente:</label>
             <div class="controls">
                 <input type="text" id="inputNomeUtilizador" name="nomeUtilizador" value="${user.nome}" width="100%" disabled style="height: 30px; width: 95%">
             </div>   
         </div>
-        <div style="width: 49%; height: 30px; text-align: center;float : left;">
+        <div style="width: 49%; height: 30px;float : left;">
             <label class="control-label" for="inputEmailUtilizador">Email:</label>
             <div class="controls">
-                <input type="text" id="inputEmailUtilizador" name="emailUtilizador" value="${user.email}" width="100%" disabled style="height: 30px; width: 95%">
+                <input type="text" id="inputEmailUtilizador" name="emailUtilizador" value="${user.email}" width="100%" disabled style="height: 30px; width: 99%">
             </div> 
         </div>
 
@@ -158,9 +159,6 @@
             <button class="btn btn-large btn-primary" onclick="this.disabled = true;
                     this.form.submit();" type="submit">Imprimir bilhete</button>
             
-             
-               <a class="btn-large btn" href="<%= request.getContextPath()%>">Cancelar</a>
-
         </div>
 
 

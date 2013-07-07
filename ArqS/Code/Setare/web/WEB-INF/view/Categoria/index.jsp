@@ -9,7 +9,7 @@
 <h1>Categorias
     <a class="btn btn-success" href="<%= request.getContextPath()%>/Categoria/register" ><i class="icon-plus icon-white"></i></a>
 </h1>
-
+<a class="btn-small btn-info" href="/Setare/Carro">Carros</a>
 
 <div class="pagination pagination-centered">
     <ul>

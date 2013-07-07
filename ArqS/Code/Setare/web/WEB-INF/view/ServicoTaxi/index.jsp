@@ -6,8 +6,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 
 
-<h1>Serviços de Taxi
+<h1>Serviços de Taxi dos Utilizadores
     </h1>
+<a class="btn-small btn-info" href="/Setare/ServicoTaxi/index">Meus Pedidos</a>
 
 
 <div class="pagination pagination-centered">

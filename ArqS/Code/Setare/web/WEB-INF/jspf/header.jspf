@@ -56,6 +56,7 @@
                             if (((Utilizador)session.getAttribute("user")).getFuncao().equals("Admin")) {%>
                             <li class="divider-vertical"><a href="/Setare/Utilizador/index">Utilizador</a></li>
                             <li class="divider-vertical"><a href="/Setare/Categoria">Categorias</a></li>
+                            <li class="divider-vertical"><a href="/Setare/Local">Locais</a></li>
                             <li class="divider-vertical"><a href="/Setare/ServicosTaxi/index">Serviços Taxi</a></li>
                             <li class="divider-vertical"><a href="/Setare/ServicoRent/index">Serviços Rent</a></li>
                         <%}
