@@ -50,10 +50,10 @@
     
 <table class="table table-hover"> 
     <tr>
-        <td>Nome:</td>
-        <td>Latitude:</td> 
-        <td>Longitude:</td>
-        <td>Opções:</td>
+        <td><h4>Nome:</h4></td>
+        <td><h4>Latitude:</h4></td> 
+        <td><h4>Longitude:</h4></td>
+        <td><h4>Opções:</h4></td>
     </tr> 
     <c:forEach var="row" items="${resultado}"> 
         <tr>                  
@@ -61,7 +61,7 @@
             <td>${row.latitude}</td> 
             <td>${row.longitude}</td> 
             <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Local/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
-            <a class="btn btn-danger" href="<%= request.getContextPath()%>/Local/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
+           </td>
         </tr>
     </c:forEach> 
 </table>

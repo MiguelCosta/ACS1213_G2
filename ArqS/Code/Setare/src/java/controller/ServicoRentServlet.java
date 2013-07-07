@@ -302,7 +302,7 @@ public class ServicoRentServlet extends HttpServlet {
 
             servicoFacade.create(serv);
 
-            session.setAttribute("MessageSuccess", "Inserido com sucesso");
+            session.setAttribute("MessageSuccess", "O pedido foi registado com sucesso. Foram enviados para o email todos detalhes e a forma de pagamento.");
 
             request.setAttribute("servico", serv);
             request.getRequestDispatcher("/enviarmailrent").forward(request, response);

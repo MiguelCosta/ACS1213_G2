@@ -8,6 +8,8 @@
 
 <h1>Serviços de Aluguer de Veículo dos Utilizadores</h1>
 
+
+<a class="btn-small btn-info" href="/Setare/ServicoRent/indexUtilizador">Meus Pedidos</a>
 <div class="pagination pagination-centered">
     <ul>
 
@@ -46,12 +48,12 @@
 </div>
 <table class="table table-hover"> 
     <tr>
-        <td>Nome de Utilizador:</td>
-        <td>Data/Hora de Levantamento:</td>
-        <td>Data/Hora de Entrega:</td>       
-        <td>Local Levantamento:</td>
-        <td>Local Entrega:</td>
-        <td>Opções:</td>
+        <td><h4>Nome de Utilizador:</h4></td>
+        <td><h4>Data/Hora de Levantamento:</h4></td>
+        <td><h4>Data/Hora de Entrega:</h4></td>       
+        <td><h4>Local Levantamento:</h4></td>
+        <td><h4>Local Entrega:</h4></td>
+        <td><h4>Opções:</h4></td>
 
     </tr> 
     <c:forEach var="row" items="${servicosRent}"> 

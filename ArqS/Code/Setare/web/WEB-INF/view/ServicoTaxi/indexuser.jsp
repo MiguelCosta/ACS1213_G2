@@ -31,7 +31,7 @@
             <td>${row.getPassageiros()}</td>
             <td>${row.getCodigotaxi()}</td> 
             <td><a class="btn btn-info" href="/Setare/ServicoTaxi/view?id=${row.getId()}" ><i class="icon-pencil icon-white"></i></a>
-            <a class="btn btn-danger" href="#" ><i class="icon-remove icon-white"></i></a></td>
+            </td>
         </tr>
     </c:forEach> 
 </table>

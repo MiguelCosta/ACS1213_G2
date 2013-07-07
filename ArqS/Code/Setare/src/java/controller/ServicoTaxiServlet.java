@@ -232,7 +232,7 @@ public class ServicoTaxiServlet extends HttpServlet {
                 serv.setUtilizadorid(user);
                 servicoFacade.create(serv);
 
-                session.setAttribute("MessageSuccess", "Inserido com sucesso");
+                session.setAttribute("MessageSuccess", "O pedido foi registado com sucesso. Foram enviados para o email todos detalhes do seu pedido.");
                 
                 request.setAttribute("servico", serv);
                 request.getRequestDispatcher("/enviarmailtaxi").forward(request, response);
