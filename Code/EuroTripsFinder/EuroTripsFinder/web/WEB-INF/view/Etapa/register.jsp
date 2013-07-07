@@ -17,19 +17,37 @@
 
 <h1>Adicionar Nova Etapa</h1>
 
-Percurso: ${percurso.getId()} - ${percurso.getNome()}
-
 <form action="<%= request.getContextPath()%>/Etapa/add" method=post class="form-horizontal">
 
     <div class="control-group">
         <label class="control-label" for="inputNomeEtapa">Nova Etapa</label>
         <div class="controls">
-            <input type="text" id="inputNomeEtapa" name="nomeEtapa" placeholder="Nome" required="required">
+            <input type="text" id="inputNomeEtapa" style="height: 30px;" name="nomeEtapa" placeholder="Nome" required="required">
         </div>   
     </div>
 
+    <h4>Origem</h4>
+
+    <div class="control-group">  
+        <label class="control-label" for="inputMeioTransporte">País</label>
+        <div class="controls">
+            <select id="inputMeioTransporte" name="meioTransporte" required="required">
+                <option value="-1">Portugal</option>
+            </select>  
+        </div>   
+    </div>
+
+    <div class="control-group">  
+        <label class="control-label" for="inputMeioTransporte">Cidade</label>
+        <div class="controls">
+            <select id="inputMeioTransporte" name="meioTransporte" required="required">
+                <option value="-1">Maia</option>
+            </select>  
+        </div>   
+    </div>
+    
     <div class="control-group">
-        <label class="control-label" for="inputLocalInicial">Local Inicial</label>
+        <label class="control-label" for="inputLocalInicial">Local</label>
         <div class="controls">
             <select id="inputLocalInicial" name="localInicial">
                 <c:forEach var="row" items="${locais}">
@@ -39,9 +57,29 @@ Percurso: ${percurso.getId()} - ${percurso.getNome()}
 
         </div>   
     </div>
+    
+    <h4>Destino</h4>
 
+    <div class="control-group">  
+        <label class="control-label" for="inputMeioTransporte">País</label>
+        <div class="controls">
+            <select id="inputMeioTransporte" name="meioTransporte" required="required">
+                <option value="-1">Portugal</option>
+            </select>  
+        </div>   
+    </div>
+
+    <div class="control-group">  
+        <label class="control-label" for="inputMeioTransporte">Cidade</label>
+        <div class="controls">
+            <select id="inputMeioTransporte" name="meioTransporte" required="required">
+                <option value="-1">Maia</option>
+            </select>  
+        </div>   
+    </div>
+    
     <div class="control-group">
-        <label class="control-label" for="inputLocalFinal">Local Final</label>
+        <label class="control-label" for="inputLocalFinal">Local</label>
         <div class="controls">
             <select id="inputLocalFinal" name="localFinal" required="required">
                 <c:forEach var="row" items="${locais}">
@@ -50,6 +88,8 @@ Percurso: ${percurso.getId()} - ${percurso.getNome()}
             </select>
         </div>   
     </div>
+    
+    <h4>Filtros</h4>
 
     <div class="control-group">
         <label class="control-label" for="inputDataInicial">Data Inicial</label>
@@ -81,14 +121,19 @@ Percurso: ${percurso.getId()} - ${percurso.getNome()}
         </div>   
     </div>
 
-
     <div class="control-group">  
         <label class="control-label" for="inputMeioTransporte">Meio de Transporte</label>
         <div class="controls">
             <select id="inputMeioTransporte" name="meioTransporte" required="required">
-                <c:forEach var="row" items="${listmeiostransporte}">
-                    <option value="${row.id}">${row.nome}</option>
-                </c:forEach>
+                <option value="-1">Qualquer</option>
+                <option value="0">Elétrico</option>
+                <option value="1">Metro</option>
+                <option value="2">Autocarros inter-cidades</option>
+                <option value="3">Autocarros</option>
+                <option value="4">Ferry-boat</option>
+                <option value="5">Teleférico</option>
+                <option value="7">Funicular</option>
+                <option value="8">Avião</option>
             </select>  
         </div>   
     </div>
@@ -96,7 +141,7 @@ Percurso: ${percurso.getId()} - ${percurso.getNome()}
     <div class="control-group">  
         <label class="control-label" for="inputCusto">Custo em Euro</label>
         <div class="controls">
-            <input type="text" id="inputCusto" name="custo" placeholder="custo" required="required" pattern="\d*">
+            <input type="number" style="height: 30px;" id="inputCusto" name="custo" placeholder="custo" required="required" min="0" max="100" value="0"> 0 - não definido
         </div>   
     </div>
 

@@ -7,6 +7,8 @@ package session;
 import entity.Tempoparagem;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -34,57 +36,79 @@ public class TempoparagemFacade extends AbstractFacade<Tempoparagem> {
         super(Tempoparagem.class);
     }
 
-    public List<ResultadoPesquisaPar> caminhos(int localOrigemId, int localDestinoId) {
+    public List<ResultadoPesquisaPar> caminhos(int localOrigemId, int localDestinoId, Date dataInicio, Date dataFim, int meioTransporte, double precoMaximo) {
+        String sql = "";
 
-        localOrigemId = 7848;
-        localDestinoId = 7849;
-        Query query = em.createNativeQuery(" SELECT * FROM tempoparagem WHERE transporteviagemid IN ("
-                + " SELECT transporteviagem.transporteviagemid "
-                + " FROM transporteviagem,calendario,rota "
-                + " WHERE transporteviagemid IN ( "
-                + "		SELECT DISTINCT transporteviagemid FROM tempoparagem "
-                + "		WHERE transporteviagemid "
-                + "			IN "
-                + "			   (SELECT DISTINCT transporteviagemid FROM tempoparagem WHERE localparagemid=?) "
-                + "		AND transporteviagemid "
-                + "			IN "
-                + "			   (SELECT DISTINCT transporteviagemid FROM tempoparagem WHERE localparagemid=?)) "
-                + " AND transporteviagem.servicoid = calendario.servicoid "
-                + " AND transporteviagem.Rotaid = rota.id "
-                + " AND calendario.datainicio >= '2012-01-01' "
-                + " AND calendario.datafim <= '2012-12-31' "
-                + " AND calendario.quarta = 1) "
-                + " AND localparagemid=? OR localparagemid=?");
+        Calendar ini = new GregorianCalendar();
+        ini.setTime(dataInicio);
+        String strInicio = ini.get(Calendar.YEAR) + "-" + ini.get(Calendar.MONTH) + "-" + ini.get(Calendar.DAY_OF_MONTH);
 
-        query.setParameter(1, localOrigemId);
-        query.setParameter(2, localDestinoId);
-        query.setParameter(3, localOrigemId);
-        query.setParameter(4, localDestinoId);
+        Calendar fim = new GregorianCalendar();
+        fim.setTime(dataFim);
+        String strFim = fim.get(Calendar.YEAR) + "-" + fim.get(Calendar.MONTH) + "-" + fim.get(Calendar.DAY_OF_MONTH);
+
+        //localOrigemId = 7848;
+        //localDestinoId = 7849;
+
+        sql = " SELECT * FROM tempoparagem WHERE transporteviagemid IN ( \n"
+                + " SELECT transporteviagem.transporteviagemid \n"
+                + " FROM transporteviagem,calendario,rota \n"
+                + " WHERE transporteviagemid IN ( \n"
+                + "		SELECT DISTINCT transporteviagemid FROM tempoparagem \n"
+                + "		WHERE transporteviagemid \n"
+                + "			IN \n"
+                + "			   (SELECT DISTINCT transporteviagemid FROM tempoparagem WHERE localparagemid=" + localOrigemId + ") \n"
+                + "		AND transporteviagemid \n"
+                + "			IN \n"
+                + "			   (SELECT DISTINCT transporteviagemid FROM tempoparagem WHERE localparagemid=" + localDestinoId + ")) \n"
+                + " AND transporteviagem.servicoid = calendario.servicoid \n"
+                + " AND transporteviagem.Rotaid = rota.id \n"
+                + " AND calendario.datainicio <= '" + strInicio + "' \n"
+                + " AND calendario.datafim >= '" + strFim + "' \n";
+
+        if (meioTransporte != -1) {
+            sql += " AND rota.tiporota=" + meioTransporte;
+        }
+
+        if (precoMaximo <= 0) {
+            sql += " AND calendario.preco <= " + precoMaximo;
+        }
+
+        sql += " ) "
+                + " AND localparagemid=" + localOrigemId + " OR localparagemid=" + localDestinoId + " ";
+
+        Query query = em.createNativeQuery(sql);
+
+//        query.setParameter(1, localOrigemId);
+//        query.setParameter(2, localDestinoId);
+//        query.setParameter(3, localOrigemId);
+//        query.setParameter(4, localDestinoId);
 
         List<Object> resultadosObjeto = query.getResultList();
 
         List<ResultadoPesquisa> resultados = new ArrayList<ResultadoPesquisa>();
-        
-        for(Object o : resultadosObjeto){
+
+        for (Object o : resultadosObjeto) {
             resultados.add(new ResultadoPesquisa((Object[]) o));
         }
 
         List<ResultadoPesquisaPar> pares = new ArrayList<ResultadoPesquisaPar>();
 
-        for(ResultadoPesquisa ro : resultados){
-            if(ro.getLocalparagemid() == localOrigemId){
-                for(ResultadoPesquisa rc : resultados){
-                    if(rc.getLocalparagemid() == localDestinoId && ro.getViagemid().equals(rc.getViagemid())){
+        for (ResultadoPesquisa ro : resultados) {
+            if (ro.getLocalparagemid() == localOrigemId) {
+                for (ResultadoPesquisa rc : resultados) {
+                    if (rc.getLocalparagemid() == localDestinoId && ro.getViagemid().equals(rc.getViagemid())) {
                         pares.add(new ResultadoPesquisaPar(ro, rc));
                     }
                 }
             }
         }
-        
+
         return pares;
     }
 
-    public class ResultadoPesquisaPar{
+    public class ResultadoPesquisaPar {
+
         private ResultadoPesquisa _origem;
         private ResultadoPesquisa _destino;
 
@@ -108,11 +132,8 @@ public class TempoparagemFacade extends AbstractFacade<Tempoparagem> {
         public void setDestino(ResultadoPesquisa _destino) {
             this._destino = _destino;
         }
-        
-        
-        
     }
-    
+
     public class ResultadoPesquisa {
 
         private int _id;
@@ -124,7 +145,7 @@ public class TempoparagemFacade extends AbstractFacade<Tempoparagem> {
 
         ResultadoPesquisa(Object[] params) {
             this._id = ((Integer) params[5]);
-            this._viagemid =  ((String) params[0]);
+            this._viagemid = ((String) params[0]);
             this._datapartida = (Time) params[1];
             this._datachegada = (Time) params[2];
             this._localparagemid = (Integer) params[3];
@@ -187,8 +208,7 @@ public class TempoparagemFacade extends AbstractFacade<Tempoparagem> {
         public void setLocalparagemsequencia(int _localparagemsequencia) {
             this._localparagemsequencia = _localparagemsequencia;
         }
-       
-        
+
         @Override
         public int hashCode() {
             int hash = 5;

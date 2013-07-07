@@ -77,7 +77,6 @@ public class EtapaServlet extends HttpServlet {
         } else if (userPath.equals("/Etapa/add")) {
             localOrigemId = Integer.parseInt((String) request.getParameter("localInicial"));
             localDestinoId = Integer.parseInt((String) request.getParameter("localFinal"));
-            request.setAttribute("caminhos", tempoparagemFacade.caminhos(localOrigemId, localDestinoId));
             Date dataInicio = null;
             Date dataFim = null;
             try {
@@ -86,6 +85,8 @@ public class EtapaServlet extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(EtapaServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            request.setAttribute("caminhos", tempoparagemFacade.caminhos(localOrigemId, localDestinoId, dataInicio, dataFim, 3, 0));
 
             Etapa et = new Etapa();
             et.setLocalparageminicialid(localparagemFacade.find(localOrigemId));

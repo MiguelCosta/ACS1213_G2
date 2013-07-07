@@ -69,7 +69,7 @@ public class Viagem implements Serializable {
     @ManyToOne(optional = false)
     private Utilizador utilizadorid;
     @JoinColumn(name = "percursoid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Percurso percursoid;
 
     public Viagem() {

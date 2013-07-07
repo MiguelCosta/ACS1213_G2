@@ -7,6 +7,7 @@ package controller;
 import entity.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,6 +33,8 @@ import validate.ViagemValidator;
 @WebServlet(name = "ViagemController", urlPatterns = {"/Viagem", "/Viagem/view", "/Viagem/add", "/Viagem/register"})
 public class ViagemController extends HttpServlet {
 
+    @EJB
+    private UtilizadorFacade utilizadorFacade;
     @EJB
     private ViagemFacade viagemFacade;
     @EJB
@@ -89,6 +92,7 @@ public class ViagemController extends HttpServlet {
 
             url = "index";
         } else if (userPath.equals("/Viagem/view")) {
+
             int Id = Integer.parseInt((String) request.getParameter("id"));
             viag = viagemFacade.getViagemDados(Id);
             request.setAttribute("viagem", viag);
@@ -119,10 +123,10 @@ public class ViagemController extends HttpServlet {
                 intermedios.remove(destino);
                 String pontos = "";
                 for (String pontosIntermedios : intermedios) {
-                pontos += pontosIntermedios+" ";
+                    pontos += pontosIntermedios + " ";
                 }
-                pontos = pontos.substring(0, pontos.length()-2);
-                
+                pontos = pontos.substring(0, pontos.length() - 2);
+
 
                 request.setAttribute("origem", origem);
                 request.setAttribute("destino", destino);
@@ -146,7 +150,25 @@ public class ViagemController extends HttpServlet {
                 viag.setNome(nome);
                 viag.setDescricao(descricao);
                 viag.setUtilizadorid(user);
-                viagemFacade.register(viag);
+
+                Percurso percurso = new Percurso();
+                percurso.setLimiteetapas(25);
+                percurso.setUtilizadorid((Utilizador) session.getAttribute("user"));
+                percurso.setNumeroetapas(0);
+                percurso.setValortotal(BigDecimal.ZERO);
+                
+                viag.setPercursoid(percurso);
+
+                try {
+                    viagemFacade.create(viag);
+                } catch (Exception ex) {
+                    session.setAttribute("MessageError", "Erro ao inserir na base de dados!");
+                    response.sendRedirect("/EuroTripsFinder/Viagem/register");
+                    return;
+                }
+
+                user = utilizadorFacade.find(user.getId());
+                session.setAttribute("user", user);
 
             } else {
 

@@ -16,7 +16,7 @@ Data de chegada: ${etapa.getDatachegada()} <br/>
         <label class="radio">
             <input type="radio" name="viagemselec" id="optionsRadios1" value="${row.getOrigem().getId()}-${row.getDestino().getId()}">
             Partida às <span class="label label-info">${row.getOrigem().getDatapartida()}</span> 
-            e chegada às <span class="label label-info">${row.getDestino().getDatachegada()}</span> <small>${row.getOrigem().getViagemid()}</small>.
+            e chegada às <span class="label label-info">${row.getDestino().getDatachegada()}</span>
         </label>
     </c:forEach> 
 

@@ -86,9 +86,8 @@
 
             <div class="navbar navbar-inverse">
                 <div class="navbar-inner">
-                    <li class="brand" style="color:white">EuroTripsFinder</li>
-                    <ul class="nav">
-                        <li><a href="/EuroTripsFinder">Home</a></li>
+                    <a class="brand" style="color:white" href="/EuroTripsFinder">EuroTripsFinder</a>
+                    <ul class="nav">    
                         <li class="dropdown open">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Viagens <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -104,8 +103,8 @@
 
                         <!--Menus do Admin e admin-->                
                         <% if (session.getAttribute("user") != null) {
-                            String funcao = ((Utilizador) session.getAttribute("user")).getFuncao();
-                            if (funcao.equals("Administrador")) {%>
+                                String funcao = ((Utilizador) session.getAttribute("user")).getFuncao();
+                                if (funcao.equals("Administrador")) {%>
                         <li><a href="/EuroTripsFinder/Utilizador/index">Utilizadores</a></li>
                         <li><a href="/EuroTripsFinder/Cliente">Clientes</a></li>
                         <li><a href="/EuroTripsFinder/Contrato">Contratos</a></li>
@@ -117,7 +116,7 @@
                         <li><a href="#">Minhas Viagens</a></li>
                         <li><a href="#">Favoritos</a></li>
                             <%}
-                            }%>
+                                }%>
 
                     </ul>
                     <ul class="nav pull-right">
@@ -164,7 +163,7 @@
                 <%= session.getAttribute("MessageError")%>
             </div>
             <% session.setAttribute("MessageError", null);
-            }%>
+                }%>
 
             <!-- Mensagem de sucesso -->
             <% if (session.getAttribute("MessageSuccess") != null) {%>
@@ -173,7 +172,7 @@
                 <%= session.getAttribute("MessageSuccess")%>
             </div>
             <% session.setAttribute("MessageSuccess", null);
-            }%>
+                }%>
 
 
 
