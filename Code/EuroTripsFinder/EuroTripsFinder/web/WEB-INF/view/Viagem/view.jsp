@@ -98,6 +98,8 @@
                     <td>${row.getLocalparageminicialid()}</td>
                     <td>${row.getLocalparagemdestinoid()}</td>
                     <td>Autocarro</td>
+                    <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Etapa/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
+                        <a class="btn btn-danger" href="<%= request.getContextPath()%>/Etapa/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
                 </tr>
             </c:forEach> 
         </table>       

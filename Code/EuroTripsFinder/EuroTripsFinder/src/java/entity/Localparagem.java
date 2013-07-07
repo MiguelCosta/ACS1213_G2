@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Localparagem.findByNome", query = "SELECT l FROM Localparagem l WHERE l.nome = :nome"),
     @NamedQuery(name = "Localparagem.findByCodigo", query = "SELECT l FROM Localparagem l WHERE l.codigo = :codigo"),
     @NamedQuery(name = "Localparagem.findByDescricao", query = "SELECT l FROM Localparagem l WHERE l.descricao = :descricao")})
-public class Localparagem implements Serializable {
+public class Localparagem implements Serializable, ILocalParagem {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,10 +92,12 @@ public class Localparagem implements Serializable {
         this.id = id;
     }
 
+    @Override
     public String getNome() {
         return nome;
     }
 
+    @Override
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -108,10 +110,12 @@ public class Localparagem implements Serializable {
         this.codigo = codigo;
     }
 
+    @Override
     public String getDescricao() {
         return descricao;
     }
 
+    @Override
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
@@ -133,6 +137,7 @@ public class Localparagem implements Serializable {
         this.cidadeid = cidadeid;
     }
 
+    @Override
     public Coordenada getCoordenadaid() {
         return coordenadaid;
     }

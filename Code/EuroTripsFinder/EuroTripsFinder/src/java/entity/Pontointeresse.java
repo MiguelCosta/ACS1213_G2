@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pontointeresse.findById", query = "SELECT p FROM Pontointeresse p WHERE p.id = :id"),
     @NamedQuery(name = "Pontointeresse.findByNome", query = "SELECT p FROM Pontointeresse p WHERE p.nome = :nome"),
     @NamedQuery(name = "Pontointeresse.findByDescricao", query = "SELECT p FROM Pontointeresse p WHERE p.descricao = :descricao")})
-public class Pontointeresse implements Serializable {
+public class Pontointeresse implements Serializable, IPontoInteresse {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -66,18 +66,22 @@ public class Pontointeresse implements Serializable {
         this.descricao = descricao;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public String getNome() {
         return nome;
     }
 
+    @Override
     public void setNome(String nome) {
         this.nome = nome;
     }

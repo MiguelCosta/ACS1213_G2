@@ -5,6 +5,7 @@
 package controller;
 
 import entity.Cidade;
+import entity.Contrato;
 import entity.Etapa;
 import entity.Percurso;
 import entity.Tempoparagem;
@@ -75,7 +76,29 @@ public class EtapaServlet extends HttpServlet {
             request.setAttribute("locais", localparagemFacade.findAll());
 
             url = "/register";
-        } else if (userPath.equals("/Etapa/add")) {
+        } else if (userPath.equals("/Etapa/delete")) {
+            
+            try{
+                int etapaID = Integer.parseInt(request.getParameter("id"));
+                Etapa etapaDEL = etapaFacade.find(etapaID);
+                etapaFacade.remove(etapaDEL);
+            }
+            catch(Exception e){
+                erro = "Não foi possível remover a etapa";
+                session.setAttribute("MessageError", erro);
+                response.sendRedirect("/EuroTripsFinder/Viagem");
+                return;
+            }
+           
+            if(session.getAttribute("viagem") != null){
+                response.sendRedirect("/EuroTripsFinder/Viagem/view?id="+((Viagem) session.getAttribute("viagem")).getId());
+                return;
+            }
+            
+            response.sendRedirect("/EuroTripsFinder");
+            return;
+        
+        }else if (userPath.equals("/Etapa/add")) {
             localOrigemId = Integer.parseInt((String) request.getParameter("localInicial"));
             localDestinoId = Integer.parseInt((String) request.getParameter("localFinal"));
             Date dataInicio = null;
