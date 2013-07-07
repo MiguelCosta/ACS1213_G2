@@ -34,6 +34,8 @@ import validate.ViagemValidator;
 public class ViagemController extends HttpServlet {
 
     @EJB
+    private PercursoFacade percursoFacade;
+    @EJB
     private UtilizadorFacade utilizadorFacade;
     @EJB
     private ViagemFacade viagemFacade;
@@ -68,17 +70,14 @@ public class ViagemController extends HttpServlet {
 
         Viagem viag = new Viagem();
 
-
-
         // Publiciade
         session.setAttribute("artigorandom", artigoFacade.ArtigoRandom());
-
-
 
         if (userPath.equals("/Viagem")) {
             Collection<Viagem> viagens = null;
 
             try {
+                user = utilizadorFacade.find(user.getId());
                 viagens = user.getViagemCollection();
             } catch (Exception e) {
                 session.setAttribute("MessageError", "Erro ao obter as viagens." + e.getMessage());
@@ -88,7 +87,9 @@ public class ViagemController extends HttpServlet {
                 session.setAttribute("MessageError", "Não existem viagens registadas para este Utilizador.");
             }
 
+            session.setAttribute("viagem", null);
             request.setAttribute("viagens", viagens);
+            session.setAttribute("user", user);
 
             url = "index";
         } else if (userPath.equals("/Viagem/view")) {
@@ -97,7 +98,7 @@ public class ViagemController extends HttpServlet {
             viag = viagemFacade.getViagemDados(Id);
             request.setAttribute("viagem", viag);
 
-            if (viag.getPercursoid() == null) {
+            if (viag.getPercursoid() == null || viag.getPercursoid().getEtapaCollection().size() == 0) {
                 session.setAttribute("MessageError", "Esta viagem ainda não possui nenhuma Etapa.");
             } else {
 
@@ -125,19 +126,26 @@ public class ViagemController extends HttpServlet {
                 for (String pontosIntermedios : intermedios) {
                     pontos += pontosIntermedios + " ";
                 }
-                pontos = pontos.substring(0, pontos.length() - 2);
+                if (!pontos.equals("")) {
+                    pontos = pontos.substring(0, pontos.length() - 2);
+                }
 
 
                 request.setAttribute("origem", origem);
                 request.setAttribute("destino", destino);
                 request.setAttribute("intermedios", pontos);
             }
+
+            session.setAttribute("percurso", viag.getPercursoid());
+            session.setAttribute("viagem", viag);
             url = "view";
         } else if (userPath.equals("/Viagem/add")) {
             String dtInicio = (String) request.getParameter("datainicio");
             String dtFim = (String) request.getParameter("datafim");
             String nome = (String) request.getParameter("nome");
             String descricao = (String) request.getParameter("descricao");
+            int maxEtapas = Integer.parseInt((String) request.getParameter("maxEtapas"));
+            double maxCusto = Double.parseDouble((String) request.getParameter("maxCusto"));
 
             if (vv.validaRegisto(dtInicio, nome, dtFim, request)) {
                 try {
@@ -147,16 +155,26 @@ public class ViagemController extends HttpServlet {
                     session.setAttribute("error", ex.getMessage().toString());
                 }
 
+                Percurso percurso = new Percurso();
+                percurso.setNome(nome);
+                percurso.setLimiteetapas(maxEtapas);
+                percurso.setUtilizadorid((Utilizador) session.getAttribute("user"));
+                percurso.setNumeroetapas(0);
+                percurso.setValortotal(BigDecimal.valueOf(maxCusto));
+
+                try {
+                    percursoFacade.create(percurso);
+                } catch (Exception ex) {
+                    erro = "Erro ao inserir percurso";
+                    session.setAttribute("MessageError", erro);
+                    response.sendRedirect("/EuroTripsFinder/Viagem/register");
+                    return;
+                }
+
                 viag.setNome(nome);
                 viag.setDescricao(descricao);
                 viag.setUtilizadorid(user);
 
-                Percurso percurso = new Percurso();
-                percurso.setLimiteetapas(25);
-                percurso.setUtilizadorid((Utilizador) session.getAttribute("user"));
-                percurso.setNumeroetapas(0);
-                percurso.setValortotal(BigDecimal.ZERO);
-                
                 viag.setPercursoid(percurso);
 
                 try {

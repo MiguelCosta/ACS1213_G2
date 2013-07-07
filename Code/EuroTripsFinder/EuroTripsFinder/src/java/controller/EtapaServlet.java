@@ -9,6 +9,7 @@ import entity.Etapa;
 import entity.Percurso;
 import entity.Tempoparagem;
 import entity.Utilizador;
+import entity.Viagem;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -85,7 +86,7 @@ public class EtapaServlet extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(EtapaServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             request.setAttribute("caminhos", tempoparagemFacade.caminhos(localOrigemId, localDestinoId, dataInicio, dataFim, 3, 0));
 
             Etapa et = new Etapa();
@@ -147,7 +148,11 @@ public class EtapaServlet extends HttpServlet {
             }
 
             session.setAttribute("MessageSuccess", "Etapa adicionada com sucesso.");
-            response.sendRedirect("/EuroTripsFinder/Percurso/view?id="+ p.getId());
+            if (session.getAttribute("viagem") == null) {
+                response.sendRedirect("/EuroTripsFinder/Percurso/view?id=" + p.getId());
+            } else {
+                response.sendRedirect("/EuroTripsFinder/Viagem/view?id=" + ((Viagem) session.getAttribute("viagem")).getId());
+            }
             return;
 
         } else if (userPath.equals("/Etapa")) {

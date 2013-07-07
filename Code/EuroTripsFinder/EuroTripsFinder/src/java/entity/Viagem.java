@@ -5,7 +5,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Viagem.findByDatafim", query = "SELECT v FROM Viagem v WHERE v.datafim = :datafim"),
     @NamedQuery(name = "Viagem.findByUtilizadorId", query = "SELECT v FROM Viagem v WHERE v.utilizadorid = :utilizadorid")})
 public class Viagem implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -115,12 +118,28 @@ public class Viagem implements Serializable {
         return datainicio;
     }
 
+    public String getDatainicioString() {
+        if(datainicio == null) return "";
+        Calendar d = new GregorianCalendar();
+        d.setTime(datainicio);
+        String strData = d.get(Calendar.YEAR) + "-" + d.get(Calendar.MONTH) + "-" + d.get(Calendar.DAY_OF_MONTH);
+        return strData;
+    }
+
     public void setDatainicio(Date datainicio) {
         this.datainicio = datainicio;
     }
 
     public Date getDatafim() {
         return datafim;
+    }
+
+    public String getDatafimString() {
+        if(datafim == null) return "";
+        Calendar d = new GregorianCalendar();
+        d.setTime(datafim);
+        String strData = d.get(Calendar.YEAR) + "-" + d.get(Calendar.MONTH) + "-" + d.get(Calendar.DAY_OF_MONTH);
+        return strData;
     }
 
     public void setDatafim(Date datafim) {
@@ -167,5 +186,4 @@ public class Viagem implements Serializable {
     public String toString() {
         return "entity.Viagem[ id=" + id + " ]";
     }
-    
 }

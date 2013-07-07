@@ -20,9 +20,8 @@
             <tr>
                 <td><a href="<%= request.getContextPath()%>/Viagem/view?id=${row.getId()}">${row.getId()}</a></td>
                 <td>${row.getNome()}</td>
-                <td>${row.getDatainicio()}</td>
-                <td>${row.getDatafim()}</td>
-                <td>${row.getPercursoid()}</td>
+                <td>${row.getDatainicioString()}</td>
+                <td>${row.getDatafimString()}</td>
             </tr>
         </c:forEach> 
 </table>

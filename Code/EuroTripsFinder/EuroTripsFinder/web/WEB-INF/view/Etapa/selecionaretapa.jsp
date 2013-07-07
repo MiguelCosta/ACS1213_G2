@@ -22,6 +22,7 @@ Data de chegada: ${etapa.getDatachegada()} <br/>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Selecionar</button>
+        <button onClick="history.go(-1)">Voltar</button>
     </div>
 
 </form>

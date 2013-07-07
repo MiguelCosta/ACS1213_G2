@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.apache.jasper.tagplugins.jstl.ForEach;
 
 /**
  *
@@ -119,6 +120,14 @@ public class Percurso implements Serializable {
 
     public void setValortotal(BigDecimal valortotal) {
         this.valortotal = valortotal;
+    }
+    
+    public BigDecimal getCustoTotal(){
+        BigDecimal valor = BigDecimal.ZERO;
+        for (Etapa etapa : etapaCollection) {
+            valor = valor.add(etapa.getValor());
+        }
+        return valor;
     }
 
     public String getNome() {

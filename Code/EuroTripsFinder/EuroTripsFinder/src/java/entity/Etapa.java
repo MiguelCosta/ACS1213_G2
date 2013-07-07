@@ -6,8 +6,10 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Etapa.findByValor", query = "SELECT e FROM Etapa e WHERE e.valor = :valor"),
     @NamedQuery(name = "Etapa.findByMeioTransporteid", query = "SELECT e FROM Etapa e WHERE e.meioTransporteid = :meioTransporteid")})
 public class Etapa implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -102,12 +105,26 @@ public class Etapa implements Serializable {
         return datapartida;
     }
 
+    public String getDatapartidaString() {
+        Calendar d = new GregorianCalendar();
+        d.setTime(datapartida);
+        String strData = d.get(Calendar.YEAR) + "-" + d.get(Calendar.MONTH) + "-" + d.get(Calendar.DAY_OF_MONTH);
+        return strData;
+    }
+
     public void setDatapartida(Date datapartida) {
         this.datapartida = datapartida;
     }
 
     public Date getDatachegada() {
         return datachegada;
+    }
+
+    public String getDatachegadaString() {
+        Calendar d = new GregorianCalendar();
+        d.setTime(datachegada);
+        String strData = d.get(Calendar.YEAR) + "-" + d.get(Calendar.MONTH) + "-" + d.get(Calendar.DAY_OF_MONTH);
+        return strData;
     }
 
     public void setDatachegada(Date datachegada) {
@@ -179,5 +196,4 @@ public class Etapa implements Serializable {
     public String toString() {
         return "entity.Etapa[ id=" + id + " ]";
     }
-    
 }

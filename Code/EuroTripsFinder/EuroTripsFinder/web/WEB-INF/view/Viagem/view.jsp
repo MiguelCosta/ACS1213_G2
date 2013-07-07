@@ -1,3 +1,4 @@
+<%@page import="entity.Viagem"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <form action="<%= request.getContextPath()%>/Viagem/view" method=post class="form-horizontal">
@@ -7,28 +8,28 @@
         <div class="control-group">
             <label class="control-label" for="inputNomeViagem">Nome da Viagem</label>
             <div class="controls">
-                <input type="text" id="inputEmail" name="nome" placeholder="nome" required="required" value="${viagem.getNome()}">
+                <input type="text" id="inputEmail" style="height: 30px;" name="nome" placeholder="nome" required="required" value="${viagem.getNome()}">
             </div>   
         </div>
 
         <div class="control-group">
             <label class="control-label" for="inputDescricao">Descrição</label>
             <div class="controls">
-                <input type="text" id="inputDescricao" name="descricao" placeholder="descricao" required="required" readonly="readonly" value="${viagem.getDescricao()}">
+                <textarea id="inputDescricao" name="descricao" placeholder="descricao" required="required" >${viagem.getDescricao()}</textarea>
             </div>   
         </div>
 
         <div class="control-group">
             <label class="control-label" for="inputDataInicio">Data de Início</label>
             <div class="controls">
-                <input type="text" id="inputDataInicio" name="datainicio" placeholder="Data de Início" required="required" value="${viagem.getDatainicio()}">
+                <input type="text" id="inputDataInicio" name="datainicio" placeholder="Data de Início" required="required" value="${viagem.getDatainicioString()}">
             </div>   
         </div>
 
         <div class="control-group">
             <label class="control-label" for="inputDataFim">Data de Fim</label>
             <div class="controls">
-                <input type="text" id="inputDataFim" name="datafim" placeholder="Data de Fim" required="required" value="${viagem.getDatafim()}">
+                <input type="text" id="inputDataFim" name="datafim" placeholder="Data de Fim" required="required" value="${viagem.getDatafimString()}">
             </div>   
         </div>
 
@@ -45,38 +46,63 @@
     </div>
 
     <div style="position: static; clear: both;">
-        <h1>Etapas</h1> 
+
+        <h1>Percurso</h1>
+        <% if (((Viagem) request.getAttribute("viagem")).getPercursoid() != null) {%>
+
+        <div class="control-group">
+            <label class="control-label">Etapas</label>
+            <div class="controls">
+                <input type="text" name="maximoEtapas" style="height: 30px;" value="${viagem.getPercursoid().getEtapaCollection().size()} de ${viagem.getPercursoid().getLimiteetapas()}">                
+            </div>   
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Custo</label>
+            <div class="controls">
+                <input type="text" name="maximoCusto" style="height: 30px;" value="${viagem.getPercursoid().getCustoTotal()}">                
+            </div>   
+        </div>
+
+
+
+        <% } else {%>
+        <form action="<%= request.getContextPath()%>/Viagem/addPercurso" method=post class="form-horizontal">
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Adicionar Percurso</button>
+            </div>
+        </form>
+        <% }%>
+
+        <h2>Etapas 
+            <a class="btn btn-success" href="<%= request.getContextPath()%>/Etapa/register" ><i class="icon-plus icon-white"></i></a>
+        </h2>
         <table class="table table-hover"> 
             <thead> 
-            <td>ID</td>       
-            <td>Data Partida</td>
-            <td>Data Chegada</td>
-            <td>Valor</td>
-            <td>Local Partida</td>
-            <td>Local Chegada</td>
-            <td>Meio de Transporte</td>
+            <th>ID</th>       
+            <th>Data Partida</th>
+            <th>Data Chegada</th>
+            <th>Valor</td>
+            <th>Local Partida</th>
+            <th>Local Chegada</th>
+            <th>Meio de Transporte</th>
 
             </thead> 
 
             <c:forEach var="row" items="${viagem.getPercursoid().getEtapaCollection()}"> 
                 <tr>
                     <td>${row.getId()}</td>
-                    <td>${row.getDatapartida()}</td>
-                    <td>${row.getDatachegada()}</td>
+                    <td>${row.getDatapartidaString()}</td>
+                    <td>${row.getDatachegadaString()}</td>
                     <td>${row.getValor()}</td>
                     <td>${row.getLocalparageminicialid()}</td>
                     <td>${row.getLocalparagemdestinoid()}</td>
-                    <td>${row.getMeioTransporteid()}</td>
+                    <td>Autocarro</td>
                 </tr>
             </c:forEach> 
         </table>       
     </div>
 
-</form>
-<form action="<%= request.getContextPath()%>/Etapa/register" method=post class="form-horizontal">
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary" >Adicionar Nova</button>
-    </div>
 </form>
 
 

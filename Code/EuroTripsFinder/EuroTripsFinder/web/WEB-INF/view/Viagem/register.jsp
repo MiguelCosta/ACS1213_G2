@@ -2,7 +2,7 @@
 
 <form action="<%= request.getContextPath()%>/Viagem/add" method=post class="form-horizontal">
 
-   
+
 
     <div class="control-group">
         <label class="control-label" for="inputNomeViagem">Nome</label>
@@ -42,11 +42,23 @@
     <div class="control-group">
         <label class="control-label" for="inputDescricao">Descrição</label>
         <div class="controls">
-           <TEXTAREA id="inputDescricao" NAME="descricao" ROWS=3 COLS=30 required="required" placeholder="Descrição"></textarea>
+            <TEXTAREA id="inputDescricao" NAME="descricao" ROWS=3 COLS=30 required="required" placeholder="Descrição"></textarea>
         </div>   
     </div>
-
     
+    <div class="control-group">
+        <label class="control-label" for="inputNomeViagem">Máximo etapas</label>
+        <div class="controls">
+            <input type="number" id="inputMaxEtapas" name="maxEtapas" required="required" value="0" style="height: 30px;"> <small>0 - não definido</small>
+        </div>   
+    </div>
+    
+    <div class="control-group">
+        <label class="control-label" for="inputNomeViagem">Custo máximo</label>
+        <div class="controls">
+            <input type="number" id="inputMaxCusto" name="maxCusto" required="required" value="0" style="height: 30px;"> <small>0 - não definido</small>
+        </div>   
+    </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Registar</button>
