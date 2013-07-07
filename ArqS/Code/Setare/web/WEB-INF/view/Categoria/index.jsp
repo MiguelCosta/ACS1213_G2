@@ -50,11 +50,11 @@
     
 <table class="table table-hover"> 
     <tr>
-        <td>Nome:</td>
-        <td>Descrição:</td> 
-        <td>Preço Depósito:</td>
-        <td>Preço Hora:</td>
-        <td>Opções:</td>
+        <td><h4>Nome:</h4></td>
+        <td><h4>Descrição:</h4></td> 
+        <td><h4>Preço Depósito:</h4></td>
+        <td><h4>Preço Hora:</h4></td>
+        <td><h4>Opções:</h4></td>
     </tr> 
     <c:forEach var="row" items="${resultado}"> 
         <tr>                  
@@ -63,7 +63,7 @@
             <td>${row.precoDeposito}</td> 
             <td>${row.precoPorHora}</td> 
             <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Categoria/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
-            <a class="btn btn-danger" href="<%= request.getContextPath()%>/Categoria/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
+            </td>
         </tr>
     </c:forEach> 
 </table>

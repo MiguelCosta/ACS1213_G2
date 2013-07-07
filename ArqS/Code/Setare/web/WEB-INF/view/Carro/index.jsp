@@ -50,20 +50,20 @@
     
 <table class="table table-hover"> 
     <tr>
-        <td>Matrícula:</td>
-        <td>Descrição:</td> 
-        <td>Imagem:</td>
-        <td>Categoria:</td>
-        <td>Opções:</td>
+        <td><h4>Matrícula:</h4></td>
+        <td><h4>Descrição:</h4></td> 
+        <td><h4>Imagem:</h4></td>
+        <td><h4>Categoria:</h4></td>
+        <td><h4>Opções:</h4></td>
     </tr> 
     <c:forEach var="row" items="${resultado}"> 
         <tr>                  
-            <td>${row.matricula}</td>
-            <td>${row.descricao}</td>
-            <td>${row.imagem}</td> 
-            <td>${row.getCategoriaid().getNome()}</td> 
-            <td><a class="btn btn-info" href="<%= request.getContextPath()%>/Carro/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
-            <a class="btn btn-danger" href="<%= request.getContextPath()%>/Carro/delete?id=${row.id}" ><i class="icon-remove icon-white"></i></a></td>
+            <td style="vertical-align: middle;">${row.matricula}</td>
+             <td style="vertical-align: middle;">${row.descricao}</td>
+             <td style="vertical-align: middle;"><img src="${row.imagem}" width="200" height="150" /></td> 
+             <td style="vertical-align: middle;">${row.getCategoriaid().getNome()}</td> 
+            <td style="vertical-align: middle;"><a class="btn btn-info" href="<%= request.getContextPath()%>/Carro/view?id=${row.id}" ><i class="icon-pencil icon-white"></i></a>
+           </td>
         </tr>
     </c:forEach> 
 </table>

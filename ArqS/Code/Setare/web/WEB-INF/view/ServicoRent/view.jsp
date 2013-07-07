@@ -1,7 +1,15 @@
+<% Utilizador user = (Utilizador) session.getAttribute("user");
+    String aux = "";
+    if (user.getFuncao().equals("User")) {
+        aux = "indexUtilizador";
+
+    } else if (user.getFuncao().equals("Admin")) {
+        aux = "index";
+    }
+%>
 
 
-
-<form  action="<%= request.getContextPath()%>/ServicoRent/index" method=post">
+<form  action="<%= request.getContextPath()%>/ServicoRent/<%=aux%>" method="post">
     <div class="container" style="max-width: 600px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px;">
 
 
@@ -46,7 +54,7 @@
                         <div class="control-group">
                             <label class="control-label" for="inputPrecoDia">Data:</label>
                             <div class="controls">          
-                                <input type="text" id="inputDataEntrega" name="datachegada" placeholder="dd-MM-AAAA" style="width:210px;" value="${servico.getDataPartida()}" disabled>
+                                <input type="text" id="inputDataEntrega" name="datachegada" placeholder="dd-MM-AAAA" style="width:210px;" value="${servico.getDataPartidaFormatada()}" disabled>
                             </div>   
                         </div>
 
@@ -56,11 +64,12 @@
 
                 </td>
                 <td style="width: 50%; text-align: center;">
+
                     <div style="float: center; clear: left; position: static;">
                         <div class="control-group">
                             <label class="control-label" for="inputPrecoDia">Data:</label>
                             <div class="controls">          
-                                <input type="text" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA" style="width:210px;" value="${servico.getDataChegada()}" disabled>
+                                <input type="text" id="inputDataLevantamento" name="datapartida" placeholder="dd-MM-AAAA" style="width:210px;" value="${servico.getDataChegadaFormatada()}" disabled>
                             </div>   
                         </div>
 
@@ -111,6 +120,7 @@
         </div>
 
         <div style="width: 100%; text-align: center;" >
+
 
             <button class="btn btn-large btn-primary" type="submit">Voltar</button>
 

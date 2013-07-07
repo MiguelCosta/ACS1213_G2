@@ -4,8 +4,11 @@
  */
 package entity;
 
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -44,6 +47,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Servico.findByDatas", query = "SELECT s FROM Servico s WHERE s.carroid = :carroid AND s.dataPartida >=:dataPartida AND s.dataChegada <= :dataChegada"),
     @NamedQuery(name = "Servico.findByCondutorExtra", query = "SELECT s FROM Servico s WHERE s.condutorExtra = :condutorExtra")})
 public class Servico implements Serializable {
+
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -128,16 +133,37 @@ public class Servico implements Serializable {
     }
 
     public Date getDataPartida() {
+
         return dataPartida;
     }
+    
+     public String getDataPartidaFormatada() {
+        return formataData(dataPartida);
+    }
+     
+      public String getDataHoraPartidaFormatada() {
+        return formataDataHora(dataPartida);
+    }
+    
+    
 
     public void setDataPartida(Date dataPartida) {
         this.dataPartida = dataPartida;
     }
 
     public Date getDataChegada() {
+
         return dataChegada;
     }
+    public String getDataChegadaFormatada() {
+        return formataData(dataChegada);
+    }
+    
+     public String getDataHoraChegadaFormatada() {
+        return formataDataHora(dataChegada);
+    }
+    
+       
 
     public void setDataChegada(Date dataChegada) {
         this.dataChegada = dataChegada;
@@ -256,4 +282,25 @@ public class Servico implements Serializable {
         return "entity.Servico[ id=" + id + " ]";
     }
     
+    //funcao para converter date para ano-mes-dia
+     public static String formataData(Date dataSemFormato) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dataSemFormato);
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        String formatted = format1.format(cal.getTime());
+        return formatted;
+    }
+     
+     //funcao para converter date para ano-mes-dia hora:min
+     public static String formataDataHora(Date dataSemFormato) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dataSemFormato);
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String formatted = format1.format(cal.getTime());
+        return formatted;
+    }
 }

@@ -68,16 +68,22 @@ public class PDFServlet extends HttpServlet {
             Servico servico = (Servico) request.getAttribute("servico");
 
 
+            
             String content = "\nDados do Bilhete:"
-              + "\nUtilizador: " + utilizador.getNome()
-              + "\nCategoria do veículo: " + servico.getCarroid().getCategoriaid().getNome()
-              + "\nDescrição do veículo: " + servico.getCarroid().getDescricao()
-              + "\nEstação de partida: " + servico.getLocalPartidaid().getNome()
-              + "\nData: "+ servico.getDataPartida()
-              + "\nEstação de entrega: " + servico.getLocalChegadaid().getNome()
-              + "\nData" + servico.getDataChegada()
-              + "\nTotal a pagar: " + servico.getPreco()
-              + "\nAgradecemos a sua escolha e desejamos-lhe uma excelente viagem!" 
+              + "\n     Utilizador: " + utilizador.getNome()
+              + "\n     Categoria do veículo: " + servico.getCarroid().getCategoriaid().getNome()
+              + "\n     Descrição do veículo: " + servico.getCarroid().getDescricao()
+              + "\n     Estação de partida: " + servico.getLocalPartidaid().getNome()
+              + "\n     Data: "+ servico.getDataPartida()
+              + "\n     Estação de entrega: " + servico.getLocalChegadaid().getNome()
+              + "\n     Data: " + servico.getDataChegada()
+              + "\n     Extras: "
+              + "\n         Cadeira bebe: " + servico.getCadeiraBebe()
+              + "\n         GPS: " + servico.getGps()
+              + "\n         Depósito Cheio: " + servico.getDepositoCheio()
+              + "\n         Condutor Adicional: " + servico.getCondutorExtra()
+              + "\n         Seguro contra todos os riscos: " + servico.getSeguroCTRiscos()
+              + "\n     Total pago: " + servico.getPreco()
               + "\n"
               + "\n";
 
@@ -116,13 +122,14 @@ public class PDFServlet extends HttpServlet {
 
 
             String content = "\nDados do Bilhete:"
-              + "\nUtilizador: " + utilizador.getNome()
-              + "\nDescrição: Bilhete de Taxi "
-              + "\nTaxi: " + servico.getCodigotaxi()
-              + "\nEstação de partida: " + servico.getLocalpartidaid().getNome()
-              + "\nData: "+ servico.getDatapartida()
-              + "\nEstação de entrega: " + servico.getLocalchegadaid().getNome()
-              + "\nAgradecemos a sua escolha e desejamos-lhe uma excelente viagem!" 
+              + "\n     Descrição: Bilhete de Taxi "
+              + "\n     Utilizador: " + utilizador.getNome()             
+              + "\n     Taxi: " + servico.getCodigotaxi()
+              + "\n     Estação de partida: " + servico.getLocalpartidaid().getNome()
+              + "\n     Data: "+ servico.getDatapartida()
+              + "\n     Estação de entrega: " + servico.getLocalchegadaid().getNome()
+              + "\n     Bagagem: " + servico.getBagagem()
+              + "\n     Passageiros: " + servico.getPassageiros()
               + "\n"
               + "\n";
 
