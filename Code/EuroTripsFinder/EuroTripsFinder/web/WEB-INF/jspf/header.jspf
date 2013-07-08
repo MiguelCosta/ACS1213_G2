@@ -89,11 +89,15 @@
                             <ul class="dropdown-menu">
                                 <li class="nav-header">Viagens</li>
                                 <li><a href="/EuroTripsFinder/Viagem/register">Criar nova viagem</a></li>
+                                <% if (session.getAttribute("user") != null) {%>
                                 <li><a href="/EuroTripsFinder/Viagem">Ver todas as viagens</a></li>
+                                
                                 <li class="divider"></li>
                                 <li class="nav-header">Percursos</li>
                                 <li><a href="/EuroTripsFinder/Percurso/register">Criar um novo</a></li>
+                                
                                 <li><a href="/EuroTripsFinder/Percurso">Ver todos</a></li>
+                                <%}%>
                             </ul>
                         </li>
 
@@ -108,9 +112,7 @@
                         <li><a href="/EuroTripsFinder/Cidade">Cidades</a></li>
                         <li><a href="/EuroTripsFinder/Coordenada">Coordenadas</a></li>
                         <li><a href="/EuroTripsFinder/Atividade">Atividades</a></li>
-                            <%} else if (funcao.equals("user")) {%>
-                        <li><a href="#">Minhas Viagens</a></li>
-                        <li><a href="#">Favoritos</a></li>
+                          
                             <%}
                                 }%>
 

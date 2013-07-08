@@ -1,5 +1,8 @@
-<h1>Criar Nova Viagem</h1>
 
+<div class="container" style="max-width: 445px; border: 1px solid #e5e5e5;  padding: 19px 29px 29px; margin: 0 auto 20px; ">
+
+<h1>Criar Nova Viagem</h1>
+<hr>
 <form action="<%= request.getContextPath()%>/Viagem/add" method=post class="form-horizontal">
 
 
@@ -66,5 +69,6 @@
     </div>
 
 </form>
+</div>
 
 
