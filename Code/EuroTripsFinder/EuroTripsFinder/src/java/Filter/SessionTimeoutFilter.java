@@ -23,17 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author miltonnunes52
  */
-@WebFilter(servletNames = {"ArtigoServlet",
-                            "AtividadeServlet",
-                            "CidadeServlet",
-                            "ClienteServlet",
-                            "ContratoServlet",
-                            "CoordenadaServlet",
-                            "EtapaServlet",
-                            "PercursoServlet",
-                            "TipoMeioTransporteServlet",
-                            "UtilizadorServlet",
-                            "ViagemController"})
+
 public class SessionTimeoutFilter implements Filter {
     
     private static final boolean debug = true;

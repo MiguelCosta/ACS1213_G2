@@ -33,20 +33,9 @@
         <url-pattern>/Utilizador/index</url-pattern>
         <url-pattern>/Utilizador/edit</url-pattern>        
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>SessionTimeoutFilter</filter-name>
-        <url-pattern>/Artigo/*</url-pattern>
-        <url-pattern>/Atividade/*</url-pattern>
-        <url-pattern>/Cidade/*</url-pattern>
-        <url-pattern>/Cliente/*</url-pattern>
-        <url-pattern>/Contrato/*</url-pattern>
-        <url-pattern>/Coordenada/*</url-pattern>
-        <url-pattern>/TipoMeioTransporte/*</url-pattern>
-        <url-pattern>/Utilizador/*</url-pattern>
-    </filter-mapping>
     
     <session-config>
-        <session-timeout>10</session-timeout>
+        <session-timeout>20</session-timeout>
     </session-config>
     <jsp-config>
         <jsp-property-group>
