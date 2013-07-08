@@ -14,6 +14,7 @@
         }
 
     }
+
 </script>
 
 <form  action="<%= request.getContextPath()%>/ServicoRent/registerContinua" method=post>
@@ -28,12 +29,16 @@
 
             <div class="control-group">
                 <label class="control-label" for="inputCategoria">Categoria do Veiculo:</label>
-                <div class="controls">               
-                    <select id="inputCategoria" name="categoria" style="width: 100%">
+                <div class="controls">       
+
+                    <select id="categoria" name="categoria" style="width: 100%" onchange="javascript:loadList();" >
                         <c:forEach var="row" items="${listacategorias}">
                             <option value="${row.id}" ${row.id == categoriaId ? 'selected' : ''}>${row.nome}</option>
                         </c:forEach>
                     </select>
+
+
+
                 </div>   
             </div>
 
@@ -106,10 +111,10 @@
     </div>
     <div style="float: right; clear: right; position: relative; width: 70%;">
 
-        <table class="table table-hover"> 
+        <table id="listaCarros" name="listaCarros" class="table table-hover"> 
 
-
-            <c:forEach var="row" items="${listacarros}"> 
+           
+<c:forEach var="row" items="${listacarros}"> 
                 <tr>
                     <td style="width: 25%;"><img src="${row.imagem}" width="200" height="200"></td>  
 
@@ -221,6 +226,8 @@
                 </tr>
 
             </c:forEach> 
+
+
 
         </table>
 

@@ -36,7 +36,7 @@ import validate.DataHoraValidator;
  *
  * @author JorgeMaia
  */
-@WebServlet(name = "ServicoRentServlet", urlPatterns = {"/ServicoRentServlet", "/ServicoRent/view", "/ServicoRent/index", "/ServicoRent/indexUtilizador", "/ServicoRent", "/ServicoRent/register", "/ServicoRent/registerContinua", "/ServicoRent/registerFinaliza"})
+@WebServlet(name = "ServicoRentServlet", urlPatterns = {"/ServicoRentServlet", "/ServicoRent/view", "/ServicoRent/index", "/ServicoRent/indexUtilizador", "/ServicoRent", "/ServicoRent/register", "/ServicoRent/registerContinua", "/ServicoRent/registerFinaliza", "/ServicoRent/lista"})
 public class ServicoRentServlet extends HttpServlet {
 
     @EJB
@@ -306,16 +306,16 @@ public class ServicoRentServlet extends HttpServlet {
 
             request.setAttribute("servico", serv);
             request.getRequestDispatcher("/enviarmailrent").forward(request, response);
-            
-            
+
+
             //response.sendRedirect("/Setare");
 
         } else if (userPath.equals(
                 "/ServicoRent/indexUtilizador")) {
 
-             try{
+            try {
                 user = (Utilizador) session.getAttribute("user");
-            }catch(Exception e){
+            } catch (Exception e) {
                 response.sendRedirect("/Setare");
             }
             List<Servico> servicos = (List<Servico>) user.getServicoCollection();
@@ -328,7 +328,7 @@ public class ServicoRentServlet extends HttpServlet {
             }
             url = "indexUtilizador";
         } else if (userPath.equals("/ServicoRent/view")) {
-            
+
             Servico servico = servicoFacade.find(Integer.parseInt(request.getParameter("id")));
             if (servico == null) {
                 session.setAttribute("MessageError", "Não existe nenhum pedido.");
@@ -336,7 +336,7 @@ public class ServicoRentServlet extends HttpServlet {
             } else {
                 request.setAttribute("servico", servico);
             }
-            
+
             url = "view";
 
         } else if (userPath.equals(
@@ -370,6 +370,16 @@ public class ServicoRentServlet extends HttpServlet {
             }
 
 //           
+        } else if (userPath.equals("/ServicoRent/lista")) {
+                    
+             int categoriaId = Integer.parseInt((String) request.getParameter("categoria"));
+             List<Carro> listacarros = categoriaFacade.listacarros(categoriaId);
+             request.setAttribute("listacarros", listacarros);
+             url = "listaCarros";
+             try {
+            request.getRequestDispatcher("/WEB-INF/" + url + ".jsp").forward(request, response);
+        } catch (Exception e) {
+        }
         }
 
 
